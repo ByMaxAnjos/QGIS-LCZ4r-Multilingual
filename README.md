@@ -18,10 +18,12 @@ Users can [download the LCZ4r-QGIS plugin in their preferred language](https://b
 
 ### AI-Only Translation
 All functions and their corresponding documentation of the LCZ4r package were fully translated using AI (ChatGPT v4o), without human review.
+
 <img src="https://github.com/user-attachments/assets/2b2312d0-bb71-4c80-b6db-4048e315fbee" width="400" height="300">
 
 ### AI-Assisted, Human-Reviewed Translation
 Translations initially performed by AI and then reviewed and refined by  by human experts familiar with Climatology, LCZ and GIS.
+
 <img src="https://github.com/user-attachments/assets/ed21bd61-b2c5-4dbb-9601-6485292d7b4c" width="400" height="300">
 
 

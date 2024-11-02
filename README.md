@@ -5,7 +5,7 @@ A plugin repository that integrates the [LCZ4r package](https://github.com/ByMax
   [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
   <!-- badges: end -->
 
-<img width="1417" alt="logo_qgis" src="https://github.com/user-attachments/assets/68cdca10-c1d5-4755-8d73-351af809552a">
+<img width="1217" alt="logo_qgis" src="https://github.com/user-attachments/assets/68cdca10-c1d5-4755-8d73-351af809552a">
 
 The **LCZ4r-QGIS plugin** facilitates the integration of the [General Functions](https://bymaxanjos.github.io/LCZ4r/articles/Introd_genera_LCZ4r.html) and [Local Functions](https://bymaxanjos.github.io/LCZ4r/articles/Introd_local_LCZ4r.html) from LCZ4r package into QGIS, allowing users to analyze Local Climate Zones (LCZ) and urban heat islands directly within the QGIS environment.
 
@@ -17,16 +17,17 @@ For detailed installation instructions, please visit the [LCZ4r installation gui
 Users can [download the LCZ4r-QGIS plugin in their preferred language](https://bymaxanjos.github.io/LCZ4r/articles/multilingual_lcz4r_qgis.html). The translation processo envolves three levels:
 
 ### AI-Only Translation
-Automated translations generated using AI, without human review.
+All functions and their corresponding documentation of the LCZ4r package were fully translated using AI (ChatGPT v4o), without human review.
 <img src="https://github.com/user-attachments/assets/2b2312d0-bb71-4c80-b6db-4048e315fbee" width="400" height="300">
 
 ### AI-Assisted, Human-Reviewed Translation
-Translations initially performed by AI and then reviewed and refined by human translators to ensure accuracy.
+Translations initially performed by AI and then reviewed and refined by  by human experts familiar with Climatology, LCZ and GIS.
 <img src="https://github.com/user-attachments/assets/ed21bd61-b2c5-4dbb-9601-6485292d7b4c" width="400" height="300">
 
 
 ### Human Translation
-Manual translations completed by language experts to guarantee the highest quality and cultural relevance.
+All functions and their corresponding documentation of the LCZ4r package were translated manually by experts familiar with Climatology, LCZ and GIS.
+
 <img src="https://github.com/user-attachments/assets/b30e9a14-0730-403d-8cd5-19ab70baa3ec" width="400" height="300">
 
 

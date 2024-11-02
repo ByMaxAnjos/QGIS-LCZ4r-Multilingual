@@ -18,16 +18,16 @@ Users can [download the LCZ4r-QGIS plugin in their preferred language](https://b
 
 ### AI-Only Translation
 Automated translations generated using AI, without human review.
-![AI_only](https://github.com/user-attachments/assets/2b2312d0-bb71-4c80-b6db-4048e315fbee)
+<img src="https://github.com/user-attachments/assets/2b2312d0-bb71-4c80-b6db-4048e315fbee" width="200" height="100">
 
 ### AI-Assisted, Human-Reviewed Translation
 Translations initially performed by AI and then reviewed and refined by human translators to ensure accuracy.
-![AI_human](https://github.com/user-attachments/assets/ed21bd61-b2c5-4dbb-9601-6485292d7b4c)
+<img src="https://github.com/user-attachments/assets/ed21bd61-b2c5-4dbb-9601-6485292d7b4c" width="200" height="100">
 
 
 ### Human Translation
 Manual translations completed by language experts to guarantee the highest quality and cultural relevance.
-![Human](https://github.com/user-attachments/assets/b30e9a14-0730-403d-8cd5-19ab70baa3ec)
+<img src="https://github.com/user-attachments/assets/b30e9a14-0730-403d-8cd5-19ab70baa3ec" width="200" height="100">
 
 
 ## Key Features

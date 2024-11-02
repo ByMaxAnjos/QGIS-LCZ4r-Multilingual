@@ -5,6 +5,8 @@ A plugin repository that integrates the [LCZ4r package](https://github.com/ByMax
   [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
   <!-- badges: end -->
 
+<img width="1417" alt="logo_qgis" src="https://github.com/user-attachments/assets/68cdca10-c1d5-4755-8d73-351af809552a">
+
 The **LCZ4r-QGIS plugin** facilitates the integration of the [General Functions](https://bymaxanjos.github.io/LCZ4r/articles/Introd_genera_LCZ4r.html) and [Local Functions](https://bymaxanjos.github.io/LCZ4r/articles/Introd_local_LCZ4r.html) from LCZ4r package into QGIS, allowing users to analyze Local Climate Zones (LCZ) and urban heat islands directly within the QGIS environment.
 
 ## 🗃️ Instalation 
@@ -16,14 +18,16 @@ Users can [download the LCZ4r-QGIS plugin in their preferred language](https://b
 
 ### AI-Only Translation
 Automated translations generated using AI, without human review.
-
+![AI_only](https://github.com/user-attachments/assets/2b2312d0-bb71-4c80-b6db-4048e315fbee)
 
 ### AI-Assisted, Human-Reviewed Translation
 Translations initially performed by AI and then reviewed and refined by human translators to ensure accuracy.
+![AI_human](https://github.com/user-attachments/assets/ed21bd61-b2c5-4dbb-9601-6485292d7b4c)
 
 
 ### Human Translation
 Manual translations completed by language experts to guarantee the highest quality and cultural relevance.
+![Human](https://github.com/user-attachments/assets/b30e9a14-0730-403d-8cd5-19ab70baa3ec)
 
 
 ## Key Features

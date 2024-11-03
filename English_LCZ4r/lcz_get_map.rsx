@@ -9,7 +9,6 @@
 if(!require(LCZ4r)) remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
 if(!require(LCZ4r)) install.packages("data.table")
 
-
 library(LCZ4r)
 library(terra)
 library(sf)

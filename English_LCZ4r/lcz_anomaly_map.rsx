@@ -17,7 +17,6 @@
 ##LCZ_interpolation=boolean TRUE
 ##Output=output raster
 
-if(!require(LCZ4r)) remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
 if(!require(data.table)) install.packages("data.table")
 if(!require(interp)) install.packages("interp", type = "binary")
 

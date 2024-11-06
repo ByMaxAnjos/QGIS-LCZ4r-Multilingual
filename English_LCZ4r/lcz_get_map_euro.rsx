@@ -6,8 +6,11 @@
 ##ROI=optional vector
 ##Output=output raster
 
-if(!require(LCZ4r)) remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
-if(!require(LCZ4r)) install.packages("data.table")
+if (!requireNamespace("remotes", quietly = TRUE)) {
+install.packages("remotes") # Install 'remotes' if not already installed
+}
+remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
+if(!require(data.table)) install.packages("data.table")
 
 library(LCZ4r)
 library(terra)

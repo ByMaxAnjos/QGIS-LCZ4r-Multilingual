@@ -14,7 +14,7 @@ The **LCZ4r-QGIS plugin** facilitates the integration of the [General Functions]
 For detailed installation instructions, please visit the [LCZ4r installation guide.](https://bymaxanjos.github.io/LCZ4r/articles/instalation_lcz4r_qgis.html)
 
 ## Translation plugin process
-Users can [download the LCZ4r-QGIS plugin in their preferred language](https://bymaxanjos.github.io/LCZ4r/articles/multilingual_lcz4r_qgis.html). The translation processo envolves three levels:
+Users can [download the LCZ4r-QGIS plugin in their preferred language](https://bymaxanjos.github.io/LCZ4r/articles/Introd_QGIS_LCZ4r.html). The translation process evolves three levels:
 
 ### AI-Only Translation
 All functions and their corresponding documentation of the LCZ4r package were fully translated using AI (ChatGPT v4o), without human review.

@@ -1,11 +1,10 @@
-##LCZ4r Local functions=group
+##LCZ4r Local Functions=group
 ##Calculate Urban Heat Island intensity=name
-##dont_load_any_packages
 ##pass_filenames
 ##LCZ_map=raster
-##Data_input=File
-##Variable=string airT
-##Station_id=string station
+###QgsProcessingParameterFeatureSource|INPUT|Data_input|5
+###QgsProcessingParameterField|FIELDS|Variable|Table|INPUT|-1|False|False
+###QgsProcessingParameterField|FIELDS2|Station_id|Table|INPUT|-1|False|False
 ##Date_start=optional datetime 
 ##Date_end=optional datetime
 ##Time_frequency=string hour
@@ -36,7 +35,7 @@ library(terra)
 library(tidyr)
 
 # Generate and plot or data.frame ----
-my_table <- data.table::fread(Data_input)
+my_table <- data.table::setDT(INPUT)
 LCZ_map <- terra::rast(LCZ_map)
 LCZ_map <-terra::project(LCZ_map, "+proj=longlat +datum=WGS84 +no_defs")
 
@@ -57,7 +56,7 @@ if ("daylight-year" %in% Split_data_by) {
 }
 
 if (Save_as_plot == TRUE) {
-        plot_uhi <- lcz_uhi_intensity(LCZ_map, data_frame = my_table, var = Variable, station_id = Station_id,
+        plot_uhi <- lcz_uhi_intensity(LCZ_map, data_frame = my_table, var = FIELDS, station_id = FIELDS2,
                         start = formatted_start, end = formatted_end,
                         time.freq = Time_frequency, 
                         by = Split_data_by,
@@ -70,7 +69,7 @@ if (Save_as_plot == TRUE) {
                         title = Title_plot, caption = Caption, xlab = xlab, ylab = ylab, ylab2 = ylab2)
         ggsave(Output, plot_uhi, height = Height, width = Width, dpi = dpi)
     } else {
-        tbl_uhi <- lcz_uhi_intensity(LCZ_map, data_frame = my_table, var = Variable, station_id = Station_id,
+        tbl_uhi <- lcz_uhi_intensity(LCZ_map, data_frame = my_table, var = FIELDS, station_id = FIELDS2,
                         start = formatted_start, end = formatted_end,
                         time.freq = Time_frequency, 
                         by = Split_data_by,
@@ -83,15 +82,15 @@ if (Save_as_plot == TRUE) {
     }
 
 #' LCZ_map: A <b>SpatRaster</b> from <em>Download LCZ map* functions</em>
-#' Data_input: A data frame (.csv) containing data on air temperature (or any other environmental variable) structured as follows:</p><p>
+#' INPUT: A data frame (.csv) containing data on air temperature (or any other environmental variable) structured as follows:</p><p>
 #'      :1. <b>date</b>: This column should contain date-time information, whose column MUST be named as <code style='background-color: lightblue;'>date</code>;</p><p>
 #'      :2. <b>Station</b>: Designate a column for meteorological station identifiers;</p><p>
 #'      :3. <b>Variable</b>: At least one column representing air temperature variable;</p><p>
 #'      :4. <b>Latitude and Longitude </b>: Two columns are required to specify the geographical coordinates.</p><p>
 #'      :It’s important to note that the users should standardize the date-time format to R’s conventions, such as <b style='text-decoration: underline;'>2023-03-13 11:00:00</b> or <b style='text-decoration: underline;'>2023-03-13</b>. It also includes: e.g. “1/2/1999” or in format i.e. “YYYY-mm-dd”, “1999-02-01”.</p><p>
 #'      :For more details, see: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_local_LCZ4r.html#data-input-requirements'>sample data</a> 
-#' Variable: The name of the variable in the data frame representing the air temperature column ("airT", "RH", "precip").
-#' Station_id: The name of the variable in the data frame representing the station IDs column ("station", "site", "id").
+#' FIELDS: The name of the variable in the data frame representing the air temperature column ("airT", "RH", "precip").
+#' FIELDS2: The name of the variable in the data frame representing the station IDs column ("station", "site", "id").
 #' Date_start: A start date in the format "01/09/1986 00:00". Please do not change the time to anything other than "00:00".
 #' Date_end: An end date, formatted similarly to Date_start.
 #' Time_frequency:An hour or hours to select from 0-23 e.g. hour = 0:12 to select hours 0 to 12 inclusive. You also can use the following: "c(1, 6, 18, 21)".   

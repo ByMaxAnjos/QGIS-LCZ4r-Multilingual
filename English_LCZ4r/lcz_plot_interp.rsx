@@ -1,30 +1,38 @@
-##LCZ4r Local functions=group
+##LCZ4r Local Functions=group
 ##Visualize interpolated map=name
 ##dont_load_any_packages
 ##pass_filenames
-##Raster_interpolated=raster
-##Title_plot=string LCZ interpolation
-##Subtitle=string My city
-##Legend=string AirT[ºC]
-##Caption=string Source:LCZ4r, 2024.
-##Height=number 7
-##Width=number 10
-##dpi=number 300
-##Palette_color=enum literal muted;viridi;arid;atlas;bl_yl_rd;deep;gn_yl;high_relieg;pi_y_g;purple;soft muted
-##Number_of_columns=number 
-##Number_of_rows=number 
-##Output=Output File png 
+##QgsProcessingParameterRasterLayer|Raster_interpolated|Enter interpolated map|None
+##QgsProcessingParameterEnum|Palette_color|Palette color|muted;viridi;arid;atlas;bl_yl_rd;deep;gn_yl;high_relieg;pi_y_g;purple;soft|-1|0|False
+##QgsProcessingParameterString|Title|Title|LCZ interpolation|optional|true
+##QgsProcessingParameterString|Subtitle|Subtitle|My city|optional|true
+##QgsProcessingParameterString|Caption|Caption|Source: LCZ4r, 2024.|optional|true
+##QgsProcessingParameterNumber|Height|Height plot|QgsProcessingParameterNumber.Integer|7
+##QgsProcessingParameterNumber|Width|Width plot|QgsProcessingParameterNumber.Integer|10
+##QgsProcessingParameterNumber|dpi|dpi plot resolution|QgsProcessingParameterNumber.Integer|300
+##QgsProcessingParameterNumber|Number_of_columns|Number of columns|QgsProcessingParameterNumber.Integer|1
+##QgsProcessingParameterNumber|Number_of_rows|Number of rows|QgsProcessingParameterNumber.Integer|1
+##QgsProcessingParameterFileDestination|Output|Result|PNG Files (*.png)
 
 #Load pacakges
 library(LCZ4r)
 library(ggplot2)
+
+#Check color type
+colors <- c("muted", "viridi", "arid", "atlas", "bl_yl_rd", "gn_yl", "high_relieg", "pi_y_g", "purple", "soft")
+if (!is.null(Palette_color) && Palette_color >= 0 && Palette_color < length(colors)) {
+  result_colors <- colors[Palette_color + 1]  # Add 1 to align with R's 1-based indexing
+} else {
+  result_colors <- NULL  # Handle invalid or missing selection
+}
+
 
 plot_map <- lcz_plot_interp(Raster_interpolated, 
                 title = Title_plot, 
                 subtitle = Subtitle,
                 caption = Caption,
                 fill = Legend,
-                palette=Palette_color,
+                palette=result_colors,
                 ncol=Number_of_columns,
                 nrow=Number_of_rows
                 )

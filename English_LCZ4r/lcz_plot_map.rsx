@@ -1,17 +1,34 @@
-##LCZ4r General functions=group
-##Visualize LCZ map=display_name
+##LCZ4r General Functions=group
+##Visualize LCZ Map=display_name
 ##dont_load_any_packages
 ##pass_filenames
-##LCZ_map=raster
-##Title=string Local Climate Zones
-##Subtitle=string My City
-##Caption=string Source: LCZ4r, 2024.
-##Show_LCZ_legend=boolean TRUE
-##Height=number 7
-##Width=number 10
-##dpi=number 300
-##inclusive=boolean FALSE
-##Output=output File png
+
+# ------------------------------
+# **1. Input Data**
+# ------------------------------
+##QgsProcessingParameterRasterLayer|LCZ_map|Enter LCZ map|None
+
+# ------------------------------
+# **2. Plot Labels and Titles**
+# ------------------------------
+##QgsProcessingParameterString|Title|Title|Local Climate Zones|optional|true
+##QgsProcessingParameterString|Subtitle|Subtitle|My City|optional|true
+##QgsProcessingParameterString|Caption|Caption|Source: LCZ4r, 2024.|optional|true
+##QgsProcessingParameterBoolean|Show_LCZ_legend|Show legend|True
+
+# ------------------------------
+# **3. Plot Dimensions**
+# ------------------------------
+##QgsProcessingParameterNumber|Height|Height plot|QgsProcessingParameterNumber.Integer|7
+##QgsProcessingParameterNumber|Width|Width plot|QgsProcessingParameterNumber.Integer|10
+##QgsProcessingParameterNumber|dpi|dpi plot resolution|QgsProcessingParameterNumber.Integer|300
+##QgsProcessingParameterBoolean|inclusive|Inclusive color|False
+
+# ------------------------------
+# **4. Output**
+# ------------------------------
+##QgsProcessingParameterFileDestination|Output|Result|PNG Files (*.png)
+
 
 library(LCZ4r)
 library(ggplot2)

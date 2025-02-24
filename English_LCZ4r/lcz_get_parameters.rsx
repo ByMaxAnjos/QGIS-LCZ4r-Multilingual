@@ -1,34 +1,78 @@
-##LCZ4r General functions=group
-##Retrieve LCZ parameters=display_name
+##LCZ4r General Functions=group
+##Retrieve LCZ Parameters=display_name
 ##dont_load_any_packages
 ##pass_filenames
-##LCZ_map=raster
-##iStack=boolean TRUE
-##Select_parameter=optional enum literal multiple SVF1;SVF2;SVF3;AR1;AR2;AR3;BSF1;BSF2;BSF3;ISF1;ISF2;ISF3;PSF1;PSF2;PSF3;TSF1;TSF2;TSF3;HRE1;HRE2;HRE3;TRC1;TRC2;TRC3;SAD1;SAD2;SAD3;SAL1;SAL2;SAL3;AH1;AH2;AH3;z0
-##Output_raster=output raster
 
+# ------------------------------
+# **1. Input Data**
+# ------------------------------
+##QgsProcessingParameterRasterLayer|LCZ_map|Enter LCZ map|None
+##QgsProcessingParameterBoolean|iStack|Save all parameters as single one|True
+
+# ------------------------------
+# **2. Select Parameters**
+# ------------------------------
+##QgsProcessingParameterEnum|Select_parameter|Select paramater|SVFmean;SVFmax;SVFmin;z0;ARmean;ARmax;ARmin;BSFmean;BSFmax;BSFmin;ISFmean;ISFmax;ISFmin;PSFmean;PSFmax;PSFmin;TSFmean;TSFmax;TSFmin;HREmean;HREmax;HREmin;TRCmean;TRCmax;TRCmin;SADmean;SADmax;SADmin;SALmean;SALmax;SALmin;AHmean;AHmax;AHmin|-1|None|True
+
+# ------------------------------
+# **4. Output**
+# ------------------------------
+##QgsProcessingParameterRasterDestination|Output_raster|Result
+
+
+if (!requireNamespace("remotes", quietly = TRUE)) {install.packages("remotes")}
+if(!require(LCZ4r)) remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
 
 library(LCZ4r)
 library(terra)
 
-# Retrieve the LCZ parameters based on user input
-if (iStack) {
-  Output_raster <- lcz_get_parameters(LCZ_map, iselect = " ", istack = iStack)
+
+# Define the mapping of indices to parameters
+parameters <- c("SVFmean", "SVFmax", "SVFmin", 
+                "ARmean", "ARmax", "ARmin", 
+                "BSFmean", "BSFmax", "BSFmin", 
+                "ISFmean", "ISFmax", "ISFmin", 
+                "PSFmean", "PSFmax", "PSFmin", 
+                "TSFmean", "TSFmax", "TSFmin", 
+                "HREmean", "HREmax", "HREmin", 
+                "TRCmean", "TRCmax", "TRCmin", 
+                "SADmean", "SADmax", "SADmin", 
+                "SALmean", "SALmax", "SALmin", 
+                "AHmean", "AHmax", "AHmin", 
+                "z0")
+
+# Use the selected parameter index to retrieve the corresponding value
+# Adjust for zero-based indexing
+if (!is.null(Select_parameter) && Select_parameter >= 0 && Select_parameter < length(parameters)) {
+  result_par <- parameters[Select_parameter + 1]  # Add 1 to align with R's 1-based indexing
 } else {
- Output_raster <- lcz_get_parameters(LCZ_map, iselect = Select_parameter, istack = iStack)
+  result_par <- NULL  # Handle invalid or missing selection
 }
 
+# Retrieve the LCZ parameters based on user input
+if (iStack==TRUE) {
+  Output_raster <- lcz_get_parameters(LCZ_map, iselect = " ", istack = iStack)
+} else {
+ Output_raster <- lcz_get_parameters(LCZ_map, iselect = result_par,istack = FALSE)
+} 
+
 #' LCZ_map: A SpatRaster object containing the LCZ map derived from Download LCZ map* functions
-#' iStack: If TRUE, returns all parameters as a raster stack. If FALSE, returns a list of individual parameter rasters using the Select parameters
-#' Select_parameter: Optionally,  specify one or more parameter names to retrieve specific parameters:</p><p>
-#'             : SVF1 (Minimum Sky View Factor), SVF2 (Maximum Sky View Factor), SVF3 (Mean Sky View Factor)</p><p> AR1 (Minimum Aspect Ratio), AR2 (Maximum Aspect Ratio), AR3 (Mean Aspect Ratio)</p><p>
-#'             : BSF1 (Minimum Building Surface Fraction), BSF2 (Maximum Building Surface Fraction), BSF3 (Mean Building Surface Fraction)</p><p> ISF1 (Minimum Impervious Surface Fraction), ISF2 (Maximum Impervious Surface Fraction), ISF3 (Mean Impervious Surface Fraction)</p><p>
-#'             : PSF1 (Minimum Vegetation Surface Fraction), PSF2 (Maximum Vegetation Surface Fraction), PSF3 (Mean Vegetation Surface Fraction)</p><p> TSF1 (Minimum Tree Surface Fraction), TSF2 (Maximum Tree Surface Fraction), TSF3 (Mean Tree Surface Fraction)</p><p>
-#'             : HRE1 (Minimum Height Roughness Elements), HRE2 (Maximum Height Roughness Elements), HRE3 (Mean Height Roughness Elements)</p><p> TRC1 (Minimum Terrain Roughness class), TRC2 (Maximum Terrain Roughness class), TRC3 (Mean Terrain Roughness class)</p><p>
-#'             : SAD1 (Minimum Surface Admittance), SAD2 (Maximum Surface Admittance), SAD3 (Mean Surface Admittance)</p><p> SAL1 (Minimum Surface Albedo), SAL2 (Maximum Surface Albedo), SAL3 (Mean Surface Albedo)</p><p> 
-#'             : AH1 (Minimum Anthropogenic Heat Outupt), AH2 (Maximum Anthropogenic Heat Outupt), AH3 (Mean Anthropogenic Heat Outupt)</p><p> z0 (Roughness Lenght class)</p><p>
+#' iStack: Save multiple raster parameters (or bands) as a single one.
+#' Select_parameter: Optionally,  specify one or more parameter names to retrieve specific mean, maximum and minumum parameter values:</p><p>
+#'             : <b>SVF</b>: Sky View Factor [0-1]. </p><p>
+#'             : <b>z0</b>: Roughness Lenght class [meters]. </p><p>
+#'             : <b>AR</b>: Aspect Ratio [0-3]. </p><p> 
+#'             : <b>BSF</b>: Building Surface Fraction [%]. </p><p> 
+#'             : <b>ISF</b>: Impervious Surface Fraction [%]. </p><p>  
+#'             : <b>PSF</b>: Pervious Surface Fraction [%]. </p><p>  
+#'             : <b>TSF</b>: Tree Surface Fraction [%]. </p><p>  
+#'             : <b>HRE</b>: Height Roughness Elements [meters]. </p><p>  
+#'             : <b>TRC</b>: Terrain Roughness class [meters]. </p><p>
+#'             : <b>SAD</b>: Surface Admittance [J m-2 s1/2 K-1]. </p><p> 
+#'             : <b>SAL</b>: Surface Albedo [0 - 0.5]. </p><p> 
+#'             : <b>AH</b>: Anthropogenic Heat Outupt [W m-2]. </p><p> 
 #' Output_raster: If TRUE, returns all parameters as a raster stack (100 m resolution)
-#' ALG_DESC: This function extracts 34 LCZ physical parameters based on the classification scheme developed by Stewart and Oke (2012). 
+#' ALG_DESC: This function extracts 12 LCZ physical parameters based on the classification scheme developed by Stewart and Oke (2012). 
 #'         :For more information, visit: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_genera_LCZ4r.html#retrieve-and-visualize-lcz-parameters'>LCZ General Functions (Retrieve and visualize LCZ parameters)</a> 
 #' ALG_CREATOR:<a href='https://github.com/ByMaxAnjos'>Max Anjos</a> 
 #' ALG_HELP_CREATOR:<a href='https://bymaxanjos.github.io/LCZ4r/index.html'>LCZ4r project</a>  

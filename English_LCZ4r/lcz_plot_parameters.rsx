@@ -16,6 +16,7 @@
 # ------------------------------
 # **3. Plot Labels and Titles**
 # ------------------------------
+##QgsProcessingParameterBoolean|display|Visualize plot(.html)|True
 ##QgsProcessingParameterString|Subtitle|Subtitle|My City|optional|true
 ##QgsProcessingParameterString|Caption|Caption|Source: LCZ4r, 2024.|optional|true
 ##QgsProcessingParameterNumber|Height|Height plot|QgsProcessingParameterNumber.Integer|7
@@ -28,9 +29,13 @@
 ##QgsProcessingParameterFileDestination|Output|Result|PNG Files (*.png)
 
 
+if(!require(ggiraph)) install.packages("ggiraph", type = "binary")
+if(!require(htmlwidgets)) install.packages("htmlwidgets", type = "binary")
+
 library(LCZ4r)
 library(ggplot2)
-
+library(ggiraph)
+library(htmlwidgets)
 
 # Define the mapping of indices to parameters
 parameters <- c("SVFmean", "SVFmax", "SVFmin", 
@@ -56,9 +61,43 @@ if (!is.null(Select_parameter) && Select_parameter >= 0 && Select_parameter < le
 
 
 plot_lcz=lcz_plot_parameters(LCZ_map_parameter, iselect = result_par, subtitle=Subtitle, caption = Caption)
+
+if (display) {
+        # Save the interactive plot as an HTML file
+html_file <- file.path(tempdir(), "plot.html")
+ggiraph::girafe(
+  ggobj = plot_lcz,
+  width_svg = 14,
+  height_svg = 9,
+  options = list(
+    opts_sizing(rescale = TRUE, width = 1),
+       opts_tooltip(css = "background-color: white; color: black; 
+                     font-size: 14px; padding: 10px; border-radius: 5px;"),
+    opts_hover_inv(css = "opacity:0.5;"),
+    opts_hover(css = "cursor:pointer; opacity: 0.8;"),
+    opts_zoom(min = 0.5, max = 2) 
+  )
+) %>%
+  htmlwidgets::saveWidget(
+  file = html_file,
+  selfcontained = FALSE, # Ensures all dependencies are embedded
+  libdir = NULL, # Keep dependencies inline
+  title = "LCZ4r Visualization"
+)
+
+# Add caption
+cat('<p style="text-align:right; font-size:16px;">',
+    'LCZ4r Project: <a href="https://bymaxanjos.github.io/LCZ4r/index.html" target="_blank">by Max Anjos</a>',
+    '</p>', sep = "\n", file = html_file, append = TRUE)
+
+# Open the HTML file in the default web browser
+utils::browseURL(html_file)
+    }
+
 ggsave(Output, plot_lcz, height = Height, width = Width, dpi=dpi)
 
 #' LCZ_map:The SpatRaster in a stack format from Retrieve LCZ parameter function.
+#' display: If TRUE, the plot will be displayed in your web browser as an HTML visualization.
 #' Select_parameter: Specify one single parameter name based on raster parameter map. 
 #' Select_parameter: Specify one single parameter name based on raster parameter map considering mean, maximum and minumum values:</p><p>
 #'             : <b>SVF</b>: Sky View Factor [0-1]. </p><p>

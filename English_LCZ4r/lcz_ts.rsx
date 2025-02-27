@@ -19,6 +19,7 @@
 # ------------------------------
 # **3. Data Processing Options**
 # ------------------------------
+##QgsProcessingParameterEnum|Select_extract_type|Select the extract method to use|simple;two.step;bilinear|-1|0|False
 ##QgsProcessingParameterEnum|Split_data_by|Split data by|year;season;seasonyear;month;monthyear;weekday;weekend;dst;hour;daylight;daylight-month;daylight-season;daylight-year|-1|None|True
 ##QgsProcessingParameterEnum|Impute_missing_values|Impute missing values|mean;median;knn;bag|-1|None|True
 
@@ -58,6 +59,13 @@ library(ggplot2)
 library(terra)
 library(lubridate)
 
+#Check extract method type
+select_extract <- c("simple", "two.step", "bilinear")
+if (!is.null(Select_extract_type) && Select_extract_type >= 0 && Select_extract_type < length(select_extract)) {
+  result_extract <- select_extract[Select_extract_type + 1]  # Add 1 to align with R's 1-based indexing
+} else {
+  result_extract <- NULL  
+}
 
 #Check plot type
 plots <- c("basic_line", "facet_line", "heatmap", "warming_stripes")
@@ -115,6 +123,7 @@ if (Save_as_plot == TRUE) {
         plot_ts <- lcz_ts(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
                           start = formatted_start, end = formatted_end,
                           time.freq = Time_frequency,
+                          extract.method = result_extract,
                           smooth=Smooth_trend_line,
                           by = result_by,
                           plot_type=result_plot,
@@ -127,6 +136,7 @@ if (Save_as_plot == TRUE) {
         tbl_ts <- lcz_ts(LCZ_map, data_frame = my_table, var = variable, station_id = station_id,
                          start = formatted_start, end = formatted_end,
                          time.freq = Time_frequency,
+                         extract.method = result_extract,
                          by = result_by,
                          iplot = FALSE)
         write.csv(tbl_ts, Output, row.names = FALSE)
@@ -134,19 +144,23 @@ if (Save_as_plot == TRUE) {
 
 #' LCZ_map: A <b>SpatRaster</b> object derived from the <em>Download LCZ map* functions</em>
 #' INPUT: A data frame (.csv) containing environmental variable data structured as follows:</p><p>
-#'      :1. <b>date</b>: A column with date-time information. Ensure the column is named <code style='background-color: lightblue;'>date</code>.;</p><p>
-#'      :2. <b>Station</b>:  A column specifying meteorological station identifiers.;</p><p>
+#'      :1. <b>date</b>: A column with date-time information. Ensure the column is named <code style='background-color: lightblue;'>date|time|timestamp|datetime</code>;</p><p>
+#'      :2. <b>Station</b>:  A column specifying meteorological station identifiers;</p><p>
 #'      :3. <b>Variable</b>: A column representing the environmental variable (e.g., air temperature, relative humidity, precipitation);</p><p>
-#'      :4. <b>Latitude and Longitude </b>: Two columns providing the geographical coordinates of data points.</p><p>
+#'      :4. <b>Latitude and Longitude </b>: Two columns providing the geographical coordinates of data points. Ensure the column is named <code style='background-color: lightblue;'>lat|latitude and lon|long|longitude </code>.</p><p>
 #'      :Formatting Note: Users must standardize the date-time format to R conventions, such as <b style='text-decoration: underline;'>2023-03-13 11:00:00</b> or <b style='text-decoration: underline;'>2023-03-13</b>. It also includes: e.g. “1/2/1999” or in format i.e. “YYYY-mm-dd”, “1999-02-01”.</p><p>
 #'      :For more information, see the: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_local_LCZ4r.html#data-input-requirements'>sample data</a> 
 #' variable: The name of the target variable column in the data frame (e.g., airT, RH, precip).
 #' station_id: The column in the data frame identifying meteorological stations (e.g., station, site, id).
-#' Date_start: Specify the start dates for the analysis. The format should be <b>DD/MM/YYYY HH:MM</b>.
+#' Date_start: Specify the start dates for the analysis. The format should be <b>DD/MM/YYYY</b>.
 #' Date_end: The end date, formatted similarly to start date.
 #' Time_frequency: Defines the time resolution for averageing. Default is “hour”. Supported resolutions include: “day”, “week”, “month” or “year”. Custom options such as "3 day",  "2 week" and so on. 
+#' Select_extract_type: character string specifying the method used to assign the LCZ class to each station point. The default is "simple". Available methods are:</p><p>
+#'      :1. <b>simple</b>: Assigns the LCZ class based on the value of the raster cell in which the point falls. It often is used in low-density observational network. </p><p>
+#'      :2. <b>two.step</b>: Assigns LCZs to stations while filtering out those located in heterogeneous LCZ areas. This method requires that at least 80% of the pixels within a 5 × 5 kernel match the LCZ of the center pixel (Daniel et al., 2017). Note that this method reduces the number of stations. It often is used in ultra and high-density observational network, especially in LCZ classes with multiple stations.</p><p>
+#'      :3. <b>bilinear</b>:  Interpolates the LCZ class values from the four nearest raster cells surrounding the point. </p><p>
 #' Split_data_by:Determines how the time series is segmented. Options include: year, month, daylight, dst, wd (wind direction) and so on. For example, daylight split up data into daytime and nighttime periods</p><p> 
-#'              :You can also use the following combination: daylight-month, daylight-season or daylight-year (make sure at least Time_resolution as “hour”).</p><p>
+#'              :You can also use the following combination: daylight-month, daylight-season or daylight-year (make sure at least time frequency as “hour”).</p><p>
 #'              :For more details, visit: <a href='https://bookdown.org/david_carslaw/openair/sections/intro/openair-package.html#the-type-option'>argument type in openair R package</a>.
 #' Smooth_trend_line: Optionally, enable a smoothed trend line using a Generalized Additive Model (GAM). Defaults to FALSE.
 #' Select_plot_type: Choose the visualization type. Options include:</p><p>

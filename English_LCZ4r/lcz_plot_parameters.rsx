@@ -28,12 +28,15 @@
 # ------------------------------
 ##QgsProcessingParameterFileDestination|Output|Result|PNG Files (*.png)
 
-
+if(!require(SparseM)) install.packages("SparseM", type = "binary")
 if(!require(ggiraph)) install.packages("ggiraph", type = "binary")
-if(!require(htmlwidgets)) install.packages("htmlwidgets", type = "binary")
+if(!require(htmlwidgets)) install.packages("htmlwidgets")
+
 
 library(LCZ4r)
 library(ggplot2)
+library(terra)
+library(SparseM)
 library(ggiraph)
 library(htmlwidgets)
 

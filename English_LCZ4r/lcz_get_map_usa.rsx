@@ -20,17 +20,20 @@
 
 
 if (!requireNamespace("remotes", quietly = TRUE)) {install.packages("remotes")}
-if(!require(LCZ4r)) remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
+if(!require(LCZ4r)) remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never", dependencies = TRUE)
+
+if(!require(SparseM)) install.packages("SparseM", type = "binary")
+if(!require(ggiraph)) install.packages("ggiraph", type = "binary")
+if(!require(htmlwidgets)) install.packages("htmlwidgets")
 
 library(LCZ4r)
-library(terra)
 library(sf)
-
+library(terra)
 
 if(City != "") {
-Output=lcz_get_map_usa(city=City)
+Output=LCZ4r::lcz_get_map_usa(city=City)
 } else { 
-Output=lcz_get_map_usa(city=NULL, roi = ROI)
+Output=LCZ4r::lcz_get_map_usa(city=NULL, roi = ROI)
 }
 
 #' City: A character string specifying the name of your target Continental United States city or area based on the <a href='https://nominatim.openstreetmap.org/ui/search.html'>OpenStreetMap project.</a></p><p> Enter the city name [opitonal] = <b>Chicago</b>  

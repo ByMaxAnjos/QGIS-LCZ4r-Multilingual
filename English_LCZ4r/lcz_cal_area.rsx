@@ -30,15 +30,8 @@
 ##QgsProcessingParameterBoolean|Save_as_plot|Save as plot|True
 ##QgsProcessingParameterFileDestination|Output|Result|PNG Files (*.png)
 
-if(!require(SparseM)) install.packages("SparseM", type = "binary")
-if(!require(ggiraph)) install.packages("ggiraph", type = "binary")
-if(!require(htmlwidgets)) install.packages("htmlwidgets")
-
-
 library(LCZ4r)
-library(ggplot2)
 library(terra)
-library(SparseM)
 library(ggiraph)
 library(htmlwidgets)
 
@@ -56,7 +49,7 @@ if (!is.null(Select_plot_type) && Select_plot_type >= 0 && Select_plot_type < le
 # Generate and plot LCZ data
 if (Save_as_plot) {
     # Calculate areas and create the plot
-    plot_lcz <- lcz_cal_area(
+    plot_lcz <- LCZ4r::lcz_cal_area(
         LCZ_map, 
         plot_type = result_plot,
         iplot = TRUE, 
@@ -71,12 +64,12 @@ if (Save_as_plot) {
     # Plot visualization
     if (display) {
         # Save the interactive plot as an HTML file
-html_file <- file.path(tempdir(), "plot.html")
-ggiraph::girafe(
-  ggobj = plot_lcz,
-  width_svg = 16,
-  height_svg = 9,
-  options = list(
+    html_file <- file.path(tempdir(), "LCZ4rPlot.html")
+    ggiraph::girafe(
+    ggobj = plot_lcz,
+    width_svg = 16,
+    height_svg = 9,
+    options = list(
     opts_sizing(rescale = TRUE, width = 1),
     opts_tooltip(css = "background-color:white; color:black; font-size:120%; padding:10px;"),
     opts_hover_inv(css = "opacity:0.5;"),
@@ -91,21 +84,21 @@ ggiraph::girafe(
   title = "LCZ4r Visualization"
 )
 
-# Add caption
-cat('<p style="text-align:right; font-size:16px;">',
+    # Add caption
+    cat('<p style="text-align:right; font-size:16px;">',
     'LCZ4r Project: <a href="https://bymaxanjos.github.io/LCZ4r/index.html" target="_blank">by Max Anjos</a>',
     '</p>', sep = "\n", file = html_file, append = TRUE)
 
-# Open the HTML file in the default web browser
-utils::browseURL(html_file)
+    # Open the HTML file in the default web browser
+    utils::browseURL(html_file)
     }
 
     # Save static plot
-    ggsave(Output, plot = plot_lcz, height = Height, width = Width, dpi = dpi)
+    ggplot2::ggsave(Output, plot = plot_lcz, height = Height, width = Width, dpi = dpi)
     
 } else {
     # Calculate areas and save as a CSV
-    tbl_lcz <- lcz_cal_area(LCZ_map, iplot = FALSE)
+    tbl_lcz <- LCZ4r::lcz_cal_area(LCZ_map, iplot = FALSE)
     write.csv(tbl_lcz, Output, row.names = FALSE)
 }
 

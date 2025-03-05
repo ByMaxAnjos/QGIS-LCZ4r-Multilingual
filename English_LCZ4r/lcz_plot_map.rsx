@@ -30,20 +30,17 @@
 # ------------------------------
 ##QgsProcessingParameterFileDestination|Output|Result|PNG Files (*.png)
 
-if(!require(SparseM)) install.packages("SparseM", type = "binary")
-if(!require(ggiraph)) install.packages("ggiraph", type = "binary")
-if(!require(htmlwidgets)) install.packages("htmlwidgets")
-
 
 library(LCZ4r)
 library(ggplot2)
 library(terra)
-library(SparseM)
 library(ggiraph)
 library(htmlwidgets)
 
+LCZ_map <- terra::rast(LCZ_map)
+
 # Generate and plot the LCZ map
-plot_lcz<-lcz_plot_map(LCZ_map, 
+plot_lcz<-LCZ4r::lcz_plot_map(LCZ_map, 
             show_legend=Show_LCZ_legend,
             title = Title, 
             subtitle=Subtitle, 
@@ -52,7 +49,7 @@ plot_lcz<-lcz_plot_map(LCZ_map,
  # Plot visualization
 if (display) {
         # Save the interactive plot as an HTML file
-html_file <- file.path(tempdir(), "plot.html")
+html_file <- file.path(tempdir(), "LCZ4rPlot.html")
 ggiraph::girafe(
   ggobj = plot_lcz,
   width_svg = 14,
@@ -81,7 +78,7 @@ cat('<p style="text-align:right; font-size:16px;">',
 # Open the HTML file in the default web browser
 utils::browseURL(html_file)
     }
-ggsave(Output, plot_lcz, height = Height, width = Width, dpi=dpi)
+ggplot2::ggsave(Output, plot_lcz, height = Height, width = Width, dpi=dpi)
 
 #' LCZ_map: A SpatRaster object containing the LCZ map derived from Obtain LCZ map* functions
 #' display: If TRUE, the plot will be displayed in your web browser as an HTML visualization.

@@ -19,10 +19,6 @@
 # ------------------------------
 ##QgsProcessingParameterRasterDestination|Output_raster|Result
 
-
-if (!requireNamespace("remotes", quietly = TRUE)) {install.packages("remotes")}
-if(!require(LCZ4r)) remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
-
 library(LCZ4r)
 library(terra)
 
@@ -51,9 +47,9 @@ if (!is.null(Select_parameter) && Select_parameter >= 0 && Select_parameter < le
 
 # Retrieve the LCZ parameters based on user input
 if (iStack==TRUE) {
-  Output_raster <- lcz_get_parameters(LCZ_map, iselect = " ", istack = iStack)
+  Output_raster <- LCZ4r::lcz_get_parameters(LCZ_map, iselect = " ", istack = iStack)
 } else {
- Output_raster <- lcz_get_parameters(LCZ_map, iselect = result_par,istack = FALSE)
+ Output_raster <- LCZ4r::lcz_get_parameters(LCZ_map, iselect = result_par,istack = FALSE)
 } 
 
 #' LCZ_map: A SpatRaster object containing the LCZ map derived from Download LCZ map* functions

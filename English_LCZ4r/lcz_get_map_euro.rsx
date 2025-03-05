@@ -15,20 +15,19 @@
 # ------------------------------
 # **3. Output**
 # ------------------------------
-##QgsProcessingParameterRasterDestination|Output|Result
+##QgsProcessingParameterRasterDestination|Output|Raster map
 
 if (!requireNamespace("remotes", quietly = TRUE)) {install.packages("remotes")}
-if(!require(LCZ4r)) remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
+if(!require(LCZ4r)) remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never", dependencies = TRUE)
 
 library(LCZ4r)
-library(terra)
 library(sf)
-
+library(terra)
 
 if(City != "") {
-Output=lcz_get_map_euro(city=City)
+Output=LCZ4r::lcz_get_map_euro(city=City)
 } else { 
-Output=lcz_get_map_euro(city=NULL, roi = ROI)
+Output=LCZ4r::lcz_get_map_euro(city=NULL, roi = ROI)
 }
 
 # Documentation

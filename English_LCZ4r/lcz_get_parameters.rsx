@@ -17,7 +17,7 @@
 # ------------------------------
 # **4. Output**
 # ------------------------------
-##QgsProcessingParameterRasterDestination|Output_raster|Result
+##QgsProcessingParameterRasterDestination|Output_raster|Output LCZ parameter
 
 library(LCZ4r)
 library(terra)

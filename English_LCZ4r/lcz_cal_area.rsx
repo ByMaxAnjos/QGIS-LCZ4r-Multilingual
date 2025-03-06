@@ -1,6 +1,7 @@
 ##LCZ4r General Functions=group
 ##Calculate LCZ Areas=display_name
 ##pass_filenames
+
 # ------------------------------
 # **1. Input Data**
 # ------------------------------
@@ -28,7 +29,7 @@
 # **4. Output**
 # ------------------------------
 ##QgsProcessingParameterBoolean|Save_as_plot|Save as plot|True
-##QgsProcessingParameterFileDestination|Output|Result|PNG Files (*.png)
+##QgsProcessingParameterFileDestination|Output|Output LCZ area|PNG Files (*.png)
 
 library(LCZ4r)
 library(terra)

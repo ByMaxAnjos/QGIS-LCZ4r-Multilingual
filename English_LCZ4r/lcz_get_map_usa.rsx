@@ -6,7 +6,7 @@
 # ------------------------------
 ##dont_load_any_packages
 ##pass_filenames
-
+##ByMaxAnjos/LCZ4r=github_install
 # ------------------------------
 # **2. Input Parameters**
 # ------------------------------
@@ -18,9 +18,6 @@
 # ------------------------------
 ##QgsProcessingParameterRasterDestination|Output|Output LCZ Map
 
-
-if (!requireNamespace("remotes", quietly = TRUE)) {install.packages("remotes")}
-if(!require(LCZ4r)) remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never", dependencies = TRUE)
 
 if(!require(SparseM)) install.packages("SparseM", type = "binary")
 if(!require(ggiraph)) install.packages("ggiraph", type = "binary")

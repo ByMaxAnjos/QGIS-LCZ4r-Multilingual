@@ -1,6 +1,5 @@
 ##LCZ4r Local Functions=group
 ##Mapping LCZ Air Temperature=name
-##dont_load_any_packages
 ##pass_filenames
 # ------------------------------
 # **1. Input Data Parameters**
@@ -102,7 +101,7 @@ if(Select_hour != "") {
     Select_hour <- as.numeric(Select_hour)  # Convert to numeric if not a range
     }
     if (LCZ_interpolation) {
-        Output=lcz_interp_map(LCZ_map, data_frame = INPUT, var = Variable, station_id = Station_id,
+        Output=lcz_interp_map(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
                           start = formatted_start, end = formatted_end, hour=Select_hour,
                           sp.res = Raster_resolution,
                           tp.res = Temporal_resolution,
@@ -113,7 +112,7 @@ if(Select_hour != "") {
                           LCZinterp = TRUE
                           )
     } else {
-         Output=lcz_interp_map(LCZ_map, data_frame = INPUT, var = Variable, station_id = Station_id,
+         Output=lcz_interp_map(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
                           start = formatted_start, end = formatted_end, hour=Select_hour,
                           sp.res = Raster_resolution,
                           tp.res = Temporal_resolution,
@@ -126,7 +125,7 @@ if(Select_hour != "") {
     }
 } else {
     if (LCZ_interpolation){
-          Output=lcz_interp_map(LCZ_map, data_frame = INPUT, var = Variable, station_id = Station_id,
+          Output=lcz_interp_map(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
                           start = formatted_start, end = formatted_end, hour=Select_hour,
                           sp.res = Raster_resolution,
                           tp.res = Temporal_resolution,
@@ -137,7 +136,7 @@ if(Select_hour != "") {
                           LCZinterp = TRUE
                           )
     } else {
-          Output=lcz_interp_map(LCZ_map, data_frame = INPUT, var = Variable, station_id = Station_id,
+          Output=lcz_interp_map(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
                           start = formatted_start, end = formatted_end, hour=Select_hour,
                           sp.res = Raster_resolution,
                           tp.res = Temporal_resolution,
@@ -158,8 +157,8 @@ if(Select_hour != "") {
 #'      :4. <b>Latitude and Longitude </b>: Two columns providing the geographical coordinates of data points. Ensure the column is named <code style='background-color: lightblue;'>lat|latitude and lon|long|longitude </code>.</p><p>
 #'      :Formatting Note: Users must standardize the date-time format to R conventions, such as <b style='text-decoration: underline;'>2023-03-13 11:00:00</b> or <b style='text-decoration: underline;'>2023-03-13</b>. It also includes: e.g. “1/2/1999” or in format i.e. “YYYY-mm-dd”, “1999-02-01”.</p><p>
 #'      :For more information, see the: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_local_LCZ4r.html#data-input-requirements'>sample data</a> 
-#' variable: The name of the target variable column in the data frame (e.g., airT, RH, precip).
-#' station_id: The column in the data frame identifying meteorological stations (e.g., station, site, id).
+#' Variable: The name of the target variable column in the data frame (e.g., airT, RH, precip).
+#' Station_id: The column in the data frame identifying meteorological stations (e.g., station, site, id).
 #' Date_start: Specify the start dates for the analysis. The format should be <b>DD/MM/YYYY</b>.
 #' Date_end: The end date, formatted similarly to start date.
 #' Select_hour: An hour or hours to select from 0-23 e.g. hour = 0:12 to select hours 0 to 12 inclusive. You also can use the following: "c(1, 6, 18, 21)".   

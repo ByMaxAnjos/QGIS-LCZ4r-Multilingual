@@ -29,7 +29,7 @@
 # **4. Output**
 # ------------------------------
 ##QgsProcessingParameterBoolean|Save_as_plot|Save as plot|True
-##QgsProcessingParameterFileDestination|Output|Output LCZ area|PNG Files (*.png)
+##QgsProcessingParameterFileDestination|Output|Save your image|PNG Files (*.png)
 
 library(LCZ4r)
 library(terra)

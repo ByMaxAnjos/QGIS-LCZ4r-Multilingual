@@ -26,7 +26,7 @@
 # ------------------------------
 # **2. Output**
 # ------------------------------
-##QgsProcessingParameterFileDestination|Output|Output LCZ parameter|PNG Files (*.png)
+##QgsProcessingParameterFileDestination|Output|Save your image|PNG Files (*.png)
 
 library(LCZ4r)
 library(ggplot2)

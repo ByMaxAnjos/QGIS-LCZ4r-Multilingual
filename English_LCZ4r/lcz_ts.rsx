@@ -1,5 +1,5 @@
 ##LCZ4r Local Functions=group
-##Analyze LCZ time series = name
+##Analyze LCZ Time Series = name
 
 # ------------------------------
 # **1. Input Data Parameters**
@@ -26,6 +26,7 @@
 # ------------------------------
 # **4. Plot Customization**
 # ------------------------------
+##QgsProcessingParameterBoolean|display|Visualize plot(.html)|True
 ##QgsProcessingParameterEnum|Select_plot_type|Select plot type|basic_line;facet_line;heatmap;warming_stripes|-1|0|False
 ##QgsProcessingParameterEnum|Palette_color|Choose palette color|VanGogh2;Archambault;Cassatt1;Cassatt2;Demuth;Derain;Egypt;Greek;Hiroshige;Hokusai2;Hokusai3;Ingres;Isfahan1;Isfahan2;Java;Johnson;Kandinsky;Morgenstern;OKeeffe2;Pillement;Tam;Troy;VanGogh3;Veronese|-1|0|False
 ##QgsProcessingParameterBoolean|Smooth_trend_line|Smooth trend line|False
@@ -50,14 +51,17 @@
 # ------------------------------
 # **7. Output**
 # ------------------------------
-##QgsProcessingParameterFileDestination|Output|Result|PNG Files (*.png)
+##QgsProcessingParameterFileDestination|Output|Save your image|PNG Files (*.png)
 
 if(!require(interp)) install.packages("interp", type = "binary")
 
 library(LCZ4r)
+library(sf)
 library(ggplot2)
 library(terra)
 library(lubridate)
+library(ggiraph)
+library(htmlwidgets)
 
 #Check extract method type
 select_extract <- c("simple", "two.step", "bilinear")
@@ -131,6 +135,38 @@ if (Save_as_plot == TRUE) {
                           legend_name=Legend_name,
                           palette = result_colors,
                           iplot = TRUE, title = Title, caption = Caption, xlab = xlab, ylab = ylab)
+# Plot visualization
+    if (display) {
+        # Save the interactive plot as an HTML file
+    html_file <- file.path(tempdir(), "LCZ4rPlot.html")
+    ggiraph::girafe(
+    ggobj = plot_ts,
+    width_svg = 16,
+    height_svg = 9,
+    options = list(
+    opts_sizing(rescale = TRUE, width = 1),
+    opts_tooltip(css = "background-color:white; color:black; font-size:120%; padding:10px;"),
+    opts_hover_inv(css = "opacity:0.5;"),
+    opts_hover(css = "cursor:pointer; opacity: 0.8;"),
+    opts_zoom(min = 0.5, max = 2)
+  )
+) %>%
+  htmlwidgets::saveWidget(
+  file = html_file,
+  selfcontained = FALSE, # Ensures all dependencies are embedded
+  libdir = NULL, # Keep dependencies inline
+  title = "LCZ4r Visualization"
+)
+
+    # Add caption
+    cat('<p style="text-align:right; font-size:16px;">',
+    'LCZ4r Project: <a href="https://bymaxanjos.github.io/LCZ4r/index.html" target="_blank">by Max Anjos</a>',
+    '</p>', sep = "\n", file = html_file, append = TRUE)
+
+    # Open the HTML file in the default web browser
+    utils::browseURL(html_file)
+    }
+
         ggsave(Output, plot_ts, height = Height, width = Width, dpi = dpi)
     } else {
         tbl_ts <- lcz_ts(LCZ_map, data_frame = my_table, var = variable, station_id = station_id,
@@ -163,6 +199,7 @@ if (Save_as_plot == TRUE) {
 #'              :You can also use the following combination: daylight-month, daylight-season or daylight-year (make sure at least time frequency as “hour”).</p><p>
 #'              :For more details, visit: <a href='https://bookdown.org/david_carslaw/openair/sections/intro/openair-package.html#the-type-option'>argument type in openair R package</a>.
 #' Smooth_trend_line: Optionally, enable a smoothed trend line using a Generalized Additive Model (GAM). Defaults to FALSE.
+#' display: If TRUE, the plot will be displayed in your web browser as an HTML visualization.
 #' Select_plot_type: Choose the visualization type. Options include:</p><p>
 #'      :1. <b>basic_line</b>: Standard line chart. </p><p>
 #'      :2. <b>facet_line</b>:  Line chart split into facets (LCZ or station).</p><p>
@@ -171,8 +208,7 @@ if (Save_as_plot == TRUE) {
 #' Impute_missing_values: Method to impute missing values (“mean”, “median”, “knn”, “bag”).
 #' Save_as_plot: Choose whether to save the output as a plot (TRUE) or as a table (FALSE). Remember to outputs (e.g., .jpeg for plot and .csv for table). 
 #' Palette_color: Define the color palette for plots. Explore additional palettes from the <a href='https://github.com/BlakeRMills/MetBrewer?tab=readme-ov-file#palettes'>MetBrewer R package</a>
-#' Output:If Save as plot is TRUE, specifies file extension: PNG (.png), JPG (.jpg .jpeg), TIF (.tif), PDF (*.pdf). Example: <b>/Users/myPC/Documents/lcz_ts.jpeg</b>;</p><p>
-#'       :if Save as plot is FALSE, specifies file extension: table (.csv). Example: <b>/Users/myPC/Documents/lcz_ts.csv</b>
+#' Output: Specifies file extension: PNG (.png), JPG (.jpg .jpeg), TIF (.tif), PDF (*.pdf). Example: <b>/Users/myPC/Documents/lcz_ts.jpeg</b></p><p>
 #' ALG_DESC: This function enables the analysis of air temperature or other environmental variables associated with Local Climate Zones (LCZ) over time.</p><p>
 #'         :For detailed use cases and examples, refer to: <a href='https://bymaxanjos.github.io/LCZ4r/articles/local_func_time_series.html'>LCZ Local Functions (Time Series Analysis)</a> 
 #' ALG_CREATOR:<a href='https://github.com/ByMaxAnjos'>Max Anjos</a> 

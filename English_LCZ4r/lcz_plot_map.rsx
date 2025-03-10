@@ -28,7 +28,7 @@
 # ------------------------------
 # **4. Output**
 # ------------------------------
-##QgsProcessingParameterFileDestination|Output|Output LCZ map|PNG Files (*.png)
+##QgsProcessingParameterFileDestination|Output|Save your image|PNG Files (*.png)
 
 
 library(LCZ4r)

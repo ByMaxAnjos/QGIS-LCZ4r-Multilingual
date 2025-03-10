@@ -16,7 +16,7 @@
 # ------------------------------
 # **3. Output**
 # ------------------------------
-##QgsProcessingParameterRasterDestination|Output|Output LCZ Map
+##QgsProcessingParameterRasterDestination|Output|Save LCZ Map
 
 
 if(!require(SparseM)) install.packages("SparseM", type = "binary")

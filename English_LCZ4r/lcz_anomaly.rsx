@@ -25,10 +25,8 @@
 # ------------------------------
 # **4. Plot Customization**
 # ------------------------------
-##QgsProcessingParameterBoolean|display|Visualize plot(.html)|True
 ##QgsProcessingParameterEnum|Select_plot_type|Select plot type|diverging_bar;bar;dot;lollipop|-1|0|False
 ##QgsProcessingParameterEnum|Palette_color|Choose palette color|VanGogh2;Archambault;Cassatt1;Cassatt2;Demuth;Derain;Egypt;Greek;Hiroshige;Hokusai2;Hokusai3;Ingres;Isfahan1;Isfahan2;Java;Johnson;Kandinsky;Morgenstern;OKeeffe2;Pillement;Tam;Troy;VanGogh3;Veronese|-1|0|False
-##QgsProcessingParameterBoolean|Save_as_plot|Save as plot|True
 # ------------------------------
 # **5. Plot Labels and Titles**
 # ------------------------------
@@ -43,9 +41,9 @@
 # ------------------------------
 # **7. Output**
 # ------------------------------
+##QgsProcessingParameterBoolean|display|Visualize plot(.html)|True
+##QgsProcessingParameterBoolean|Save_as_plot|Save as plot|True
 ##QgsProcessingParameterFileDestination|Output|Save your image|PNG Files (*.png)
-
-if(!require(interp)) install.packages("interp", type = "binary")
 
 library(LCZ4r)
 library(sf)
@@ -183,7 +181,7 @@ if(Select_hour != "") {
 } else {
     if (Save_as_plot==TRUE){
         plot_ts <- lcz_anomaly(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
-                          start = formatted_start, end = formatted_end,  hour=Select_hour,
+                          start = formatted_start, end = formatted_end, 
                           time.freq = Time_frequency, 
                           extract.method = result_extract,
                           by = result_by,
@@ -226,7 +224,7 @@ if(Select_hour != "") {
         ggsave(Output, plot_ts, height = Height, width = Width, dpi = dpi)
     } else {
         tbl_ts <- lcz_anomaly(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
-                         start = formatted_start, end = formatted_end,  hour=Select_hour,
+                         start = formatted_start, end = formatted_end,
                          time.freq = Time_frequency,
                          extract.method = result_extract,
                          by = result_by,
@@ -236,39 +234,43 @@ if(Select_hour != "") {
 }
  
 
-#' LCZ_map: A <b>SpatRaster</b> object derived from the <em>Download LCZ map* functions</em>
+#' LCZ_map: A <b>SpatRaster</b> object derived from the <em>Download LCZ map* functions.</em>
 #' INPUT: A data frame (.csv) containing environmental variable data structured as follows:</p><p>
 #'      :1. <b>date</b>: A column with date-time information. Ensure the column is named <code style='background-color: lightblue;'>date|time|timestamp|datetime</code>;</p><p>
 #'      :2. <b>Station</b>:  A column specifying meteorological station identifiers;</p><p>
-#'      :3. <b>Variable</b>: A column representing the environmental variable (e.g., air temperature, relative humidity, precipitation);</p><p>
-#'      :4. <b>Latitude and Longitude </b>: Two columns providing the geographical coordinates of data points. Ensure the column is named <code style='background-color: lightblue;'>lat|latitude and lon|long|longitude </code>.</p><p>
+#'      :3. <b>Variable</b>: A column representing the environmental variable (e.g., air temperature, relative humidity);</p><p>
+#'      :4. <b>Latitude and Longitude </b>: Two columns providing the geographical coordinates of data points. Ensure the column is named <code style='background-color: lightblue;'>lat|latitude and lon|long|longitude</code>.</p><p>
 #'      :Formatting Note: Users must standardize the date-time format to R conventions, such as <b style='text-decoration: underline;'>2023-03-13 11:00:00</b> or <b style='text-decoration: underline;'>2023-03-13</b>. It also includes: e.g. “1/2/1999” or in format i.e. “YYYY-mm-dd”, “1999-02-01”.</p><p>
-#'      :For more information, see the: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_local_LCZ4r.html#data-input-requirements'>sample data</a> 
-#' variable: The name of the target variable column in the data frame (e.g., airT, RH, precip).
+#'      :For more information, see the: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_local_LCZ4r.html#data-input-requirements'>sample data.</a> 
+#' variable: The name of the target variable column in the data frame (e.g., airT, RH).
 #' station_id: The column in the data frame identifying meteorological stations (e.g., station, site, id).
-#' Date_start: Specify the start dates for the analysis. The format should be <b>DD/MM/YYYY HH:MM</b>. E.g., 01-09-1986.
+#' Date_start: Specify the start dates for the analysis. The format should be <b>DD-MM-YYYY [01-09-1986]</b>.
 #' Date_end: The end date, formatted similarly to start date.
 #' Time_frequency: Defines the time period for averaging. Default is "hour", but options include "day", "week", "month", "season", "year", or even "3 hour", "2 day", "3 month", etc.
 #' Select_extract_type: character string specifying the method used to assign the LCZ class to each station point. The default is "simple". Available methods are:</p><p>
 #'      :1. <b>simple</b>: Assigns the LCZ class based on the value of the raster cell in which the point falls. It often is used in low-density observational network. </p><p>
 #'      :2. <b>two.step</b>: Assigns LCZs to stations while filtering out those located in heterogeneous LCZ areas. This method requires that at least 80% of the pixels within a 5 × 5 kernel match the LCZ of the center pixel (Daniel et al., 2017). Note that this method reduces the number of stations. It often is used in ultra and high-density observational network, especially in LCZ classes with multiple stations.</p><p>
 #'      :3. <b>bilinear</b>:  Interpolates the LCZ class values from the four nearest raster cells surrounding the point. </p><p>
-#' Split_data_by:Determines how the time series is segmented. Options include: year, month, daylight, dst, wd (wind direction) and so on. For example, daylight split up data into daytime and nighttime periods</p><p> 
+#' Split_data_by:Determines how the time series is segmented. Options include: year, month, daylight, dst, wd (wind direction) and so on. For example, daylight split up data into daytime and nighttime periods.</p><p> 
 #'              :You can also use the following combination: daylight-month, daylight-season or daylight-year (make sure at least Time_resolution as “hour”).</p><p>
-#'              :For more details, visit: <a href='https://bookdown.org/david_carslaw/openair/sections/intro/openair-package.html#the-type-option'>argument type in openair R package</a>.
-#' Select_hour: An hour or hours to select from 0-23 e.g. hour = 0:12 to select hours 0 to 12 inclusive. You also can use the following: "c(1, 6, 18, 21)".   
-#' display: If TRUE, the plot will be displayed in your web browser as an HTML visualization.
+#'              :For more details, visit: <a href='https://bookdown.org/david_carslaw/openair/sections/intro/openair-package.html#the-type-option'>argument type in openair R package.</a>.
+#' Select_hour:Specify an hour or a range of hours to select from 0 to 23. You can use the following formats:</p><p>
+#'      :A range: 0:12 selects hours 0 to 12 inclusive;</p><p>
+#'      :A specific set: c(1, 6, 18, 21) to selects hours 1, 6, 18, and 21;</p><p>
+#'      :If the data is on a daily, monthly, or yearly basis, leave this parameter empty.
 #' Select_plot_type: Choose from:</p><p>
 #'      :1. <b>diverging_bar</b>: A horizontal bar plot that diverges from the center (zero), with positive anomalies extending to the right and negative anomalies to the left. This plot is good for showing the extent and direction of anomalies in a compact format;</p><p>
 #'      :2. <b>bar</b>:A bar plot showing the magnitude of the anomaly for each station, colored by whether the anomaly is positive or negative. This plot is good for comparing anomalies across stations;</p><p>
 #'      :3. <b>dot</b>: A dot plot that displays both the mean temperature values and the reference values, with lines connecting them. The size or color of the dots can indicate the magnitude of the anomaly. Ideal for showing both absolute temperature values and their anomalies;</p><p>
 #'      :4. <b>lollipop</b>: A lollipop plot where each "stick" represents an anomaly value and the dots at the top represent the size of the anomaly. Useful for clearly showing positive and negative anomalies in a minimalist way.</p><p>
 #' Impute_missing_values:Method to impute missing values in data: “mean”, “median”, “knn”, “bag”.
+#' display: If TRUE, the plot will be displayed in your web browser as an HTML visualization.
 #' Save_as_plot: Set to TRUE to save a plot into your PC; otherwise,  save a data frame (table.csv). Remember to link with Outputs (e.g., .jpeg for plot and .csv for table). 
-#' Palette_color: Define the color palette for plots. Explore additional palettes from the <a href='https://github.com/BlakeRMills/MetBrewer?tab=readme-ov-file#palettes'>MetBrewer R package</a>
-#' Output:1. If Save as plot is TRUE, specifies file extension: PNG (.png), JPG (.jpg .jpeg), TIF (.tif), PDF (*.pdf). Example: <b>/Users/myPC/Documents/lcz_anomaly.png</b></p><p>
-#' ALG_DESC:This function caluculates thermal anomaly for different Local Climate Zones (LCZs).</p><p>
-#'         :For more information, visit: <a href='https://bymaxanjos.github.io/LCZ4r/articles/local_func_anomaly.html'>LCZ Local Functions(Thermal Anomalies)</a> 
+#' Palette_color: Define the color palette for plots. Explore additional palettes from the <a href='https://github.com/BlakeRMills/MetBrewer?tab=readme-ov-file#palettes'>MetBrewer R package.</a>
+#' Output:1. If Save as plot is TRUE, specifies file extension: PNG (.png), JPG (.jpg .jpeg), TTIF (.tif), PDF (*.pdf), SVG (*.svg) Example: <b>/Users/myPC/Documents/name_lcz_anomaly.png</b>;</p><p>
+#'       :2. if Save as plot is FALSE, specifies file extension: table (.csv). Example: <b>/Users/myPC/Documents/name_lcz_anomaly.csv</b>
+#' ALG_DESC:This function caluculates thermal anomaly for different LCZs.</p><p>
+#'         :For more information, visit: <a href='https://bymaxanjos.github.io/LCZ4r/articles/local_func_anomaly.html'>LCZ Local Functions(Thermal Anomalies).</a> 
 #' ALG_CREATOR:<a href='https://github.com/ByMaxAnjos'>Max Anjos</a> 
 #' ALG_HELP_CREATOR:<a href='https://bymaxanjos.github.io/LCZ4r/index.html'>LCZ4r project</a>  
 #' ALG_VERSION: 0.1.0

@@ -1,7 +1,8 @@
 ##LCZ4r General Functions=group
 ##Calculate LCZ Areas=display_name
-##pass_filenames
 
+##dont_load_any_packages
+##pass_filenames
 # ------------------------------
 # **1. Input Data**
 # ------------------------------
@@ -15,7 +16,7 @@
 ##QgsProcessingParameterString|Subtitle|Subtitle|My City|optional|true
 ##QgsProcessingParameterString|Caption|Caption|Source: LCZ4r, 2024.|optional|true
 ##QgsProcessingParameterString|xlab|xlab|LCZ code|optional|true
-##QgsProcessingParameterString|ylab|ylab|Area [square kilometer]|optional|true
+##QgsProcessingParameterString|ylab|ylab|Area [square kilometers]|optional|true
 ##QgsProcessingParameterBoolean|Show_LCZ_legend|Show legend|True
 
 # ------------------------------
@@ -104,14 +105,14 @@ if (Save_as_plot) {
 }
 
 
-#' LCZ_map: A SpatRaster object containing the LCZ map derived from Download LCZ map* functions
+#' LCZ_map: A SpatRaster object containing the LCZ map derived from Download LCZ map* functions.
 #' Select_plot_type: Choose the visualization type. Options include: <b>bar</b>, <b>pie</b>,<b>donut</b> </p><p>
 #' display: If TRUE, the plot will be displayed in your web browser as an HTML visualization.
 #' Save_as_plot: Set to TRUE to save a plot into your PC; otherwise,  save a data frame (table.csv). Remember to link with Outputs (.jpeg for plot and .csv for table). 
 #' Show_LCZ_legend: If TRUE, the plot will include the LCZ legend.
-#' Output:1. If Save_as_plot is TRUE, specifies file extension: PNG (.png), JPG (.jpg .jpeg), TIF (.tif), PDF (*.pdf), SVG (*.svg) Example: <b>/Users/myPC/Documents/name_lcz_area.jpeg</b>;</p><p>
-#'       :2. if Save_as_plot is FALSE, specifies file extension: table (.csv). Example: <b>/Users/myPC/Documents/name_lcz_area.csv</b>
-#' ALG_DESC: This function calculates the areas of LCZ classes in both percentage and square kilometers.</p><p>
+#' Output:1. If Save as plot is TRUE, specifies file extension: PNG (.png), JPG (.jpg .jpeg), TTIF (.tif), PDF (*.pdf), SVG (*.svg) Example: <b>/Users/myPC/Documents/name_lcz_area.png</b>;</p><p>
+#'       :2. if Save as plot is FALSE, specifies file extension: table (.csv). Example: <b>/Users/myPC/Documents/name_lcz_area.csv</b>
+#' ALG_DESC: This functon calculates the areas of LCZ classes in both percentage and square kilometers.</p><p>
 #'         :For more information, visit: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_general_LCZ4r.html'>LCZ general functions</a> 
 #' ALG_CREATOR:<a href='https://github.com/ByMaxAnjos'>Max Anjos</a> 
 #' ALG_HELP_CREATOR:<a href='https://bymaxanjos.github.io/LCZ4r/index.html'>LCZ4r project</a>  

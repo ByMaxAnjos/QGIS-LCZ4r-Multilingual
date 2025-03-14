@@ -29,8 +29,6 @@
 ##QgsProcessingParameterBoolean|LCZ_interpolation|LCZ-kringing interpolation|True
 ##QgsProcessingParameterFileDestination|Output|Save your table|Files (*.csv)
 
-if(!require(interp)) install.packages("interp", type = "binary")
-
 
 library(LCZ4r)
 library(ggplot2)

@@ -52,7 +52,7 @@ if (iStack==TRUE) {
  Output_raster <- LCZ4r::lcz_get_parameters(LCZ_map, iselect = result_par,istack = FALSE)
 } 
 
-#' LCZ_map: A SpatRaster object containing the LCZ map derived from Download LCZ map* functions
+#' LCZ_map: A SpatRaster object containing the LCZ map derived from Download LCZ map* functions.
 #' iStack: Save multiple raster parameters (or bands) as a single one.
 #' Select_parameter: Optionally,  specify one or more parameter names to retrieve specific mean, maximum and minumum parameter values:</p><p>
 #'             : <b>SVF</b>: Sky View Factor [0-1]. </p><p>
@@ -67,8 +67,9 @@ if (iStack==TRUE) {
 #'             : <b>SAD</b>: Surface Admittance [J m-2 s1/2 K-1]. </p><p> 
 #'             : <b>SAL</b>: Surface Albedo [0 - 0.5]. </p><p> 
 #'             : <b>AH</b>: Anthropogenic Heat Outupt [W m-2]. </p><p> 
-#' Output_raster: If TRUE, returns all parameters as a raster stack (100 m resolution)
-#' ALG_DESC: This function extracts 12 LCZ physical parameters based on the classification scheme developed by Stewart and Oke (2012). 
+#' Output_raster: 1. If <b>Save all parameters as single one</b> is TRUE, returns all parameters as a raster stack (100 m resolution). </p><p>
+#'              : 2. If <b>Save all parameters as single one</b> is FALSE, returns the selected parameter as a single raster (100 m resolution).
+#' ALG_DESC: This function extracts 12 LCZ physical urban canopy parameters (UCP's) based on the classification scheme developed by Stewart and Oke (2012). 
 #'         :For more information, visit: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_genera_LCZ4r.html#retrieve-and-visualize-lcz-parameters'>LCZ General Functions (Retrieve and visualize LCZ parameters)</a> 
 #' ALG_CREATOR:<a href='https://github.com/ByMaxAnjos'>Max Anjos</a> 
 #' ALG_HELP_CREATOR:<a href='https://bymaxanjos.github.io/LCZ4r/index.html'>LCZ4r project</a>  

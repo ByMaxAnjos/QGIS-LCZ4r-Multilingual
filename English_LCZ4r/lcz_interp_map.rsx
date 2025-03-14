@@ -28,8 +28,6 @@
 ##QgsProcessingParameterBoolean|LCZ_interpolation|LCZ-kringing interpolation|True
 ##QgsProcessingParameterRasterDestination|Output|Save your map
 
-if(!require(interp)) install.packages("interp", type = "binary")
-
 
 library(LCZ4r)
 library(ggplot2)
@@ -126,7 +124,7 @@ if(Select_hour != "") {
 } else {
     if (LCZ_interpolation){
           Output=lcz_interp_map(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
-                          start = formatted_start, end = formatted_end, hour=Select_hour,
+                          start = formatted_start, end = formatted_end,
                           sp.res = Raster_resolution,
                           tp.res = Temporal_resolution,
                           extract.method = result_extract,
@@ -137,7 +135,7 @@ if(Select_hour != "") {
                           )
     } else {
           Output=lcz_interp_map(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
-                          start = formatted_start, end = formatted_end, hour=Select_hour,
+                          start = formatted_start, end = formatted_end,
                           sp.res = Raster_resolution,
                           tp.res = Temporal_resolution,
                           extract.method = result_extract,
@@ -149,33 +147,36 @@ if(Select_hour != "") {
     }
 }
  
-#' LCZ_map: A <b>SpatRaster</b> object derived from the <em>Download LCZ map* functions</em>
+#' LCZ_map: A <b>SpatRaster</b> object derived from the <em>Download LCZ map* functions.</em>
 #' INPUT: A data frame (.csv) containing environmental variable data structured as follows:</p><p>
 #'      :1. <b>date</b>: A column with date-time information. Ensure the column is named <code style='background-color: lightblue;'>date|time|timestamp|datetime</code>;</p><p>
 #'      :2. <b>Station</b>:  A column specifying meteorological station identifiers;</p><p>
-#'      :3. <b>Variable</b>: A column representing the environmental variable (e.g., air temperature, relative humidity, precipitation);</p><p>
-#'      :4. <b>Latitude and Longitude </b>: Two columns providing the geographical coordinates of data points. Ensure the column is named <code style='background-color: lightblue;'>lat|latitude and lon|long|longitude </code>.</p><p>
+#'      :3. <b>Variable</b>: A column representing the environmental variable (e.g., air temperature, relative humidity);</p><p>
+#'      :4. <b>Latitude and Longitude </b>: Two columns providing the geographical coordinates of data points. Ensure the column is named <code style='background-color: lightblue;'>lat|latitude and lon|long|longitude</code>.</p><p>
 #'      :Formatting Note: Users must standardize the date-time format to R conventions, such as <b style='text-decoration: underline;'>2023-03-13 11:00:00</b> or <b style='text-decoration: underline;'>2023-03-13</b>. It also includes: e.g. “1/2/1999” or in format i.e. “YYYY-mm-dd”, “1999-02-01”.</p><p>
-#'      :For more information, see the: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_local_LCZ4r.html#data-input-requirements'>sample data</a> 
+#'      :For more information, see the: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_local_LCZ4r.html#data-input-requirements'>sample data.</a> 
 #' Variable: The name of the target variable column in the data frame (e.g., airT, RH, precip).
 #' Station_id: The column in the data frame identifying meteorological stations (e.g., station, site, id).
-#' Date_start: Specify the start dates for the analysis. The format should be <b>DD/MM/YYYY</b>.
+#' Date_start: Specify the start dates for the analysis. The format should be <b>DD-MM-YYYY [01-09-1986]</b>.
 #' Date_end: The end date, formatted similarly to start date.
-#' Select_hour: An hour or hours to select from 0-23 e.g. hour = 0:12 to select hours 0 to 12 inclusive. You also can use the following: "c(1, 6, 18, 21)".   
+#' Select_hour:Specify an hour or a range of hours to select from 0 to 23. You can use the following formats:</p><p>
+#'      :A range: 0:12 selects hours 0 to 12 inclusive;</p><p>
+#'      :A specific set: c(1, 6, 18, 21) to selects hours 1, 6, 18, and 21;</p><p>
+#'      :If the data is on a daily, monthly, or yearly basis, leave this parameter empty.
 #' Raster_resolution:Spatial resolution in unit of meters for interpolation. Default is 100.
 #' Temporal_resolution: Defines the time period for averaging. Default is "hour", but options include "day", "week", "month", "season", "year", or even "3 hour", "2 day", "3 month", etc.
 #' Select_extract_type: character string specifying the method used to assign the LCZ class to each station point. The default is "simple". Available methods are:</p><p>
 #'      :1. <b>simple</b>: Assigns the LCZ class based on the value of the raster cell in which the point falls. It often is used in low-density observational network. </p><p>
 #'      :2. <b>two.step</b>: Assigns LCZs to stations while filtering out those located in heterogeneous LCZ areas. This method requires that at least 80% of the pixels within a 5 × 5 kernel match the LCZ of the center pixel (Daniel et al., 2017). Note that this method reduces the number of stations. It often is used in ultra and high-density observational network, especially in LCZ classes with multiple stations.</p><p>
 #'      :3. <b>bilinear</b>:  Interpolates the LCZ class values from the four nearest raster cells surrounding the point. </p><p>
-#' Split_data_by:Determines how the time series is segmented. Options include: year, month, daylight, dst, wd (wind direction) and so on. For example, daylight split up data into daytime and nighttime periods</p><p> 
+#' Split_data_by:Determines how the time series is segmented. Options include: year, month, daylight, dst, wd (wind direction) and so on. For example, daylight split up data into daytime and nighttime periods.</p><p> 
 #'              :You can also use the following combination: daylight-month, daylight-season or daylight-year (make sure at least Time_resolution as “hour”).</p><p>
 #'              :For more details, visit: <a href='https://bookdown.org/david_carslaw/openair/sections/intro/openair-package.html#the-type-option'>argument type in openair R package</a>.
 #' Viogram_model: If kriging is selected, the list of viogrammodels that will be tested and interpolated with kriging. Default is "Sph". The model are "Sph", "Exp", "Gau", "Ste". They names respective shperical, exponential, gaussian, Matern familiy, Matern, M. Stein's parameterization.
 #' Impute_missing_values: Method to impute missing values in data (“mean”, “median”, “knn”, “bag”).
 #' LCZ_interpolation: If set to TRUE (default), the LCZ interpolation approach is used. If set to FALSE, conventional kriging interpolation without LCZ is used.
 #' Output: A raster in terra GeoTIF format
-#' ALG_DESC:This function generates a spatial interpolation of air temperature (or other variable) using Local Climate Zones (LCZs) and Kriging.</p><p>
+#' ALG_DESC:This function generates a spatial interpolation of air temperature (or other variable) using LCZ and Kriging.</p><p>
 #'         :For more information, visit: <a href='https://bymaxanjos.github.io/LCZ4r/articles/local_func_modeling.html'>LCZ Local Functions (Temperature Modeling with LCZ)</a> 
 #' ALG_CREATOR:<a href='https://github.com/ByMaxAnjos'>Max Anjos</a> 
 #' ALG_HELP_CREATOR:<a href='https://bymaxanjos.github.io/LCZ4r/index.html'>LCZ4r project</a>  

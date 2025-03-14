@@ -51,8 +51,6 @@
 ##QgsProcessingParameterBoolean|Save_as_plot|Save as plot|True
 ##QgsProcessingParameterFileDestination|Output|Save your image|PNG Files (*.png)
 
-if(!require(interp)) install.packages("interp", type = "binary")
-if(!require(DT)) install.packages("DT")
 
 
 library(LCZ4r)
@@ -62,7 +60,7 @@ library(terra)
 library(lubridate)
 library(ggiraph)
 library(htmlwidgets)
-library(DT)
+
 
 #Check extract method type
 uhi_methods <- c("LCZ", "manual")
@@ -177,19 +175,19 @@ if (Save_as_plot == TRUE) {
         write.csv(tbl_uhi, Output, row.names = FALSE)
     }
 
-#' LCZ_map: A <b>SpatRaster</b> object derived from the <em>Download LCZ map* functions</em>
+#' LCZ_map: A <b>SpatRaster</b> object derived from the <em>Download LCZ map* functions.</em>
 #' INPUT: A data frame (.csv) containing environmental variable data structured as follows:</p><p>
 #'      :1. <b>date</b>: A column with date-time information. Ensure the column is named <code style='background-color: lightblue;'>date|time|timestamp|datetime</code>;</p><p>
 #'      :2. <b>Station</b>:  A column specifying meteorological station identifiers;</p><p>
-#'      :3. <b>Variable</b>: A column representing the environmental variable (e.g., air temperature, relative humidity, precipitation);</p><p>
-#'      :4. <b>Latitude and Longitude </b>: Two columns providing the geographical coordinates of data points. Ensure the column is named <code style='background-color: lightblue;'>lat|latitude and lon|long|longitude </code>.</p><p>
+#'      :3. <b>Variable</b>: A column representing the environmental variable (e.g., air temperature, relative humidity);</p><p>
+#'      :4. <b>Latitude and Longitude </b>: Two columns providing the geographical coordinates of data points. Ensure the column is named <code style='background-color: lightblue;'>lat|latitude and lon|long|longitude</code>.</p><p>
 #'      :Formatting Note: Users must standardize the date-time format to R conventions, such as <b style='text-decoration: underline;'>2023-03-13 11:00:00</b> or <b style='text-decoration: underline;'>2023-03-13</b>. It also includes: e.g. “1/2/1999” or in format i.e. “YYYY-mm-dd”, “1999-02-01”.</p><p>
 #'      :For more information, see the: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_local_LCZ4r.html#data-input-requirements'>sample data</a> 
-#' variable: The name of the target variable column in the data frame (e.g., airT).
+#' variable: The name of the target variable column in the data frame (e.g., airT, HR).
 #' station_id: The column in the data frame identifying meteorological stations (e.g., station, site, id).
-#' Date_start: Specify the start dates for the analysis. The format should be <b>DD/MM/YYYY</b>.
+#' Date_start: Specify the start dates for the analysis. The format should be <b>DD-MM-YYYY [01-09-1986]</b>.
 #' Date_end: The end date, formatted similarly to start date.
-#' Time_frequency: Defines the time resolution for averageing. Default is “hour”. Supported resolutions include: “day”, “week”, “month” or “year”. Custom options such as "3 day",  "2 week" and so on. 
+#' Time_frequency: Defines the time resolution for averageing. Default is “hour”. Supported resolutions include: “day”, “week”, “month” or “year”. Custom options such as "3 day",  "2 week", and so on. 
 #' Impute_missing_values:Method to impute missing values (“mean”, “median”, “knn”, “bag”).
 #' Select_extract_type: character string specifying the method used to assign the LCZ class to each station point. The default is "simple". Available methods are:</p><p>
 #'      :1. <b>simple</b>: Assigns the LCZ class based on the value of the raster cell in which the point falls. It often is used in low-density observational network. </p><p>

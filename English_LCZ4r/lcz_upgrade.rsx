@@ -4,7 +4,7 @@
 ##pass_filenames
 # Set the environment variable for standalone mode
 Sys.setenv(R_REMOTES_STANDALONE="true")
-##ByMaxAnjos/LCZ4r=github_install
+remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
 ##QgsProcessingParameterFile|in_folder|Select the folder where the script be stored|1
 ##QgsProcessingParameterEnum|Select_Language|Select your Language|English|-1|0|False
 

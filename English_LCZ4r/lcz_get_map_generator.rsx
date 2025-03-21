@@ -6,9 +6,6 @@
 ##dont_load_any_packages
 ##pass_filenames
 
-# Set the environment variable for standalone mode
-Sys.setenv(R_REMOTES_STANDALONE="true")
-##ByMaxAnjos/LCZ4r=github_install
 # ------------------------------
 # **2. Input Parameters**
 # ------------------------------

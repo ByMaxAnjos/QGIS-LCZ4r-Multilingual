@@ -4,7 +4,7 @@
 
 # Set the environment variable for standalone mode
 Sys.setenv(R_REMOTES_STANDALONE="true")
-##ByMaxAnjos/LCZ4r=github_install
+remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
 ##QgsProcessingParameterBoolean|Install|Installing the LCZ4r in QGIS|True
 
 if(!require(interp)) install.packages("interp", type = "binary")

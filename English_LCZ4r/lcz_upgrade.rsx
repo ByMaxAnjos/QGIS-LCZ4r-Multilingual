@@ -4,27 +4,22 @@
 ##pass_filenames
 # Set the environment variable for standalone mode
 Sys.setenv(R_REMOTES_STANDALONE="true")
-options(remotes.upgrade = "never")
 ##ByMaxAnjos/LCZ4r=github_install
 ##QgsProcessingParameterFile|in_folder|Select the folder where the script be stored|1
 ##QgsProcessingParameterEnum|Select_Language|Select your Language|English|-1|0|False
 
-# Definição de idiomas disponíveis
 Languages <- c("English")
 
-# Verifica e ajusta a seleção do idioma
 if (!is.null(Select_Language) && Select_Language >= 0 && Select_Language < length(Languages)) {
   result_language <- Languages[Select_Language + 1] # Alinhado com indexação baseada em 1 do R
 } else {
   stop("Invalid language selection. Please choose from English")
 }
 
-# Mapeia o idioma selecionado para a pasta correspondente
 folder_name <- switch(result_language,
   "English"   = "English_LCZ4r"
 )
 
-# Define os scripts a serem baixados conforme o idioma escolhido
 script_files <- switch(result_language,
   "English" = c("lcz_get_map.rsx", "lcz_get_map_euro.rsx", "lcz_get_map_usa.rsx", "lcz_get_map_generator.rsx", 
                 "lcz_cal_area.rsx", "lcz_plot_map.rsx", "lcz_get_parameters.rsx", "lcz_plot_parameters.rsx", "lcz_ts.rsx",  
@@ -32,13 +27,10 @@ script_files <- switch(result_language,
                 "lcz_interp_eval.rsx", "lcz_upgrade.rsx", "lcz_install.rsx")
 )
 
-# URL base do repositório
 base_url <- "https://raw.githubusercontent.com/ByMaxAnjos/QGIS-LCZ4r-Multilingual/master/"
 
-# Define diretório temporário para os scripts
 if (!dir.exists(in_folder)) dir.create(in_folder, recursive = TRUE)
 
-# Loop para baixar e carregar os scripts
 for (script in script_files) {
   script_url <- paste0(base_url, folder_name, "/", script)
   dest_file <- file.path(in_folder, script)

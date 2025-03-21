@@ -2,25 +2,26 @@
 ##Upgrade LCZ4r=display_name
 ##dont_load_any_packages
 ##pass_filenames
+# Set the environment variable for standalone mode
+Sys.setenv(R_REMOTES_STANDALONE="true")
+options(remotes.upgrade = "never")
 ##ByMaxAnjos/LCZ4r=github_install
 ##QgsProcessingParameterFile|in_folder|Select the folder where the script be stored|1
-##QgsProcessingParameterEnum|Select_Language|Select your Language|English;Portuguese;Spanish|-1|0|False
+##QgsProcessingParameterEnum|Select_Language|Select your Language|English|-1|0|False
 
 # Definição de idiomas disponíveis
-Languages <- c("English", "Portuguese", "Spanish")
+Languages <- c("English")
 
 # Verifica e ajusta a seleção do idioma
 if (!is.null(Select_Language) && Select_Language >= 0 && Select_Language < length(Languages)) {
   result_language <- Languages[Select_Language + 1] # Alinhado com indexação baseada em 1 do R
 } else {
-  stop("Invalid language selection. Please choose from English, Portuguese, or Spanish.")
+  stop("Invalid language selection. Please choose from English")
 }
 
 # Mapeia o idioma selecionado para a pasta correspondente
 folder_name <- switch(result_language,
-  "English"   = "English_LCZ4r",
-  "Portuguese" = "Portuguese_LCZ4r",
-  "Spanish"   = "Spanish_LCZ4r"
+  "English"   = "English_LCZ4r"
 )
 
 # Define os scripts a serem baixados conforme o idioma escolhido
@@ -28,17 +29,7 @@ script_files <- switch(result_language,
   "English" = c("lcz_get_map.rsx", "lcz_get_map_euro.rsx", "lcz_get_map_usa.rsx", "lcz_get_map_generator.rsx", 
                 "lcz_cal_area.rsx", "lcz_plot_map.rsx", "lcz_get_parameters.rsx", "lcz_plot_parameters.rsx", "lcz_ts.rsx",  
                 "lcz_uhi_intensity.rsx", "lcz_anomaly.rsx", "lcz_interp_map.rsx", "lcz_anomaly_map.rsx", "lcz_plot_interp.rsx", 
-                "lcz_interp_eval.rsx", "lcz_upgrade.rsx", "lcz_install.rsx"),
-  
-  "Portuguese" = c("PT_lcz_get_map.rsx", "PT_lcz_get_map_euro.rsx", "PT_lcz_get_map_usa.rsx", "PT_lcz_get_map_generator.rsx", 
-                   "PT_lcz_cal_area.rsx", "PT_lcz_plot_map.rsx", "PT_lcz_get_parameters.rsx", "PT_lcz_plot_parameters.rsx", 
-                   "PT_lcz_ts.rsx", "PT_lcz_uhi_intensity.rsx", "PT_lcz_anomaly.rsx", "PT_lcz_interp_map.rsx", 
-                   "PT_lcz_anomaly_map.rsx", "PT_lcz_plot_interp.rsx", "PT_lcz_interp_eval.rsx", "PT_lcz_upgrade.rsx", "PT_lcz_install.rsx"),
-  
-  "Spanish" = c("ES_lcz_get_map.rsx", "ES_lcz_get_map_euro.rsx", "ES_lcz_get_map_usa.rsx", "ES_lcz_get_map_generator.rsx", 
-                "ES_lcz_cal_area.rsx", "ES_lcz_plot_map.rsx", "ES_lcz_get_parameters.rsx", "ES_lcz_plot_parameters.rsx", 
-                "ES_lcz_ts.rsx", "ES_lcz_uhi_intensity.rsx", "ES_lcz_anomaly.rsx", "ES_lcz_interp_map.rsx", 
-                "ES_lcz_anomaly_map.rsx", "ES_lcz_plot_interp.rsx", "ES_lcz_interp_eval.rsx", "ES_lcz_upgrade.rsx", "ES_lcz_install.rsx")
+                "lcz_interp_eval.rsx", "lcz_upgrade.rsx", "lcz_install.rsx")
 )
 
 # URL base do repositório

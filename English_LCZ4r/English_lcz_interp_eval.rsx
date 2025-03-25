@@ -1,31 +1,20 @@
 ##LCZ4r Local Functions=group
 ##Evaluate LCZ Interpolation=name
 ##pass_filenames
-# ------------------------------
-# **1. Input Data Parameters**
-# ------------------------------
 ##QgsProcessingParameterRasterLayer|LCZ_map|Enter LCZ map|None
 ##QgsProcessingParameterFeatureSource|INPUT|Input data|5
 ##QgsProcessingParameterField|variable|Target variable column|Table|INPUT|-1|False|False
 ##QgsProcessingParameterField|station_id|Column identifying stations|Table|INPUT|-1|False|False
-
-# ------------------------------
-# **2. Time Range Parameters**
-# ------------------------------
 ##QgsProcessingParameterString|Date_start|Start date|DD-MM-YYYY|False
 ##QgsProcessingParameterString|Date_end|End date|DD-MM-YYYY|False
-# ------------------------------
-# **3. Data Processing Options**
-# ------------------------------
 ##QgsProcessingParameterBoolean|Select_Anomaly|Evaluate Anomaly|FALSE
 ##QgsProcessingParameterBoolean|Select_LOOCV|LOOCV (leave-one-out cross validation)|True
 ##QgsProcessingParameterNumber|SplitRatio|Train/test split station proportion (if LOOCV is false)|QgsProcessingParameterNumber.Double|0.8
-##QgsProcessingParameterString|Temporal_resolution|Temporal resolution|hour|False
+##QgsProcessingParameterEnum|Temporal_resolution|Temporal resolution|hour;day;DSTday;week;month;season;quater;year|-1|0|False
 ##QgsProcessingParameterNumber|Raster_resolution|Raster resolution|QgsProcessingParameterNumber.Integer|100
 ##QgsProcessingParameterEnum|Viogram_model|Vioagram model|Sph;Exp;Gau;Ste|-1|0|False
 ##QgsProcessingParameterEnum|Select_extract_type|Select the extract method to use|simple;two.step;bilinear|-1|0|False
 ##QgsProcessingParameterEnum|Impute_missing_values|Impute missing values|mean;median;knn;bag|-1|None|True
-
 ##QgsProcessingParameterBoolean|LCZ_interpolation|LCZ-kringing interpolation|True
 ##QgsProcessingParameterFileDestination|Output|Save your table|Files (*.csv)
 
@@ -34,6 +23,16 @@ library(LCZ4r)
 library(ggplot2)
 library(terra)
 library(lubridate)
+
+
+#Check extract method type
+time_options <- c("hour", "day", "DSTday", "week", "month", "season", "quater", "year")
+if (!is.null(Temporal_resolution) && Temporal_resolution >= 0 && Temporal_resolution < length(time_options)) {
+  result_time <- time_options[Temporal_resolution + 1]  # Add 1 to align with R's 1-based indexing
+} else {
+  result_time <- NULL  
+}
+
 
 #Check extract method type
 select_extract <- c("simple", "two.step", "bilinear")
@@ -75,7 +74,7 @@ formatted_end <- format(as.Date(Date_end, format = "%d-%m-%Y"), "%d/%m/%Y")
         eval_lcz=lcz_interp_eval(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
                           start = formatted_start, end = formatted_end,
                           sp.res = Raster_resolution,
-                          tp.res = Temporal_resolution,
+                          tp.res = result_time,
                           LOOCV = Select_LOOCV,
                           split.ratio = SplitRatio,
                           Anomaly = Select_Anomaly,
@@ -90,7 +89,7 @@ formatted_end <- format(as.Date(Date_end, format = "%d-%m-%Y"), "%d/%m/%Y")
          Output=lcz_interp_eval(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
                           start = formatted_start, end = formatted_end, 
                           sp.res = Raster_resolution,
-                          tp.res = Temporal_resolution,
+                          tp.res = result_time,
                           LOOCV = Select_LOOCV,
                           split.ratio = SplitRatio,
                           Anomaly = Select_Anomaly,
@@ -119,7 +118,7 @@ formatted_end <- format(as.Date(Date_end, format = "%d-%m-%Y"), "%d/%m/%Y")
 #' Select_LOOCV: If TRUE (default), leave-one-out cross-validation (LOOCV) is used for kriging. If FALSE, the split method into training and testing stations is used. 
 #' SplitRatio: A numeric value representing the proportion of meteorological stations to be used for training (interpolation). The remaining stations will be used for testing (evaluation). For example, the default 0.8 indicates that 80% of the stations will be used for training and 20% for testing. 
 #' Raster_resolution: Spatial resolution in unit of meters for interpolation. Default is 100.
-#' Temporal_resolution: Defines the time period for averaging. Default is "hour", but options include "day", "week", "month", "season", "year", or even "3 hour", "2 day", "3 month", etc.
+#' Temporal_resolution: Defines the time resolution for averageing. Default is “hour”. Supported resolutions include: “hour”, “day”, “DSTday”, “week”, “month”, “quarter” or “year”.
 #' Select_extract_type: character string specifying the method used to assign the LCZ class to each station point. The default is "simple". Available methods are:</p><p>
 #'      :1. <b>simple</b>: Assigns the LCZ class based on the value of the raster cell in which the point falls. It often is used in low-density observational network. </p><p>
 #'      :2. <b>two.step</b>: Assigns LCZs to stations while filtering out those located in heterogeneous LCZ areas. This method requires that at least 80% of the pixels within a 5 × 5 kernel match the LCZ of the center pixel (Daniel et al., 2017). Note that this method reduces the number of stations. It often is used in ultra and high-density observational network, especially in LCZ classes with multiple stations.</p><p>

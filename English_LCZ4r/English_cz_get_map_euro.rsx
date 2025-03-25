@@ -1,19 +1,9 @@
 ##LCZ4r General Functions=group
-##Download LCZ map from Europe=display_name
-# ------------------------------
-# **1. General Settings**
-# ------------------------------
+##Download LCZ map (Europe)=display_name
 ##dont_load_any_packages
 ##pass_filenames
-# ------------------------------
-# **2. Input Parameters**
-# ------------------------------
 ##QgsProcessingParameterString|City|Enter the city name |None|optional|true
 ##QgsProcessingParameterFeatureSource|ROI|ROI|2|None|true
-
-# ------------------------------
-# **3. Output**
-# ------------------------------
 ##QgsProcessingParameterRasterDestination|Output|Save LCZ map
 
 
@@ -27,7 +17,7 @@ Output=LCZ4r::lcz_get_map_euro(city=City)
 Output=LCZ4r::lcz_get_map_euro(city=NULL, roi = ROI)
 }
 
-# Documentation
+
 #' City: A character string specifying the name of your target european city or area based on the <a href='https://nominatim.openstreetmap.org/ui/search.html'>OpenStreetMap project.</a></p><p> Enter the city name = <b>Berlin</b></p><p> If left empty,  the function uses the custom ROI.  
 #' ROI: Optionally, you can provide a Region of Interest (ROI) in ESRI shapefile format (or .gpkg) to clip the LCZ map to a custom area.
 #' Output: A raster TIFF file with 100 m resolution containing LCZ classes between 1 and 17.

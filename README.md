@@ -24,8 +24,6 @@ All functions and their corresponding documentation of the LCZ4r package were fu
 ### AI-Assisted, Human-Reviewed Translation
 Translations initially performed by AI and then reviewed and refined by  by human experts familiar with Climatology, LCZ and GIS.
 
-<img src="https://github.com/user-attachments/assets/ed21bd61-b2c5-4dbb-9601-6485292d7b4c" width="400" height="300">
-
 
 ### Human Translation
 All functions and their corresponding documentation of the LCZ4r package were translated manually by experts familiar with Climatology, LCZ and GIS.

@@ -1,20 +1,9 @@
 ##LCZ4r General Functions=group
-##Download LCZ map from Generator Platform=display_name
-# ------------------------------
-# **1. General Settings**
-# ------------------------------
+##Download LCZ map (Generator Platform)=display_name
 ##dont_load_any_packages
 ##pass_filenames
-
-# ------------------------------
-# **2. Input Parameters**
-# ------------------------------
 ##QgsProcessingParameterString|ID|Enter the ID |None|optional|true
 ##QgsProcessingParameterEnum|Select_band_type|Select the feature to use|lczFilter;lcz|-1|0|False
-
-# ------------------------------
-# **3. Output**
-# ------------------------------
 ##QgsProcessingParameterRasterDestination|Output|Save LCZ map
 
 

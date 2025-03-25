@@ -1,5 +1,5 @@
 ##LCZ4r Local Functions=group
-##Visualize Interpolated Map=name
+##Visualize Interpolated LCZ Map=name
 ##dont_load_any_packages
 ##pass_filenames
 # ------------------------------

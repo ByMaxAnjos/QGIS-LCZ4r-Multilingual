@@ -2,30 +2,14 @@
 ##Visualize LCZ Parameter Map=name 
 ##dont_load_any_packages
 ##pass_filenames
-
-# ------------------------------
-# **1. Input Data**
-# ------------------------------
 ##QgsProcessingParameterRasterLayer|LCZ_map_parameter|Enter LCZ paramter map|None
-
-# ------------------------------
-# **2. Select Paramters**
-# ------------------------------
 ##QgsProcessingParameterEnum|Select_parameter|Select paramater|SVFmean;SVFmax;SVFmin;z0;ARmean;ARmax;ARmin;BSFmean;BSFmax;BSFmin;ISFmean;ISFmax;ISFmin;PSFmean;PSFmax;PSFmin;TSFmean;TSFmax;TSFmin;HREmean;HREmax;HREmin;TRCmean;TRCmax;TRCmin;SADmean;SADmax;SADmin;SALmean;SALmax;SALmin;AHmean;AHmax;AHmin|-1|0|False
-
-# ------------------------------
-# **3. Plot Labels and Titles**
-# ------------------------------
 ##QgsProcessingParameterBoolean|display|Visualize plot(.html)|True
 ##QgsProcessingParameterString|Subtitle|Subtitle|My City|optional|true
 ##QgsProcessingParameterString|Caption|Caption|Source: LCZ4r, 2024.|optional|true
 ##QgsProcessingParameterNumber|Height|Height plot|QgsProcessingParameterNumber.Integer|7
 ##QgsProcessingParameterNumber|Width|Width plot|QgsProcessingParameterNumber.Integer|10
 ##QgsProcessingParameterNumber|dpi|dpi plot resolution|QgsProcessingParameterNumber.Integer|300
-
-# ------------------------------
-# **2. Output**
-# ------------------------------
 ##QgsProcessingParameterFileDestination|Output|Save your image|PNG Files (*.png)
 
 library(LCZ4r)
@@ -96,9 +80,8 @@ plot_lcz <- LCZ4r::lcz_plot_parameters(LCZ_map_parameter, iselect = result_par, 
 
 ggplot2::ggsave(Output, plot_lcz, height = Height, width = Width, dpi=dpi)
 
-#' LCZ_map:The SpatRaster in a stack format from Retrieve LCZ parameter function.
+#' LCZ_map_parameter:The SpatRaster in a stack format from Retrieve LCZ parameter function.
 #' display: If TRUE, the plot will be displayed in your web browser as an HTML visualization.
-#' Select_parameter: Specify one single parameter name based on raster parameter map. 
 #' Select_parameter: Specify one single parameter name based on raster parameter map considering mean, maximum and minumum values:</p><p>
 #'             : <b>SVF</b>: Sky View Factor [0-1]. </p><p>
 #'             : <b>z0</b>: Roughness Lenght class [meters]. </p><p>

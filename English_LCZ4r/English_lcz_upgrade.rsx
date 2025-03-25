@@ -21,10 +21,10 @@ folder_name <- switch(result_language,
 )
 
 script_files <- switch(result_language,
-  "English" = c("lcz_get_map.rsx", "lcz_get_map_euro.rsx", "lcz_get_map_usa.rsx", "lcz_get_map_generator.rsx", 
-                "lcz_cal_area.rsx", "lcz_plot_map.rsx", "lcz_get_parameters.rsx", "lcz_plot_parameters.rsx", "lcz_ts.rsx",  
-                "lcz_uhi_intensity.rsx", "lcz_anomaly.rsx", "lcz_interp_map.rsx", "lcz_anomaly_map.rsx", "lcz_plot_interp.rsx", 
-                "lcz_interp_eval.rsx", "lcz_upgrade.rsx", "lcz_install.rsx")
+  "English" = c("English_lcz_get_map.rsx", "English_lcz_get_map_euro.rsx", "English_lcz_get_map_usa.rsx", "English_lcz_get_map_generator.rsx", 
+                "English_lcz_cal_area.rsx", "English_lcz_plot_map.rsx", "English_lcz_get_parameters.rsx", "English_lcz_plot_parameters.rsx", "English_lcz_ts.rsx",  
+                "English_lcz_uhi_intensity.rsx", "English_lcz_anomaly.rsx", "English_lcz_interp_map.rsx", "English_lcz_anomaly_map.rsx", "English_lcz_plot_interp.rsx", 
+                "English_lcz_interp_eval.rsx", "English_lcz_upgrade.rsx", "English_lcz_install.rsx")
 )
 
 base_url <- "https://raw.githubusercontent.com/ByMaxAnjos/QGIS-LCZ4r-Multilingual/master/"

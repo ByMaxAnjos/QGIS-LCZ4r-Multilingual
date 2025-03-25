@@ -2,32 +2,16 @@
 ##Visualize LCZ Map=display_name
 ##dont_load_any_packages
 ##pass_filenames
-
-# ------------------------------
-# **1. Input Data**
-# ------------------------------
 ##QgsProcessingParameterRasterLayer|LCZ_map|Enter LCZ map|None
-
-# ------------------------------
-# **2. Plot Labels and Titles**
-# ------------------------------
 ##QgsProcessingParameterBoolean|display|Visualize plot(.html)|True
 ##QgsProcessingParameterString|Title|Title|Local Climate Zones|optional|true
 ##QgsProcessingParameterString|Subtitle|Subtitle|My City|optional|true
 ##QgsProcessingParameterString|Caption|Caption|Source: LCZ4r, 2024.|optional|true
 ##QgsProcessingParameterBoolean|Show_LCZ_legend|Show legend|True
-
-# ------------------------------
-# **3. Plot Dimensions**
-# ------------------------------
 ##QgsProcessingParameterNumber|Height|Height plot|QgsProcessingParameterNumber.Integer|7
 ##QgsProcessingParameterNumber|Width|Width plot|QgsProcessingParameterNumber.Integer|10
 ##QgsProcessingParameterNumber|dpi|dpi plot resolution|QgsProcessingParameterNumber.Integer|300
 ##QgsProcessingParameterBoolean|inclusive|Inclusive color|False
-
-# ------------------------------
-# **4. Output**
-# ------------------------------
 ##QgsProcessingParameterFileDestination|Output|Save your image|PNG Files (*.png)
 
 

@@ -1,20 +1,9 @@
 ##LCZ4r General Functions=group
-##Download LCZ map from USA = display_name
-
-# ------------------------------
-# **1. General Settings**
-# ------------------------------
+##Download LCZ map (USA)=display_name
 ##dont_load_any_packages
 ##pass_filenames
-# -----------------------------
-# **2. Input Parameters**
-# ------------------------------
 ##QgsProcessingParameterString|City|Enter the city name|None|optional|true
 ##QgsProcessingParameterFeatureSource|ROI|Region of Interest (ROI)|2|None|true
-
-# ------------------------------
-# **3. Output**
-# ------------------------------
 ##QgsProcessingParameterRasterDestination|Output|Save LCZ Map
 
 library(LCZ4r)

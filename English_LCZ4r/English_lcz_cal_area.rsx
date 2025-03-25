@@ -1,15 +1,8 @@
 ##LCZ4r General Functions=group
 ##Calculate LCZ Areas=display_name
-
 ##dont_load_any_packages
 ##pass_filenames
-# ------------------------------
-# **1. Input Data**
-# ------------------------------
 ##QgsProcessingParameterRasterLayer|LCZ_map|Enter LCZ map|None
-# ------------------------------
-# **2. Plot Labels and Titles**
-# ------------------------------
 ##QgsProcessingParameterEnum|Select_plot_type|Select plot type|bar;pie;donut|-1|0|False
 ##QgsProcessingParameterBoolean|display|Visualize plot(.html)|True
 ##QgsProcessingParameterString|Title|Title|Local Climate Zones|optional|true
@@ -18,17 +11,9 @@
 ##QgsProcessingParameterString|xlab|xlab|LCZ code|optional|true
 ##QgsProcessingParameterString|ylab|ylab|Area [square kilometers]|optional|true
 ##QgsProcessingParameterBoolean|Show_LCZ_legend|Show legend|True
-
-# ------------------------------
-# **3. Plot Dimensions**
-# ------------------------------
 ##QgsProcessingParameterNumber|Height|Height plot|QgsProcessingParameterNumber.Integer|7
 ##QgsProcessingParameterNumber|Width|Width plot|QgsProcessingParameterNumber.Integer|10
 ##QgsProcessingParameterNumber|dpi|dpi plot resolution|QgsProcessingParameterNumber.Integer|300
-
-# ------------------------------
-# **4. Output**
-# ------------------------------
 ##QgsProcessingParameterBoolean|Save_as_plot|Save as plot|True
 ##QgsProcessingParameterFileDestination|Output|Save your image|PNG Files (*.png)
 

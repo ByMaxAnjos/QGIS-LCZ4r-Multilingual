@@ -1,19 +1,9 @@
 ##LCZ4r General Functions=group
-##Download LCZ map from Global=display_name
-# ------------------------------
-# **1. General Settings**
-# ------------------------------
+##Download LCZ map (Global)=display_name
 ##dont_load_any_packages
 ##pass_filenames
-# ------------------------------
-# **2. Input Parameters**
-# ------------------------------
 ##QgsProcessingParameterString|City|Enter the city name |None|optional|true
 ##QgsProcessingParameterFeatureSource|ROI|ROI|2|None|true
-
-# ------------------------------
-# **3. Output**
-# ------------------------------
 ##QgsProcessingParameterRasterDestination|Output|Save LCZ Map
 
 

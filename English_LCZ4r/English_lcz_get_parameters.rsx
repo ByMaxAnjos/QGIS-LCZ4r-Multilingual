@@ -1,22 +1,10 @@
 ##LCZ4r General Functions=group
-##Retrieve LCZ Parameters=display_name
+##Generate LCZ Parameters=display_name
 ##dont_load_any_packages
 ##pass_filenames
-
-# ------------------------------
-# **1. Input Data**
-# ------------------------------
 ##QgsProcessingParameterRasterLayer|LCZ_map|Enter LCZ map|None
 ##QgsProcessingParameterBoolean|iStack|Save all parameters as single one|True
-
-# ------------------------------
-# **2. Select Parameters**
-# ------------------------------
 ##QgsProcessingParameterEnum|Select_parameter|Select paramater|SVFmean;SVFmax;SVFmin;z0;ARmean;ARmax;ARmin;BSFmean;BSFmax;BSFmin;ISFmean;ISFmax;ISFmin;PSFmean;PSFmax;PSFmin;TSFmean;TSFmax;TSFmin;HREmean;HREmax;HREmin;TRCmean;TRCmax;TRCmin;SADmean;SADmax;SADmin;SALmean;SALmax;SALmin;AHmean;AHmax;AHmin|-1|None|True
-
-# ------------------------------
-# **4. Output**
-# ------------------------------
 ##QgsProcessingParameterRasterDestination|Output_raster|Save LCZ parameter
 
 library(LCZ4r)

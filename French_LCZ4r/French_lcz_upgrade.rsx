@@ -10,7 +10,7 @@ if(Upgrade){
 remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
 }
 
-Languages <- c("English", "Portuguese", "Chinese", "Spanish", "German", "French")
+Languages <- c("English", "Portuguese", "Chinese", "Spanish", "Deutsch", "French")
 
 if (!is.null(Select_Language) && Select_Language >= 0 && Select_Language < length(Languages)) {
   result_language <- Languages[Select_Language + 1] # Alinhado com indexação baseada em 1 do R
@@ -39,10 +39,10 @@ script_files <- switch(result_language,
                 "Spanish_lcz_cal_area.rsx", "Spanish_lcz_plot_map.rsx", "Spanish_lcz_get_parameters.rsx", "Spanish_lcz_plot_parameters.rsx", "Spanish_lcz_ts.rsx",  
                 "Spanish_lcz_uhi_intensity.rsx", "Spanish_lcz_anomaly.rsx", "Spanish_lcz_interp_map.rsx", "Spanish_lcz_anomaly_map.rsx", "Spanish_lcz_plot_interp.rsx", 
                 "Spanish_lcz_interp_eval.rsx", "Spanish_lcz_upgrade.rsx", "Spanish_lcz_install.rsx"),
-"German" = c("German_lcz_get_map.rsx", "German_lcz_get_map_euro.rsx", "German_lcz_get_map_usa.rsx", "German_lcz_get_map_generator.rsx", 
-                "German_lcz_cal_area.rsx", "German_lcz_plot_map.rsx", "German_lcz_get_parameters.rsx", "German_lcz_plot_parameters.rsx", "German_lcz_ts.rsx",  
-                "German_lcz_uhi_intensity.rsx", "German_lcz_anomaly.rsx", "German_lcz_interp_map.rsx", "German_lcz_anomaly_map.rsx", "German_lcz_plot_interp.rsx", 
-                "German_lcz_interp_eval.rsx", "German_lcz_upgrade.rsx", "German_lcz_install.rsx"),
+"Deutsch" = c("Deutsch_lcz_get_map.rsx", "Deutsch_lcz_get_map_euro.rsx", "Deutsch_lcz_get_map_usa.rsx", "Deutsch_lcz_get_map_generator.rsx", 
+                "Deutsch_lcz_cal_area.rsx", "Deutsch_lcz_plot_map.rsx", "Deutsch_lcz_get_parameters.rsx", "Deutsch_lcz_plot_parameters.rsx", "Deutsch_lcz_ts.rsx",  
+                "Deutsch_lcz_uhi_intensity.rsx", "Deutsch_lcz_anomaly.rsx", "Deutsch_lcz_interp_map.rsx", "Deutsch_lcz_anomaly_map.rsx", "Deutsch_lcz_plot_interp.rsx", 
+                "Deutsch_lcz_interp_eval.rsx", "Deutsch_lcz_upgrade.rsx", "Deutsch_lcz_install.rsx"),
 "French" = c("French_lcz_get_map.rsx", "French_lcz_get_map_euro.rsx", "French_lcz_get_map_usa.rsx", "French_lcz_get_map_generator.rsx", 
                 "French_lcz_cal_area.rsx", "French_lcz_plot_map.rsx", "French_lcz_get_parameters.rsx", "French_lcz_plot_parameters.rsx", "French_lcz_ts.rsx",  
                 "French_lcz_uhi_intensity.rsx", "French_lcz_anomaly.rsx", "French_lcz_interp_map.rsx", "French_lcz_anomaly_map.rsx", "French_lcz_plot_interp.rsx", 

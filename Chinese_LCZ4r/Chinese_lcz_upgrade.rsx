@@ -1,12 +1,11 @@
-##LCZ4r Setup Functions=group
-##Upgrade LCZ4r=display_name
+##LCZ4r 设置函数=group
+##升级LCZ4r=display_name
 ##dont_load_any_packages
 ##pass_filenames
-# Set the environment variable for standalone mode
-##QgsProcessingParameterBoolean|Upgrade|Upgrading the LCZ4r pacakge R|False
-##QgsProcessingParameterFile|in_folder|Select the folder where the script be stored|1
-##QgsProcessingParameterEnum|Select_Language|Select your Language|English;Portuguese;Chinese;Spanish;German;French|-1|0|False
-
+# 为独立模式设置环境变量
+##QgsProcessingParameterBoolean|Upgrade|升级LCZ4r R包|False
+##QgsProcessingParameterFile|in_folder|选择脚本存储文件夹|1
+##QgsProcessingParameterEnum|Select_Language|选择语言|英语;葡萄牙语;中文;西班牙语;德语;法语|-1|0|False
 if(Upgrade){
 remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
 }
@@ -68,14 +67,14 @@ for (script in script_files) {
   })
 }
 
-#' Upgrade: If set to TRUE, the General and Local functions from the LCZ4r package will be reinstalled. This ensures that you are using the latest versions of these functions, which may include important updates and improvements.</p><p> 
-#' in_folder: Specify the directory where the scripts will be downloaded from the official repository.</p><p> 
-#'          : Note that this specifc directory must be the same directory in <b>R scripts folder</b> (Settings > Options… > Processing > Providers > R).
-#' ALG_DESC: This function allows you to upgrade the LCZ4r package to the latest version and the Language Plugin. Regular upgrades ensure you benefit from the latest features, bug fixes, and performance improvements.</p><p>
-#'         :If this is your first installation, follow the guide here: <a href='https://bymaxanjos.github.io/LCZ4r/articles/instalation_lcz4r_qgis.html'>Installing LCZ4r in QGIS</a></p><p> 
-#'         :To select a language, refer to: <a href='https://bymaxanjos.github.io/LCZ4r/articles/examples.html#multilingual-plugins'>Multilingual Plugin</a></p><p> 
-#' ALG_CREATOR:<a href='https://github.com/ByMaxAnjos'>Max Anjos</a> 
-#' ALG_HELP_CREATOR:<a href='https://bymaxanjos.github.io/LCZ4r/index.html'>LCZ4r project</a>  
+#' Upgrade: 如设为TRUE，将重新安装LCZ4r包的通用和本地函数。这将确保您使用包含重要更新和改进的最新版本。</p><p>
+#' in_folder: 指定从官方仓库下载脚本的目录。</p><p>
+#'          : 注意：此特定目录必须与<b>R脚本文件夹</b>相同(设置 > 选项... > 处理 > 提供者 > R)。
+#' ALG_DESC: 此功能可让您将LCZ4r包和语言插件升级至最新版本。定期升级可确保您获得最新功能、错误修复和性能改进。</p><p>
+#'         : 首次安装请遵循此指南: <a href='https://bymaxanjos.github.io/LCZ4r/articles/instalation_lcz4r_qgis.html'>在QGIS中安装LCZ4r</a></p<p>
+#'         : 选择语言请参考: <a href='https://bymaxanjos.github.io/LCZ4r/articles/examples.html#multilingual-plugins'>多语言插件</a></p<p>
+#' ALG_CREATOR:<a href='https://github.com/ByMaxAnjos'>Max Anjos</a>
+#' ALG_HELP_CREATOR:<a href='https://bymaxanjos.github.io/LCZ4r/index.html'>LCZ4r项目</a>
 #' ALG_VERSION: 0.1.1
 
 

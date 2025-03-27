@@ -1,12 +1,9 @@
 ##LCZ4r Setup Functions=group
 ##Install LCZ4r=display_name
 ##pass_filenames
-
-# Set the environment variable for standalone mode
-Sys.setenv(R_REMOTES_STANDALONE="true")
-remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
 ##QgsProcessingParameterBoolean|Install|Installing the LCZ4r in QGIS|True
 
+remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
 if(!require(interp)) install.packages("interp", type = "binary")
 if(!require(SparseM)) install.packages("SparseM", type = "binary")
 if(!require(ggiraph)) install.packages("ggiraph", type = "binary")

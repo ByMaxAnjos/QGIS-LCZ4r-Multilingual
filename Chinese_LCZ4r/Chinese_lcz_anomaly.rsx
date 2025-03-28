@@ -1,4 +1,4 @@
-##LCZ4r 本地函数=group
+##LCZ4r 局部功能=group
 ##计算LCZ异常=name
 ##pass_filenames
 ##QgsProcessingParameterRasterLayer|LCZ_map|输入LCZ地图|None

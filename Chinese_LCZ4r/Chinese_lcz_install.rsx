@@ -1,4 +1,4 @@
-##LCZ4r 设置函数=group
+##LCZ4r 配置功能=group
 ##安装LCZ4r=display_name
 ##pass_filenames
 ##QgsProcessingParameterBoolean|Install|在QGIS中安装LCZ4r|True

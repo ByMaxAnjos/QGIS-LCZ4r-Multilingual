@@ -1,4 +1,4 @@
-##LCZ4r Fonctions Générales=group
+##LCZ4r Allgemeine Funktionen=group
 ##LCZ-Karte herunterladen (Generator-Plattform)=display_name
 ##dont_load_any_packages
 ##pass_filenames 

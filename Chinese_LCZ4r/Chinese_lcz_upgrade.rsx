@@ -1,4 +1,4 @@
-##LCZ4r 设置函数=group
+##LCZ4r 配置功能=group
 ##升级LCZ4r=display_name
 ##dont_load_any_packages
 ##pass_filenames

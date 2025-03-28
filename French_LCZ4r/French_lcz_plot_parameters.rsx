@@ -1,4 +1,4 @@
-##LCZ4r Fonctions générales=group
+##LCZ4r Fonctions Générales=group
 ##Visualiser la carte des paramètres LCZ=name 
 ##dont_load_any_packages
 ##pass_filenames

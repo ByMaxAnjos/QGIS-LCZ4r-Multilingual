@@ -1,4 +1,4 @@
-##LCZ4r 一般功能=group
+##LCZ4r 通用功能=group
 ##生成 LCZ 参数=display_name
 ##dont_load_any_packages
 ##pass_filenames

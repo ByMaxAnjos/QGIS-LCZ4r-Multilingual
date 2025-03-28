@@ -1,4 +1,4 @@
-##LCZ4r 本地函数=group
+##LCZ4r 局部功能=group
 ##分析城市热岛强度=name
 ##pass_filenames
 # ------------------------------

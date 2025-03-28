@@ -1,4 +1,4 @@
-##LCZ4r Funciones generales=group
+##LCZ4r Funciones Generales=group
 ##Calcular Áreas LCZ=display_name
 ##dont_load_any_packages
 ##pass_filenames

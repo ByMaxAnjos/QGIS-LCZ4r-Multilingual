@@ -2,11 +2,13 @@
 ##LCZ4r aktualisieren=display_name
 ##dont_load_any_packages
 ##pass_filenames
-# Umgebungsvariable für den Standalone-Modus setzen
 ##QgsProcessingParameterBoolean|Upgrade|Aktualisierung des LCZ4r R-Pakets|False
 ##QgsProcessingParameterFile|in_folder|Ordner für die Skriptspeicherung auswählen|1
 ##QgsProcessingParameterEnum|Select_Language|Sprache auswählen|Englisch;Portugiesisch;Chinesisch;Spanisch;Deutsch;Französisch|-1|0|False
+
+
 if(Upgrade){
+remove.packages("LCZ4r")
 remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
 }
 

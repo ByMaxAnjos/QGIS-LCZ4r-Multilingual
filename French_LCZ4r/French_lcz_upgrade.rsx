@@ -2,11 +2,13 @@
 ##Mettre à jour LCZ4r=display_name
 ##dont_load_any_packages
 ##pass_filenames
-# Définir la variable d'environnement pour le mode autonome
 ##QgsProcessingParameterBoolean|Upgrade|Mise à jour du package R LCZ4r|False
 ##QgsProcessingParameterFile|in_folder|Sélectionner le dossier de stockage du script|1
 ##QgsProcessingParameterEnum|Select_Language|Sélectionnez votre langue|Anglais;Portugais;Chinois;Espagnol;Allemand;Français|-1|0|False
+
+
 if(Upgrade){
+remove.packages("LCZ4r")
 remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
 }
 

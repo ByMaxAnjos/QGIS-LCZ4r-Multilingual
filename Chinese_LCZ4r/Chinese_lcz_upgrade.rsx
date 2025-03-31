@@ -2,11 +2,12 @@
 ##升级LCZ4r=display_name
 ##dont_load_any_packages
 ##pass_filenames
-# 为独立模式设置环境变量
 ##QgsProcessingParameterBoolean|Upgrade|升级LCZ4r R包|False
 ##QgsProcessingParameterFile|in_folder|选择脚本存储文件夹|1
 ##QgsProcessingParameterEnum|Select_Language|选择语言|英语;葡萄牙语;中文;西班牙语;德语;法语|-1|0|False
+
 if(Upgrade){
+remove.packages("LCZ4r")
 remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
 }
 

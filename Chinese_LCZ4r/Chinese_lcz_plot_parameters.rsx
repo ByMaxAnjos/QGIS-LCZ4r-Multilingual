@@ -1,5 +1,5 @@
 ##LCZ4r 通用功能=group
-##可视化LCZ参数地图=name 
+##可视化LCZ参数地图=display_name 
 ##dont_load_any_packages
 ##pass_filenames
 ##QgsProcessingParameterRasterLayer|LCZ_map_parameter|输入LCZ参数地图|None

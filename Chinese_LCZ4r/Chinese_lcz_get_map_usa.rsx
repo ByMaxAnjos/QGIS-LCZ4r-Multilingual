@@ -1,5 +1,5 @@
 ##LCZ4r 通用功能=group
-##下载 LCZ 地图 (美国)=display_name
+##下载LCZ地图 (美国)=display_name
 ##dont_load_any_packages
 ##pass_filenames 
 ##QgsProcessingParameterString|City|输入城市名称|None|optional|true

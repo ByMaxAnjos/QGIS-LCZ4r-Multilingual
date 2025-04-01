@@ -59,7 +59,10 @@ for (script in script_files) {
   script_url <- paste0(base_url, folder_name, "/", script)
   dest_file <- file.path(in_folder, script)
 
-  # Download do script
+  # Ensure the file is deleted before downloading
+  if (file.exists(dest_file)) file.remove(dest_file)
+
+  # Download the script
   tryCatch({
     download.file(script_url, destfile = dest_file, mode = "wb", quiet = TRUE)
     source(dest_file)

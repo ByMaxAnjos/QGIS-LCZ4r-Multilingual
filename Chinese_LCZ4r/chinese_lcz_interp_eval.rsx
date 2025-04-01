@@ -1,5 +1,5 @@
 ##LCZ4r 局部功能=group
-##评估LCZ插值=name
+##评估LCZ插值=display_name
 ##pass_filenames
 ##QgsProcessingParameterRasterLayer|LCZ_map|输入LCZ地图|None
 ##QgsProcessingParameterFeatureSource|INPUT|输入数据|5

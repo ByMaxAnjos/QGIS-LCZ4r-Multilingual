@@ -1,5 +1,5 @@
 ##LCZ4r 局部功能=group
-##LCZ异常地图=name
+##LCZ异常地图=display_name
 ##pass_filenames
 ##QgsProcessingParameterRasterLayer|LCZ_map|输入LCZ地图|None
 ##QgsProcessingParameterFeatureSource|INPUT|输入数据|5

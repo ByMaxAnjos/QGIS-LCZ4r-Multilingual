@@ -1,5 +1,5 @@
 ##LCZ4r 局部功能=group
-##可视化插值LCZ地图=name
+##可视化插值LCZ地图=display_name
 ##dont_load_any_packages
 ##pass_filenames
 ##QgsProcessingParameterRasterLayer|Raster_interpolated|输入插值地图|None

@@ -1,5 +1,5 @@
 ##LCZ4r 局部功能=group
-##分析LCZ时间序列 = name
+##分析LCZ时间序列 = display_name
 ##pass_filenames
 ##QgsProcessingParameterRasterLayer|LCZ_map|输入LCZ地图|None
 ##QgsProcessingParameterFeatureSource|INPUT|输入数据|5

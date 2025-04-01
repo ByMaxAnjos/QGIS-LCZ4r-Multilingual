@@ -4,6 +4,7 @@
 ##QgsProcessingParameterBoolean|Install|在QGIS中安装LCZ4r|True
 
 remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
+
 if(!require(interp)) install.packages("interp", type = "binary")
 if(!require(SparseM)) install.packages("SparseM", type = "binary")
 if(!require(ggiraph)) install.packages("ggiraph", type = "binary")

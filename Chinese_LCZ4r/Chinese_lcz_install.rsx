@@ -3,7 +3,9 @@
 ##pass_filenames
 ##QgsProcessingParameterBoolean|Install|在QGIS中安装LCZ4r|True
 
-remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
+if(!require(pak)) {install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))}
+
+pak::pkg_install("ByMaxAnjos/LCZ4r")
 
 if(!require(interp)) install.packages("interp", type = "binary")
 if(!require(SparseM)) install.packages("SparseM", type = "binary")

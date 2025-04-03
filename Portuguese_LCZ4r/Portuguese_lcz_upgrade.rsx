@@ -7,8 +7,7 @@
 ##QgsProcessingParameterEnum|Select_Language|Selecione seu idioma|Inglês;Português;Chinês;Espanhol;Alemão;Francês|-1|0|False
 
 if(Upgrade){
-remove.packages("LCZ4r")
-remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
+pak::pkg_install("ByMaxAnjos/LCZ4r")
 }
 
 Languages <- c("English", "Portuguese", "Chinese", "Spanish", "Deutsch", "French")

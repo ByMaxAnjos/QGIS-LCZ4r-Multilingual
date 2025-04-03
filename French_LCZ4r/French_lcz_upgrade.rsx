@@ -8,8 +8,7 @@
 
 
 if(Upgrade){
-remove.packages("LCZ4r")
-remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
+pak::pkg_install("ByMaxAnjos/LCZ4r")
 }
 
 Languages <- c("English", "Portuguese", "Chinese", "Spanish", "Deutsch", "French")

@@ -14,7 +14,7 @@ pak::pkg_install("ByMaxAnjos/LCZ4r")
 Languages <- c("English", "Portuguese", "Chinese", "Spanish", "Deutsch", "French")
 
 if (!is.null(Select_Language) && Select_Language >= 0 && Select_Language < length(Languages)) {
-  result_language <- Languages[Select_Language + 1] # Alinhado com indexação baseada em 1 do R
+  result_language <- Languages[Select_Language + 1]
 } else {
   stop("Invalid language selection. Please choose the correct language")
 }
@@ -60,7 +60,7 @@ for (script in script_files) {
   dest_file <- file.path(in_folder, script)
 
   # Ensure the file is deleted before downloading
-  if (file.exists(dest_file)) file.remove(dest_file)
+  file.remove(dest_file)
 
   # Download the script
   tryCatch({

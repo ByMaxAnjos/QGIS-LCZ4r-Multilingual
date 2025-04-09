@@ -7,8 +7,8 @@
 ##QgsProcessingParameterField|station_id|Stationen identifizierende Spalte|Tabelle|INPUT|-1|False|False
 ##QgsProcessingParameterString|Date_start|Startdatum|TT-MM-JJJJ|False
 ##QgsProcessingParameterString|Date_end|Enddatum|TT-MM-JJJJ|False
-##QgsProcessingParameterString|Time_frequency|Zeitliche Auflösung|Stunde|False
-##QgsProcessingParameterEnum|Select_extract_type|Extraktionsmethode auswählen|einfach;zweistufig;bilinear|-1|0|False
+##QgsProcessingParameterEnum|Time_frequency|Zeitfrequenz|Stunde;Tag;Sommerzeittag;Woche;Monat;Saison;Quartal;Jahr|-1|0|False
+##QgsProcessingParameterEnum|Select_extract_type|Extraktionsmethode auswählen|einfach;zweistufig;bilinear|-1|2|False
 ##QgsProcessingParameterEnum|Split_data_by|Daten aufteilen nach|Jahr;Saison;SaisonJahr;Monat;MonatJahr;Wochentag;Wochenende;Sommerzeit;Stunde;Tageslicht;Tageslicht-Monat;Tageslicht-Saison;Tageslicht-Jahr|-1|None|True
 ##QgsProcessingParameterEnum|Impute_missing_values|Fehlende Werte ersetzen|Mittelwert;Median;knn;bag|-1|None|True
 ##QgsProcessingParameterEnum|Select_plot_type|Diagrammtyp auswählen|einfache_Linie;facettierte_Linie;Heatmap;Erwärmungsstreifen|-1|0|False
@@ -33,6 +33,14 @@ library(terra)
 library(lubridate)
 library(ggiraph)
 library(htmlwidgets)
+
+#Check extract method type
+time_options <- c("hour", "day", "DSTday", "week", "month", "season", "quater", "year")
+if (!is.null(Time_frequency) && Time_frequency >= 0 && Time_frequency < length(time_options)) {
+  result_time <- time_options[Time_frequency + 1]  # Add 1 to align with R's 1-based indexing
+} else {
+  result_time <- NULL  
+}
 
 #Check extract method type
 select_extract <- c("simple", "two.step", "bilinear")
@@ -160,7 +168,7 @@ if (Save_as_plot == TRUE) {
 #' station_id: Die Spalte im Datenrahmen zur Identifizierung der Wetterstationen (z.B. station, site, id).
 #' Date_start: Startdatum für die Analyse im Format <b>TT-MM-JJJJ [01-09-1986]</b>.
 #' Date_end: Enddatum im gleichen Format wie Startdatum.
-#' Time_frequency: Definiert die zeitliche Auflösung für die Mittelwertbildung. Standard ist "Stunde". Unterstützte Auflösungen: "Tag", "Woche", "Monat" oder "Jahr". Benutzerdefinierte Optionen wie "3 Tage", "2 Wochen" etc. sind möglich.
+#' Time_frequency: Definiert die zeitliche Auflösung für Durchschnittsberechnungen. Standardmäßig Stunde. Unterstützte Auflösungen: Stunde, Tag, Sommerzeittag, Woche, Monat, Quartal und Jahr.
 #' Select_extract_type: Zeichenkette zur Auswahl der Methode zur Zuweisung der LCZ-Klasse zu jeder Station. Standard ist "einfach". Verfügbare Methoden:</p><p>
 #'      :1. <b>einfach</b>: Weist die LCZ-Klasse basierend auf dem Rasterzellenwert zu, in dem der Punkt liegt. Wird oft in Beobachtungsnetzen mit geringer Dichte verwendet.</p><p>
 #'      :2. <b>zweistufig</b>: Weist LCZs zu Stationen zu, während solche in heterogenen LCZ-Bereichen herausgefiltert werden. Diese Methode erfordert, dass mindestens 80% der Pixel innerhalb eines 5×5-Kerns mit dem LCZ des Mittelpunkt-Pixels übereinstimmen (Daniel et al., 2017). Diese Methode reduziert die Anzahl der Stationen und wird oft in ultra- und hochdichten Beobachtungsnetzen verwendet.</p><p>

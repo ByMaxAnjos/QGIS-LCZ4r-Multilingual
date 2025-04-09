@@ -1,25 +1,14 @@
 ##LCZ4r Funções Locais=group
 ##Analisar Intensidade de Ilha de Calor Urbana=name
 ##pass_filenames
-# ------------------------------
-# **1. Parâmetros de Dados de Entrada**
-# ------------------------------
 ##QgsProcessingParameterRasterLayer|LCZ_map|Insira o mapa LCZ|None
 ##QgsProcessingParameterFeatureSource|INPUT|Dados de entrada|5
 ##QgsProcessingParameterField|variable|Coluna da variável alvo|Tabela|INPUT|-1|False|False
 ##QgsProcessingParameterField|station_id|Coluna de identificação das estações|Tabela|INPUT|-1|False|False
-
-# ------------------------------
-# **2. Parâmetros de Período**
-# ------------------------------
 ##QgsProcessingParameterString|Date_start|Data inicial|DD-MM-AAAA|False
 ##QgsProcessingParameterString|Date_end|Data final|DD-MM-AAAA|False
-##QgsProcessingParameterString|Time_frequency|Frequência temporal|hora|False
+##QgsProcessingParameterEnum|Time_frequency|Frequência Temporal|hora;dia;dia_de_verão;semana;mês;estação;trimestre;ano|-1|0|False
 ##QgsProcessingParameterEnum|Impute_missing_values|Imputar valores faltantes|média;mediana;knn;bag|-1|None|True
-
-# ------------------------------
-# **3. Opções de Processamento**
-# ------------------------------
 ##QgsProcessingParameterEnum|Method|Selecione o método ICU|LCZ;manual|-1|0|False
 ##QgsProcessingParameterBoolean|Group_urban_and_rural_temperatures|Exibir estações urbanas e rurais|True
 ##QgsProcessingParameterEnum|Select_extract_type|Método de extração|simples;dois.passos;bilinear|-1|0|False
@@ -37,6 +26,7 @@
 ##QgsProcessingParameterNumber|dpi|Resolução (DPI)|QgsProcessingParameterNumber.Integer|300
 ##QgsProcessingParameterBoolean|Save_as_plot|Salvar como gráfico|True
 ##QgsProcessingParameterFileDestination|Output|Salvar imagem|Arquivos PNG (*.png)
+
 library(LCZ4r)
 library(sf)
 library(ggplot2)
@@ -45,7 +35,12 @@ library(lubridate)
 library(ggiraph)
 library(htmlwidgets)
 
-
+time_options <- c("hour", "day", "DSTday", "week", "month", "season", "quater", "year")
+if (!is.null(Time_frequency) && Time_frequency >= 0 && Time_frequency < length(time_options)) {
+  result_time <- time_options[Time_frequency + 1]  # Add 1 to align with R's 1-based indexing
+} else {
+  result_time <- NULL  
+}
 #Check extract method type
 uhi_methods <- c("LCZ", "manual")
 if (!is.null(Method) && Method >= 0 && Method < length(uhi_methods)) {
@@ -102,7 +97,7 @@ formatted_end <- format(as.Date(Date_end, format = "%d-%m-%Y"), "%d/%m/%Y")
 if (Save_as_plot == TRUE) {
         plot_uhi <- lcz_uhi_intensity(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
                         start = formatted_start, end = formatted_end,
-                        time.freq = Time_frequency, 
+                        time.freq = result_time, 
                         by = result_by,
                         extract.method = result_extract,
                         method = result_method,
@@ -147,7 +142,7 @@ if (Save_as_plot == TRUE) {
     } else {
         tbl_uhi <- lcz_uhi_intensity(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
                          start = formatted_start, end = formatted_end,
-                        time.freq = Time_frequency, 
+                        time.freq = result_time, 
                         by = result_by,
                         extract.method = result_extract,
                         method = result_method,
@@ -171,7 +166,7 @@ if (Save_as_plot == TRUE) {
 #' station_id: Coluna identificando estações meteorológicas (ex: station, site, id).
 #' Date_start: Data de início no formato <b>DD-MM-AAAA [01-09-1986]</b>.
 #' Date_end: Data final no mesmo formato.
-#' Time_frequency: Resolução temporal para média. Padrão "hora". Opções: "dia", "semana", "mês" ou "ano". Opções personalizadas como "3 dias", "2 semanas", etc.
+#' Time_frequency: Define a resolução temporal para cálculo de médias. O padrão é hora. Resoluções suportadas incluem: hora, dia, dia_de_verão, semana, mês, trimestre e ano.
 #' Impute_missing_values: Método para imputar valores faltantes ("média", "mediana", "knn", "bag").
 #' Select_extract_type: Método para atribuir classe LCZ a estações. Padrão "simples". Métodos:</p><p>
 #'      :1. <b>simples</b>: Atribui classe LCZ baseada no valor da célula raster. Usado em redes de baixa densidade.</p><p>

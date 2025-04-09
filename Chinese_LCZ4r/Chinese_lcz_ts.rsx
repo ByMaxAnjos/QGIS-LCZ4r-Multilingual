@@ -7,8 +7,8 @@
 ##QgsProcessingParameterField|station_id|站点标识列|表格|INPUT|-1|False|False
 ##QgsProcessingParameterString|Date_start|开始日期|DD-MM-YYYY|False
 ##QgsProcessingParameterString|Date_end|结束日期|DD-MM-YYYY|False
-##QgsProcessingParameterString|Time_frequency|时间频率|小时|False
-##QgsProcessingParameterEnum|Select_extract_type|选择提取方法|简单;两步;双线性|-1|0|False
+##QgsProcessingParameterEnum|Time_frequency|时间频率|小时;天;夏令时天;周;月;季节;季度;年|-1|0|False
+##QgsProcessingParameterEnum|Select_extract_type|选择提取方法|简单;两步;双线性|-1|2|False
 ##QgsProcessingParameterEnum|Split_data_by|数据分组方式|年;季节;季节年;月;月年;工作日;周末;夏令时;小时;日光;日光-月;日光-季节;日光-年|-1|None|True
 ##QgsProcessingParameterEnum|Impute_missing_values|缺失值填补|平均值;中位数;knn;bag|-1|None|True
 ##QgsProcessingParameterEnum|Select_plot_type|选择图表类型|基础折线;分面折线;热力图;变暖条纹|-1|0|False
@@ -32,6 +32,14 @@ library(terra)
 library(lubridate)
 library(ggiraph)
 library(htmlwidgets)
+
+#Check extract method type
+time_options <- c("hour", "day", "DSTday", "week", "month", "season", "quater", "year")
+if (!is.null(Time_frequency) && Time_frequency >= 0 && Time_frequency < length(time_options)) {
+  result_time <- time_options[Time_frequency + 1]  # Add 1 to align with R's 1-based indexing
+} else {
+  result_time <- NULL  
+}
 
 #Check extract method type
 select_extract <- c("simple", "two.step", "bilinear")
@@ -96,7 +104,7 @@ formatted_end <- format(as.Date(Date_end, format = "%d-%m-%Y"), "%d/%m/%Y")
 if (Save_as_plot == TRUE) {
         plot_ts <- LCZ4r::lcz_ts(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
                           start = formatted_start, end = formatted_end,
-                          time.freq = Time_frequency,
+                          time.freq = result_time,
                           extract.method = result_extract,
                           smooth=Smooth_trend_line,
                           by = result_by,
@@ -141,77 +149,13 @@ if (Save_as_plot == TRUE) {
     } else {
         tbl_ts <- LCZ4r::lcz_ts(LCZ_map, data_frame = my_table, var = variable, station_id = station_id,
                          start = formatted_start, end = formatted_end,
-                         time.freq = Time_frequency,
+                         time.freq = result_time,
                          extract.method = result_extract,
                          by = result_by,
                          iplot = FALSE)
         write.csv(tbl_ts, Output, row.names = FALSE)
     }
-# Generate data.frame ----
 
-INPUT$date <-lubridate::as_datetime(INPUT$date)
-
-LCZ_map <- terra::rast(LCZ_map)
-LCZ_map <-terra::project(LCZ_map, "+proj=longlat +datum=WGS84 +no_defs")
-
-# Convert to "d/m/y" format
-formatted_start <- format(as.Date(Date_start, format = "%d-%m-%Y"), "%d/%m/%Y")
-formatted_end <- format(as.Date(Date_end, format = "%d-%m-%Y"), "%d/%m/%Y")
-
-if (Save_as_plot == TRUE) {
-        plot_ts <- LCZ4r::lcz_ts(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
-                          start = formatted_start, end = formatted_end,
-                          time.freq = Time_frequency,
-                          extract.method = result_extract,
-                          smooth=Smooth_trend_line,
-                          by = result_by,
-                          plot_type=result_plot,
-                          impute = result_imputes,
-                          legend_name=Legend_name,
-                          palette = result_colors,
-                          iplot = TRUE, title = Title, caption = Caption, xlab = xlab, ylab = ylab)
-# Plot visualization
-    if (display) {
-        # Save the interactive plot as an HTML file
-    html_file <- file.path(tempdir(), "LCZ4rPlot.html")
-    ggiraph::girafe(
-    ggobj = plot_ts,
-    width_svg = 16,
-    height_svg = 9,
-    options = list(
-    opts_sizing(rescale = TRUE, width = 1),
-    opts_tooltip(css = "background-color:white; color:black; font-size:120%; padding:10px;"),
-    opts_hover_inv(css = "opacity:0.5;"),
-    opts_hover(css = "cursor:pointer; opacity: 0.8;"),
-    opts_zoom(min = 0.5, max = 2)
-  )
-) %>%
-  htmlwidgets::saveWidget(
-  file = html_file,
-  selfcontained = FALSE, # Ensures all dependencies are embedded
-  libdir = NULL, # Keep dependencies inline
-  title = "LCZ4r Visualization"
-)
-
-    # Add caption
-    cat('<p style="text-align:right; font-size:16px;">',
-    'LCZ4r Project: <a href="https://bymaxanjos.github.io/LCZ4r/index.html" target="_blank">by Max Anjos</a>',
-    '</p>', sep = "\n", file = html_file, append = TRUE)
-
-    # Open the HTML file in the default web browser
-    utils::browseURL(html_file)
-    }
-
-        ggsave(Output, plot_ts, height = Height, width = Width, dpi = dpi)
-    } else {
-        tbl_ts <- LCZ4r::lcz_ts(LCZ_map, data_frame = my_table, var = variable, station_id = station_id,
-                         start = formatted_start, end = formatted_end,
-                         time.freq = Time_frequency,
-                         extract.method = result_extract,
-                         by = result_by,
-                         iplot = FALSE)
-        write.csv(tbl_ts, Output, row.names = FALSE)
-    }
 #' LCZ_map: 从<em>下载LCZ地图</em>函数派生的<b>SpatRaster</b>对象。
 #' INPUT: 包含环境变量数据的框架(.csv),结构如下:</p><p>
 #'      :1. <b>date</b>: 包含日期时间信息的列。确保列名为<code style='background-color: lightblue;'>date|time|timestamp|datetime</code>;</p><p>
@@ -224,7 +168,7 @@ if (Save_as_plot == TRUE) {
 #' station_id: 数据框架中识别气象站的列(如station, site, id)。
 #' Date_start: 指定分析开始日期。格式应为<b>DD-MM-YYYY [01-09-1986]</b>。
 #' Date_end: 结束日期,格式与开始日期相同。
-#' Time_frequency: 定义平均的时间分辨率。默认为"小时"。支持的分辨率包括:"天","周","月"或"年"。自定义选项如"3天","2周"等。
+#' Time_frequency: 定义用于计算平均值的时间分辨率。默认为小时。支持的分辨率包括：小时、天、夏令时天、周、月、季度以及年。
 #' Select_extract_type: 指定用于将LCZ类分配给每个站点点的方法。默认为"简单"。可用方法:</p><p>
 #'      :1. <b>简单</b>: 根据点所在栅格单元格的值分配LCZ类。常用于低密度观测网络。</p><p>
 #'      :2. <b>两步</b>: 在过滤掉位于异质LCZ区域的站点的同时分配LCZ。此方法要求5×5内核中至少80%的像素与中心像素的LCZ匹配(Daniel等,2017)。注意此方法会减少站点数量。常用于超高密度观测网络。</p><p>

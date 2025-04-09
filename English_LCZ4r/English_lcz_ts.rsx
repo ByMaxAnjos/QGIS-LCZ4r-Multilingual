@@ -106,7 +106,7 @@ formatted_end <- format(as.Date(Date_end, format = "%d-%m-%Y"), "%d/%m/%Y")
 if (Save_as_plot == TRUE) {
         plot_ts <- LCZ4r::lcz_ts(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
                           start = formatted_start, end = formatted_end,
-                          time.freq = Time_frequency,
+                          time.freq = result_time,
                           extract.method = result_extract,
                           smooth=Smooth_trend_line,
                           by = result_by,

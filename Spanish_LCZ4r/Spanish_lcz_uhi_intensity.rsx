@@ -7,7 +7,7 @@
 ##QgsProcessingParameterField|station_id|Columna de identificación de estaciones|Tabla|INPUT|-1|False|False
 ##QgsProcessingParameterString|Date_start|Fecha de inicio|DD-MM-AAAA|False
 ##QgsProcessingParameterString|Date_end|Fecha de fin|DD-MM-AAAA|False
-##QgsProcessingParameterString|Time_frequency|Frecuencia temporal|hora|False
+##QgsProcessingParameterEnum|Time_frequency|Frecuencia Temporal|hora;día;día_de_verano;semana;mes;temporada;trimestre;año|-1|0|False
 ##QgsProcessingParameterEnum|Impute_missing_values|Imputar valores faltantes|media;mediana;knn;bag|-1|None|True
 ##QgsProcessingParameterEnum|Method|Seleccione método ICU|LCZ;manual|-1|0|False
 ##QgsProcessingParameterBoolean|Group_urban_and_rural_temperatures|Mostrar estaciones urbanas y rurales|True
@@ -34,7 +34,13 @@ library(lubridate)
 library(ggiraph)
 library(htmlwidgets)
 
-
+#Check extract method type
+time_options <- c("hour", "day", "DSTday", "week", "month", "season", "quater", "year")
+if (!is.null(Time_frequency) && Time_frequency >= 0 && Time_frequency < length(time_options)) {
+  result_time <- time_options[Time_frequency + 1]  # Add 1 to align with R's 1-based indexing
+} else {
+  result_time <- NULL  
+}
 #Check extract method type
 uhi_methods <- c("LCZ", "manual")
 if (!is.null(Method) && Method >= 0 && Method < length(uhi_methods)) {
@@ -91,7 +97,7 @@ formatted_end <- format(as.Date(Date_end, format = "%d-%m-%Y"), "%d/%m/%Y")
 if (Save_as_plot == TRUE) {
         plot_uhi <- lcz_uhi_intensity(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
                         start = formatted_start, end = formatted_end,
-                        time.freq = Time_frequency, 
+                        time.freq = result_time, 
                         by = result_by,
                         extract.method = result_extract,
                         method = result_method,
@@ -136,7 +142,7 @@ if (Save_as_plot == TRUE) {
     } else {
         tbl_uhi <- lcz_uhi_intensity(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
                          start = formatted_start, end = formatted_end,
-                        time.freq = Time_frequency, 
+                        time.freq = result_time, 
                         by = result_by,
                         extract.method = result_extract,
                         method = result_method,
@@ -159,7 +165,7 @@ if (Save_as_plot == TRUE) {
 #' station_id: Columna identificando estaciones meteorológicas (ej: station, site, id).
 #' Date_start: Fecha de inicio en formato <b>DD-MM-AAAA [01-09-1986]</b>.
 #' Date_end: Fecha final en mismo formato.
-#' Time_frequency: Resolución temporal para promedio. Por defecto "hora". Opciones: "día", "semana", "mes" o "año". Opciones personalizadas como "3 días", "2 semanas", etc.
+#' Time_frequency: Define la resolución temporal para promediar. Por defecto hora. Resoluciones soportadas: hora, día, día_de_verano, semana, mes, trimestre y año.
 #' Impute_missing_values: Método para imputar valores faltantes ("media", "mediana", "knn", "bag").
 #' Select_extract_type: Método para asignar clase LCZ a estaciones. Por defecto "simple". Métodos:</p><p>
 #'      :1. <b>simple</b>: Asigna clase LCZ basada en valor de celda raster. Usado en redes de baja densidad.</p><p>

@@ -1,25 +1,14 @@
 ##LCZ4r 局部功能=group
 ##分析城市热岛强度=display_name
 ##pass_filenames
-# ------------------------------
-# **1. 输入数据参数**
-# ------------------------------
 ##QgsProcessingParameterRasterLayer|LCZ_map|输入LCZ地图|None
 ##QgsProcessingParameterFeatureSource|INPUT|输入数据|5
 ##QgsProcessingParameterField|variable|目标变量列|表格|INPUT|-1|False|False
 ##QgsProcessingParameterField|station_id|站点标识列|表格|INPUT|-1|False|False
-
-# ------------------------------
-# **2. 时间范围参数**
-# ------------------------------
 ##QgsProcessingParameterString|Date_start|开始日期|DD-MM-YYYY|False
 ##QgsProcessingParameterString|Date_end|结束日期|DD-MM-YYYY|False
-##QgsProcessingParameterString|Time_frequency|时间频率|小时|False
+##QgsProcessingParameterEnum|Time_frequency|时间频率|小时;天;夏令时天;周;月;季节;季度;年|-1|0|False
 ##QgsProcessingParameterEnum|Impute_missing_values|缺失值填补|平均值;中位数;knn;bag|-1|None|True
-
-# ------------------------------
-# **3. 数据处理选项**
-# ------------------------------
 ##QgsProcessingParameterEnum|Method|选择UHI方法|LCZ;手动|-1|0|False
 ##QgsProcessingParameterBoolean|Group_urban_and_rural_temperatures|显示城乡站点|True
 ##QgsProcessingParameterEnum|Select_extract_type|选择提取方法|简单;两步;双线性|-1|0|False
@@ -45,6 +34,13 @@ library(lubridate)
 library(ggiraph)
 library(htmlwidgets)
 
+#Check extract method type
+time_options <- c("hour", "day", "DSTday", "week", "month", "season", "quater", "year")
+if (!is.null(Time_frequency) && Time_frequency >= 0 && Time_frequency < length(time_options)) {
+  result_time <- time_options[Time_frequency + 1]  # Add 1 to align with R's 1-based indexing
+} else {
+  result_time <- NULL  
+}
 
 #Check extract method type
 uhi_methods <- c("LCZ", "manual")
@@ -102,7 +98,7 @@ formatted_end <- format(as.Date(Date_end, format = "%d-%m-%Y"), "%d/%m/%Y")
 if (Save_as_plot == TRUE) {
         plot_uhi <- lcz_uhi_intensity(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
                         start = formatted_start, end = formatted_end,
-                        time.freq = Time_frequency, 
+                        time.freq = result_time, 
                         by = result_by,
                         extract.method = result_extract,
                         method = result_method,
@@ -147,7 +143,7 @@ if (Save_as_plot == TRUE) {
     } else {
         tbl_uhi <- lcz_uhi_intensity(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
                          start = formatted_start, end = formatted_end,
-                        time.freq = Time_frequency, 
+                        time.freq = result_time, 
                         by = result_by,
                         extract.method = result_extract,
                         method = result_method,
@@ -171,7 +167,7 @@ if (Save_as_plot == TRUE) {
 #' station_id: 数据框架中识别气象站的列(如station, site, id)。
 #' Date_start: 指定分析开始日期。格式应为<b>DD-MM-YYYY [01-09-1986]</b>。
 #' Date_end: 结束日期,格式与开始日期相同。
-#' Time_frequency: 定义平均的时间分辨率。默认为"小时"。支持的分辨率包括:"天","周","月"或"年"。自定义选项如"3天","2周"等。
+#' Time_frequency: 定义用于计算平均值的时间分辨率。默认为小时。支持的分辨率包括：小时、天、夏令时天、周、月、季度以及年。
 #' Impute_missing_values: 填补缺失值的方法("平均值","中位数","knn","bag")。
 #' Select_extract_type: 指定用于将LCZ类分配给每个站点的方法。默认为"简单"。可用方法:</p><p>
 #'      :1. <b>简单</b>: 根据点所在栅格单元格的值分配LCZ类。常用于低密度观测网络。</p><p>

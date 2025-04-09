@@ -7,8 +7,8 @@
 ##QgsProcessingParameterField|station_id|Colonne d'identification des stations|Table|INPUT|-1|False|False
 ##QgsProcessingParameterString|Date_start|Date de début|JJ-MM-AAAA|False
 ##QgsProcessingParameterString|Date_end|Date de fin|JJ-MM-AAAA|False
-##QgsProcessingParameterString|Time_frequency|Fréquence temporelle|heure|False
-##QgsProcessingParameterEnum|Select_extract_type|Sélectionnez la méthode d'extraction|simple;deux.étapes;bilinéaire|-1|0|False
+##QgsProcessingParameterEnum|Time_frequency|Fréquence Temporelle|heure;jour;jour_d'été;semaine;mois;saison;trimestre;année|-1|0|False
+##QgsProcessingParameterEnum|Select_extract_type|Sélectionnez la méthode d'extraction|simple;deux.étapes;bilinéaire|-1|2|False
 ##QgsProcessingParameterEnum|Split_data_by|Diviser les données par|année;saison;saisonannée;mois;moisannée;jour.semaine;week-end;heure.été;heure;journée;journée-mois;journée-saison;journée-année|-1|None|True
 ##QgsProcessingParameterEnum|Impute_missing_values|Imputer les valeurs manquantes|moyenne;médiane;knn;bag|-1|None|True
 ##QgsProcessingParameterEnum|Select_plot_type|Sélectionnez le type de graphique|ligne.de.base;ligne.facette;carte.de.chaleur;rayures.de.réchauffement|-1|0|False
@@ -33,6 +33,13 @@ library(terra)
 library(lubridate)
 library(ggiraph)
 library(htmlwidgets)
+#Check extract method type
+time_options <- c("hour", "day", "DSTday", "week", "month", "season", "quater", "year")
+if (!is.null(Time_frequency) && Time_frequency >= 0 && Time_frequency < length(time_options)) {
+  result_time <- time_options[Time_frequency + 1]  # Add 1 to align with R's 1-based indexing
+} else {
+  result_time <- NULL  
+}
 
 #Check extract method type
 select_extract <- c("simple", "two.step", "bilinear")
@@ -97,7 +104,7 @@ formatted_end <- format(as.Date(Date_end, format = "%d-%m-%Y"), "%d/%m/%Y")
 if (Save_as_plot == TRUE) {
         plot_ts <- LCZ4r::lcz_ts(LCZ_map, data_frame = INPUT, var = variable, station_id = station_id,
                           start = formatted_start, end = formatted_end,
-                          time.freq = Time_frequency,
+                          time.freq = result_time,
                           extract.method = result_extract,
                           smooth=Smooth_trend_line,
                           by = result_by,
@@ -142,7 +149,7 @@ if (Save_as_plot == TRUE) {
     } else {
         tbl_ts <- LCZ4r::lcz_ts(LCZ_map, data_frame = my_table, var = variable, station_id = station_id,
                          start = formatted_start, end = formatted_end,
-                         time.freq = Time_frequency,
+                         time.freq = result_time,
                          extract.method = result_extract,
                          by = result_by,
                          iplot = FALSE)
@@ -160,7 +167,7 @@ if (Save_as_plot == TRUE) {
 #' station_id: Colonne identifiant les stations météorologiques (ex: station, site, id).
 #' Date_start: Date de début d'analyse au format <b>JJ-MM-AAAA [01-09-1986]</b>.
 #' Date_end: Date de fin dans le même format.
-#' Time_frequency: Résolution temporelle pour la moyenne. Par défaut "heure". Options: "jour", "semaine", "mois" ou "année". Options personnalisées comme "3 jours", "2 semaines", etc.
+#' Time_frequency: Définit la résolution temporelle pour le calcul des moyennes. Par défaut heure. Résolutions supportées : heure, jour, jour_d'été, semaine, mois, trimestre et année.
 #' Select_extract_type: Méthode d'assignation des classes LCZ aux stations. Par défaut "simple". Méthodes disponibles:</p><p>
 #'      :1. <b>simple</b>: Assignation basée sur la valeur de la cellule raster où se trouve le point. Utilisé dans les réseaux d'observation de faible densité.</p><p>
 #'      :2. <b>deux.étapes</b>: Assignation des LCZ en filtrant les stations en zones LCZ hétérogènes. Nécessite ≥80% de pixels concordants dans un noyau 5×5 (Daniel et al., 2017). Réduit le nombre de stations. Utilisé dans les réseaux ultra et haute densité.</p><p>

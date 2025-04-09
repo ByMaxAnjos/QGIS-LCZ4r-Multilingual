@@ -234,7 +234,7 @@ if(Select_hour != "") {
 #' station_id: Die Spalte zur Identifizierung der Wetterstationen (z.B. station, site, id).
 #' Date_start: Startdatum für die Analyse im Format <b>TT-MM-JJJJ [01-09-1986]</b>.
 #' Date_end: Enddatum im gleichen Format wie Startdatum.
-#' Time_frequency: Zeitliche Auflösung für die Mittelwertbildung. Standard ist "Stunde". Unterstützte Auflösungen: "Stunde", "Tag", "SommerzeitTag", "Woche", "Monat", "Quartal" oder "Jahr".
+#' Time_frequency: Definiert die zeitliche Auflösung für Durchschnittsberechnungen. Standardmäßig Stunde. Unterstützte Auflösungen: Stunde, Tag, Sommerzeittag, Woche, Monat, Quartal und Jahr.
 #' Select_extract_type: Methode zur Zuweisung der LCZ-Klasse zu Stationen. Standard ist "einfach". Verfügbare Methoden:</p><p>
 #'      :1. <b>einfach</b>: Weist die LCZ-Klasse basierend auf dem Rasterzellenwert zu. Wird in Beobachtungsnetzen mit geringer Dichte verwendet.</p><p>
 #'      :2. <b>zweistufig</b>: Weist LCZs zu Stationen zu und filtert solche in heterogenen LCZ-Bereichen heraus. Erfordert ≥80% übereinstimmende Pixel in einem 5×5-Kernel (Daniel et al., 2017). Reduziert die Anzahl der Stationen. Für ultra- und hochdichte Netze.</p><p>

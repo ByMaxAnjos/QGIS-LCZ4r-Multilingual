@@ -59,7 +59,7 @@ for (script in script_files) {
   dest_file <- file.path(in_folder, script)
 
   # Ensure the file is deleted before downloading
-  if (file.exists(dest_file)) file.remove(dest_file)
+  file.remove(dest_file)
 
   # Download the script
   tryCatch({

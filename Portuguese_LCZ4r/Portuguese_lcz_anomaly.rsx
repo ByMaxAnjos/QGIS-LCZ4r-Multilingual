@@ -234,7 +234,7 @@ if(Select_hour != "") {
 #' station_id: Coluna identificando estações meteorológicas (ex: station, site, id).
 #' Date_start: Data de início no formato <b>DD-MM-AAAA [01-09-1986]</b>.
 #' Date_end: Data final no mesmo formato.
-#' Time_frequency: Resolução temporal para média. Padrão "hora". Opções: "hora", "dia", "dia.verão", "semana", "mês", "trimestre" ou "ano".
+#' Time_frequency: Define a resolução temporal para cálculo de médias. O padrão é hora. Resoluções suportadas incluem: hora, dia, dia_de_verão, semana, mês, trimestre e ano.
 #' Select_extract_type: Método para atribuir classe LCZ a estações. Padrão "simples". Métodos:</p><p>
 #'      :1. <b>simples</b>: Atribui classe LCZ baseada no valor da célula raster. Usado em redes de baixa densidade.</p><p>
 #'      :2. <b>dois.passos</b>: Atribui LCZs filtrando estações em áreas heterogêneas. Requer ≥80% de pixels correspondentes em kernel 5×5 (Daniel et al., 2017). Reduz número de estações. Para redes ultra e alta densidade.</p><p>

@@ -8,7 +8,8 @@
 
 
 if(Upgrade){
-pak::pkg_install("ByMaxAnjos/LCZ4r")
+if(!require(remotes)) install.packages("remotes")
+remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
 }
 
 Languages <- c("English", "Portuguese", "Chinese", "Spanish", "Deutsch", "French")
@@ -59,8 +60,10 @@ for (script in script_files) {
   script_url <- paste0(base_url, folder_name, "/", script)
   dest_file <- file.path(in_folder, script)
 
-  # Ensure the file is deleted before downloading
-  file.remove(dest_file)
+    # Check if the file exists and delete it before downloading, except for upgrade files.
+  if (file.exists(dest_file) && !grepl("upgrade", script, ignore.case = TRUE)) {
+    file.remove(dest_file)
+  }
 
   # Download the script
   tryCatch({

@@ -21,7 +21,12 @@ if (!is.null(Select_Language) && Select_Language >= 0 && Select_Language < lengt
 }
 
 folder_name <- switch(result_language,
-  "English"   = "English_LCZ4r"
+  "English"   = "English_LCZ4r",
+  "Portuguese"   = "Portuguese_LCZ4r",
+  "Chinese"   = "Chinese_LCZ4r",
+  "Spanish"   = "Spanish_LCZ4r",
+  "Deutsch"   = "Deutsch_LCZ4r",
+  "French"   = "French_LCZ4r"
 )
 
 script_files <- switch(result_language,
@@ -61,7 +66,7 @@ for (script in script_files) {
   dest_file <- file.path(in_folder, script)
 
    # Check if the file exists and delete it before downloading, except for upgrade files.
-  if (file.exists(dest_file) && !grepl("upgrade", script, ignore.case = TRUE)) {
+  if (file.exists(dest_file) && !grepl("upgrade.rsx", script, ignore.case = TRUE)) {
     file.remove(dest_file)
   }
 

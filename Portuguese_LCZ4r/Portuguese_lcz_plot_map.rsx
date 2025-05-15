@@ -6,7 +6,7 @@
 ##QgsProcessingParameterBoolean|display|Visualizar gráfico (.html)|True
 ##QgsProcessingParameterString|Title|Título|Zonas Climáticas Locais|optional|true
 ##QgsProcessingParameterString|Subtitle|Subtítulo|Minha Cidade|optional|true
-##QgsProcessingParameterString|Caption|Legenda|Fonte: LCZ4r, 2024.|optional|true
+##QgsProcessingParameterString|Caption|Fonte|Fonte: LCZ4r, 2024.|optional|true
 ##QgsProcessingParameterBoolean|Show_LCZ_legend|Mostrar legenda|True
 ##QgsProcessingParameterNumber|Height|Altura do gráfico|QgsProcessingParameterNumber.Integer|7
 ##QgsProcessingParameterNumber|Width|Largura do gráfico|QgsProcessingParameterNumber.Integer|10
@@ -64,14 +64,14 @@ utils::browseURL(html_file)
     }
 ggplot2::ggsave(Output, plot_lcz, height = Height, width = Width, dpi=dpi)
 
-#' LCZ_map: Um objeto SpatRaster contendo o mapa LCZ (das funções *Obtain LCZ map*)
-#' display: Se TRUE, o gráfico será exibido no navegador como HTML.
-#' Show_LCZ_legend: Se TRUE, a legenda LCZ será incluída.
-#' inclusive: Lógico. TRUE usa uma paleta de cores para daltônicos.
-#' Output: Formatos suportados: PNG (*.png), JPG (*.jpg *.jpeg), TIF (*.tif), PDF (*.pdf), SVG (*.svg).</p><p>
+#' LCZ_map: Um objeto no formato SpatRaster contendo o mapa LCZ (gerado pelas funções <em>"Baixar Mapa LCZ"<em>)
+#' display: Se a opção "Visualizar gráfico" estiver selecionada, o gráfico será exibido no navegador como HTML.
+#' Show_LCZ_legend: Se a opção "Mostrar legenda" estiver selecionada, a legenda LCZ será incluída no mapa.
+#' inclusive: Se a opção "Cores para daltônicos" estiver selecionada, será aplicado uma paleta de cores específicas para daltônicos.
+#' Output: As opções de formatos suportados disponíveis: PNG (*.png), JPG (*.jpg *.jpeg), TIF (*.tif), PDF (*.pdf), SVG (*.svg).</p><p>
 #'       : Exemplo: <b>/Users/myPC/Documents/name_lcz_map.jpeg</b>
 #' ALG_DESC: Esta função gera uma representação gráfica de um mapa de Zonas Climáticas Locais (LCZ).</p><p>
-#'         : Mais informações: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_general_LCZ4r.html'>Funções gerais LCZ</a> 
+#'         : Para mais informações, visite: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_general_LCZ4r.html'>Funções gerais LCZ</a> 
 #' ALG_CREATOR:<a href='https://github.com/ByMaxAnjos'>Max Anjos</a> 
 #' ALG_HELP_CREATOR:<a href='https://bymaxanjos.github.io/LCZ4r/index.html'>Projeto LCZ4r</a>  
 #' ALG_VERSION: 0.1.0

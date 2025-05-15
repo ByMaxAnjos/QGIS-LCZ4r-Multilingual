@@ -3,21 +3,21 @@
 ##pass_filenames
 ##QgsProcessingParameterRasterLayer|LCZ_map|Insira o mapa LCZ|None
 ##QgsProcessingParameterFeatureSource|INPUT|Dados de entrada|5
-##QgsProcessingParameterField|variable|Coluna da variável alvo|Tabela|INPUT|-1|False|False
-##QgsProcessingParameterField|station_id|Coluna de identificação das estações|Tabela|INPUT|-1|False|False
+##QgsProcessingParameterField|variable|Selecione a variável temperatura do ar|Tabela|INPUT|-1|False|False
+##QgsProcessingParameterField|station_id|Selecione o ID das estações |Tabela|INPUT|-1|False|False
 ##QgsProcessingParameterString|Date_start|Data inicial|DD-MM-AAAA|False
 ##QgsProcessingParameterString|Date_end|Data final|DD-MM-AAAA|False
-##QgsProcessingParameterEnum|Time_frequency|Frequência temporal|hora;dia;dia.verão;semana;mês;estação;trimestre;ano|-1|0|False
+##QgsProcessingParameterEnum|Time_frequency|Frequência temporal|Horária;Diária;Semanal;Mensal;Sazonal;Trimestral;Anual|-1|0|False
 ##QgsProcessingParameterString|Select_hour|Especificar uma hora|0:23|optional|True
-##QgsProcessingParameterEnum|Select_extract_type|Selecione o método de extração|simples;dois.passos;bilinear|-1|0|False
-##QgsProcessingParameterEnum|Split_data_by|Dividir dados por|ano;estação;estaçãoano;mês;mêsano;dia.semana;fim.semana;horário.verão;hora;luz.dia;luz.dia-mês;luz.dia-estação;luz.dia-ano|-1|None|True
-##QgsProcessingParameterEnum|Impute_missing_values|Imputar valores faltantes|média;mediana;knn;bag|-1|None|True
-##QgsProcessingParameterEnum|Select_plot_type|Selecione o tipo de gráfico|barras_divergentes;barras;pontos;lollipop|-1|0|False
+##QgsProcessingParameterEnum|Select_extract_type|Selecione o método de extração|Simples;Duas Etapas;Bilinear|-1|0|False
+##QgsProcessingParameterEnum|Split_data_by|Dividir dados por|Ano;Estação;Estação por ano;Mês;Meses por ano;Dia Útil;Fim de semana;Hora;Ciclo Diurno;Ciclo Diurno por Mês;Ciclo Diurno por Estação;Ciclo Diurno por Ano|-1|None|True
+##QgsProcessingParameterEnum|Impute_missing_values|Preencher valores faltantes|Média;Mediana;knn;bag|-1|None|True
+##QgsProcessingParameterEnum|Select_plot_type|Selecione o tipo de gráfico|Barras divergentes;Barras;Pontos;Lollipop|-1|0|False
 ##QgsProcessingParameterEnum|Palette_color|Escolha a paleta de cores|VanGogh2;Archambault;Cassatt1;Cassatt2;Demuth;Derain;Egito;Grego;Hiroshige;Hokusai2;Hokusai3;Ingres;Isfahan1;Isfahan2;Java;Johnson;Kandinsky;Morgenstern;OKeeffe2;Pillement;Tam;Troy;VanGogh3;Veronese|-1|0|False
 ##QgsProcessingParameterString|Title|Título|Anomalias LCZ|optional|true
 ##QgsProcessingParameterString|xlab|Rótulo eixo x|Estações|optional|true
 ##QgsProcessingParameterString|ylab|Rótulo eixo y|Temperatura do Ar [ºC]|optional|true
-##QgsProcessingParameterString|Caption|Legenda|Fonte: LCZ4r, 2024.|optional|true
+##QgsProcessingParameterString|Caption|Fonte|Fonte: LCZ4r, 2024.|optional|true
 ##QgsProcessingParameterString|Legend_name|Nome da legenda|Anomalia [ºC]|optional|true
 ##QgsProcessingParameterNumber|Height|Altura do gráfico|QgsProcessingParameterNumber.Integer|7
 ##QgsProcessingParameterNumber|Width|Largura do gráfico|QgsProcessingParameterNumber.Integer|10
@@ -222,42 +222,42 @@ if(Select_hour != "") {
     }
 }
  
-#' LCZ_map: Um objeto <b>SpatRaster</b> derivado das funções <em>Baixar mapa LCZ</em>.
-#' INPUT: Um dataframe (.csv) contendo dados de variáveis ambientais estruturados assim:</p><p>
-#'      :1. <b>date</b>: Coluna com informações data-hora. Nomeie como <code style='background-color: lightblue;'>date|time|timestamp|datetime</code>;</p><p>
-#'      :2. <b>Station</b>: Coluna identificando estações meteorológicas;</p><p>
-#'      :3. <b>Variable</b>: Coluna representando a variável ambiental (ex: temperatura do ar, umidade relativa);</p><p>
+#' LCZ_map: Um objeto no formato <b>SpatRaster</b> derivado das funções <em>"Baixar Mapa LCZ"</em>.
+#' INPUT: Uma tabela (.csv), contendo dados de variáveis ambientais estruturados assim:</p><p>
+#'      :1. <b>Data</b>: Coluna com informações data-hora. Nomeie como <code style='background-color: lightblue;'>date|time|timestamp|datetime</code>;</p><p>
+#'      :2. <b>Estação</b>: Coluna identificando estações meteorológicas;</p><p>
+#'      :3. <b>Variável</b>: Coluna representando a variável a ser interpolada (ex: temperatura do ar, umidade relativa);</p><p>
 #'      :4. <b>Latitude e Longitude</b>: Duas colunas com coordenadas geográficas. Nomeie como <code style='background-color: lightblue;'>lat|latitude e lon|long|longitude</code>.</p><p>
 #'      :Formato data-hora: Deve seguir convenções R, como <b style='text-decoration: underline;'>2023-03-13 11:00:00</b> ou <b style='text-decoration: underline;'>2023-03-13</b>. Formatos aceitos: "1/2/1999" ou "AAAA-MM-DD", "1999-02-01".</p><p>
-#'      :Mais informações: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_local_LCZ4r.html#data-input-requirements'>dados de exemplo</a> 
-#' variable: Nome da coluna da variável alvo (ex: airT, HR).
-#' station_id: Coluna identificando estações meteorológicas (ex: station, site, id).
+#'      :Para mais informações, visite: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_local_LCZ4r.html#data-input-requirements'>dados de exemplo</a> 
+#' variable: Selecione a coluna referente a variável temperatura do ar (ex: airT).
+#' station_id: Selecione a coluna que identifica as estações (ex: estações, site, id).
 #' Date_start: Data de início no formato <b>DD-MM-AAAA [01-09-1986]</b>.
-#' Date_end: Data final no mesmo formato.
-#' Time_frequency: Define a resolução temporal para cálculo de médias. O padrão é hora. Resoluções suportadas incluem: hora, dia, dia_de_verão, semana, mês, trimestre e ano.
-#' Select_extract_type: Método para atribuir classe LCZ a estações. Padrão "simples". Métodos:</p><p>
-#'      :1. <b>simples</b>: Atribui classe LCZ baseada no valor da célula raster. Usado em redes de baixa densidade.</p><p>
-#'      :2. <b>dois.passos</b>: Atribui LCZs filtrando estações em áreas heterogêneas. Requer ≥80% de pixels correspondentes em kernel 5×5 (Daniel et al., 2017). Reduz número de estações. Para redes ultra e alta densidade.</p><p>
-#'      :3. <b>bilinear</b>: Interpola valores LCZ das quatro células raster mais próximas.</p><p>
-#' Split_data_by: Determina como a série temporal é segmentada. Opções: ano, mês, luz do dia, horário de verão, etc. Combinações como luz.dia-mês, luz.dia-estação ou luz.dia-ano (resolução ≥ "hora").</p><p>
-#'              :Detalhes: <a href='https://bookdown.org/david_carslaw/openair/sections/intro/openair-package.html#the-type-option'>argumento type no pacote R openair</a>.
+#' Date_end: Data final no mesmo formato da data de início.
+#' Time_frequency: Define a resolução temporal para os quais dados são arredondados. O padrão é "Horária". Resoluções suportadas incluem: Horária, Diária, Semanal, Mensal, Sazonal, Trimestral ou Anual.
+#' Select_extract_type: Método para atribuir classe LCZ a estações. O padrão é "Simples". Métodos:</p><p>
+#'      :1. <b>Simples</b>: Atribui classe LCZ baseada no valor da célula raster. Usado em redes de baixa densidade.</p><p>
+#'      :2. <b>Duas Etapas</b>: Atribui LCZs filtrando estações em áreas heterogêneas. Requer ≥80% de pixels correspondentes em kernel 5×5 (Daniel et al., 2017). Reduz número de estações. Para redes ultra e alta densidade.</p><p>
+#'      :3. <b>Bilinear</b>: Interpola valores LCZ das quatro células raster mais próximas.</p><p>
+#' Split_data_by: Determina como a série temporal é segmentada. Opções: Ano, Mês, Ciclo Diurno, etc. </p><p> Combinações como Ciclo Diurno por Mês, Ciclo Diurno por Estação ou Ciclo Diurno por Ano (resolução ≥ "hora").</p><p>
+#'              :Para mais detalhes, visite: <a href='https://bookdown.org/david_carslaw/openair/sections/intro/openair-package.html#the-type-option'>argumento type no pacote R openair</a>.
 #' Select_hour: Especificar hora ou intervalo de horas de 0 a 23. Formatos possíveis:</p><p>
 #'      :Intervalo: 0:12 seleciona horas 0 a 12 inclusive;</p><p>
 #'      :Conjunto específico: c(1, 6, 18, 21) seleciona horas 1, 6, 18 e 21;</p><p>
 #'      :Para dados diários, mensais ou anuais, deixe este parâmetro vazio.
 #' Select_plot_type: Escolha entre:</p><p>
-#'      :1. <b>barras_divergentes</b>: Gráfico de barras horizontais divergindo do centro (zero), com anomalias positivas à direita e negativas à esquerda. Ideal para mostrar extensão e direção das anomalias;</p><p>
-#'      :2. <b>barras</b>: Gráfico de barras mostrando magnitude das anomalias por estação, coloridas por positivas/negativas. Bom para comparar anomalias entre estações;</p><p>
-#'      :3. <b>pontos</b>: Gráfico de pontos exibindo valores médios e de referência, conectados por linhas. Tamanho/cor dos pontos indica magnitude da anomalia. Ideal para valores absolutos e anomalias;</p><p>
-#'      :4. <b>lollipop</b>: Gráfico lollipop onde cada "haste" representa um valor de anomalia e os pontos no topo representam o tamanho da anomalia. Visualização clara de anomalias positivas/negativas.</p><p>
-#' Impute_missing_values: Método para imputar valores faltantes: "média", "mediana", "knn", "bag".
-#' display: Se TRUE, exibe o gráfico no navegador como HTML.
-#' Save_as_plot: Se TRUE salva um gráfico, senão um dataframe (table.csv). Extensões: .jpeg para gráficos, .csv para tabelas.
+#'      :1. <b>Barras Divergentes</b>: Gráfico de barras horizontais divergindo do centro (zero), com anomalias positivas à direita e negativas à esquerda. Ideal para mostrar extensão e direção das anomalias;</p><p>
+#'      :2. <b>Barras</b>: Gráfico de barras mostrando magnitude das anomalias por estação, coloridas por positivas/negativas. Bom para comparar anomalias entre estações;</p><p>
+#'      :3. <b>Pontos</b>: Gráfico de pontos exibindo valores médios e de referência, conectados por linhas. Tamanho/cor dos pontos indica magnitude da anomalia. Ideal para valores absolutos e anomalias;</p><p>
+#'      :4. <b>Lollipop</b>: Gráfico lollipop onde cada "haste" representa um valor de anomalia e os pontos no topo representam o tamanho da anomalia. Visualização clara de anomalias positivas/negativas.</p><p>
+#' Impute_missing_values: Método para preencher valores faltantes: "Média", "Mediana", "knn", "bag".
+#' display: Se a opção "Visualizar gráfico" estiver selecionada, exibe o gráfico no navegador como HTML.
+#' Save_as_plot: Se a opção "Salvar como gráfico" estiver selecionada salva um gráfico, se não estiver, salva uma tabela (.csv). Extensões: .jpeg para gráficos, .csv para tabelas.
 #' Palette_color: Defina a paleta de cores para gráficos. Explore paletas adicionais do <a href='https://github.com/BlakeRMills/MetBrewer?tab=readme-ov-file#palettes'>pacote R MetBrewer</a>
-#' Output:1. Se Save as plot TRUE, extensões: PNG (.png), JPG (.jpg .jpeg), TIF (.tif), PDF (*.pdf), SVG (*.svg). Exemplo: <b>/Users/myPC/Documents/name_lcz_anomaly.png</b>;</p><p>
-#'       :2. Se FALSE, extensão: tabela (.csv). Exemplo: <b>/Users/myPC/Documents/name_lcz_anomaly.csv</b>
-#' ALG_DESC: Esta função calcula anomalias térmicas para diferentes LCZs.</p><p>
-#'         :Mais informações: <a href='https://bymaxanjos.github.io/LCZ4r/articles/local_func_anomaly.html'>Funções Locais LCZ (Anomalias Térmicas)</a> 
+#' Output:1. Se a opção "Salvar como gráfico" estiver selecionada, salva um arquivo nas extensões disponíveis: PNG (.png), JPG (.jpg .jpeg), TIF (.tif), PDF (*.pdf), SVG (*.svg). Exemplo: <b>/Users/myPC/Documents/name_lcz_anomaly.png</b>;</p><p>
+#'       :2. Se a opção não estiver selecionada, salva uma tabela (.csv). Exemplo: <b>/Users/myPC/Documents/name_lcz_anomaly.csv</b>
+#' ALG_DESC: Esta função calcula as anomalias térmicas entre as diferentes LCZs.</p><p>
+#'         :Para mais informações, visite: <a href='https://bymaxanjos.github.io/LCZ4r/articles/local_func_anomaly.html'>Funções Locais LCZ (Anomalias Térmicas)</a> 
 #' ALG_CREATOR:<a href='https://github.com/ByMaxAnjos'>Max Anjos</a> 
 #' ALG_HELP_CREATOR:<a href='https://bymaxanjos.github.io/LCZ4r/index.html'>Projeto LCZ4r</a>  
 #' ALG_VERSION: 0.1.0

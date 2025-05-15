@@ -17,10 +17,10 @@ Output=lcz_get_map(city=NULL, roi = ROI)
 }
 
 
-#' City: Nome da cidade ou região alvo baseado em <a href='https://nominatim.openstreetmap.org/ui/search.html'>OpenStreetMap</a>.</p><p>Exemplo: <b>Rio de Janeiro</b>. Se vazio, usa ROI personalizada.
-#' ROI: Opcional - forneça uma área de interesse (Shapefile/GeoPackage) para recortar o mapa LCZ.
-#' Output: Arquivo raster TIFF (100 m de resolução) com classes LCZ 1-17.
-#' ALG_DESC: Baixa mapas LCZ do banco de dados global. Suporta cidades ou regiões personalizadas.</p><p>
+#' City: Nome da cidade ou região alvo (baseado em <a href='https://nominatim.openstreetmap.org/ui/search.html'>OpenStreetMap</a>).</p><p>Exemplo: <b>Rio de Janeiro</b>. Se o parâmetro estiver vazio, usa uma Região de Interesse (ROI) personalizada.
+#' ROI: Opcional - forneça uma área de interesse (Shapefile/GeoPackage) para gerar o recorte do mapa LCZ.
+#' Output: Arquivo raster no formato .TIFF (100 m de resolução) com as classes LCZ 1-17.
+#' ALG_DESC: Baixa mapas LCZ do banco de dados global. A função suporta cidades ou regiões personalizadas.</p><p>
 #'         :Documentação: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_general_LCZ4r.html'>Funções LCZ</a>
 #' ALG_CREATOR:<a href='https://github.com/ByMaxAnjos'>Max Anjos</a>
 #' ALG_HELP_CREATOR:<a href='https://bymaxanjos.github.io/LCZ4r/index.html'>Projeto LCZ4r</a>

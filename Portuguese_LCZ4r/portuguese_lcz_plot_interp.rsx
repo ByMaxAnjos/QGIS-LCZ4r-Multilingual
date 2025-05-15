@@ -1,14 +1,14 @@
 ##LCZ4r Funções Locais=group
-##Visualizar Mapa LCZ Interpolado=name
+##Visualizar Mapa Interpolado LCZ=name
 ##dont_load_any_packages
 ##pass_filenames
 ##QgsProcessingParameterRasterLayer|Raster_interpolated|Insira o mapa interpolado|None
-##QgsProcessingParameterEnum|Palette_color|Paleta de cores|sombreada;viridi;árido;atlas;az_am_ve;profundo;vd_am;alto_relevo;rp_am_vd;roxo;suave|-1|0|False
+##QgsProcessingParameterEnum|Palette_color|Paleta de cores|Sombreada;Viridi;Árido;Atlas;Az_am_ve;Profundo;Vd_am;Alto_Relevo;Rp_am_vd;Roxo;Suave|-1|0|False
 ##QgsProcessingParameterBoolean|display|Visualizar gráfico (.html)|True
 ##QgsProcessingParameterString|Title|Título|Zonas Climáticas Locais|optional|true
 ##QgsProcessingParameterString|Subtitle|Subtítulo|Minha Cidade|optional|true
 ##QgsProcessingParameterString|Legend|Legenda| TempAr[°C]|optional|true
-##QgsProcessingParameterString|Caption|Descrição|Fonte: LCZ4r, 2024.|optional|true
+##QgsProcessingParameterString|Caption|Fonte|Fonte: LCZ4r, 2024.|optional|true
 ##QgsProcessingParameterNumber|Height|Altura do gráfico|QgsProcessingParameterNumber.Integer|7
 ##QgsProcessingParameterNumber|Width|Largura do gráfico|QgsProcessingParameterNumber.Integer|10
 ##QgsProcessingParameterNumber|dpi|Resolução do gráfico (dpi)|QgsProcessingParameterNumber.Integer|300
@@ -74,13 +74,13 @@ utils::browseURL(html_file)
     }
 ggsave(Output, plot_map, height = Height, width = Width, dpi = dpi)
 
-#' Raster_interpolated: Um <b>SpatRaster</b> das <em>funções de interpolação LCZ</em>
-#' Palette_color: Paletas de gradiente disponíveis no: <a href='https://dieghernan.github.io/tidyterra/articles/palettes.html#scale_fill_whitebox_'>pacote tidyterra</a> 
-#' display: Se TRUE, o gráfico será exibido no navegador como visualização HTML.
+#' Raster_interpolated: Um arquivo no formato <b>SpatRaster</b> das funções <em>"Gerar Mapa Interpolado LCZ"</em>
+#' Palette_color: Consulte as paletas de gradiente disponíveis em: <a href='https://dieghernan.github.io/tidyterra/articles/palettes.html#scale_fill_whitebox_'>pacote tidyterra</a> 
+#' display: Se a opção "Visualizar gráfico" estiver selecionada, o gráfico será exibido no navegador como visualização HTML.
 #' Output: Especifica a extensão do arquivo: PNG (.png), JPG (.jpg .jpeg), TIF (.tif), PDF (*.pdf).</p><p>
 #'       :Exemplo: <b>/Users/myPC/Documents/my_interp_map.png</b>
-#' ALG_DESC: Esta função plota a anomalia LCZ interpolada, temperatura do ar LCZ ou outras variáveis ambientais.</p><p>
-#'         :Mais informações: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_local_LCZ4r.html#data-inputs'>Funções Locais LCZ</a> 
+#' ALG_DESC: Esta função plota a anomalia LCZ interpolada, a temperatura do ar LCZ ou outras variáveis ambientais.</p><p>
+#'         :Para mais informações, visite: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_local_LCZ4r.html#data-inputs'>Funções Locais LCZ</a> 
 #' ALG_CREATOR: <a href='https://github.com/ByMaxAnjos'>Max Anjos</a> 
 #' ALG_HELP_CREATOR: <a href='https://bymaxanjos.github.io/LCZ4r/index.html'>Projeto LCZ4r</a>  
 #' ALG_VERSION: 0.1.0

@@ -3,11 +3,11 @@
 ##dont_load_any_packages
 ##pass_filenames
 ##QgsProcessingParameterRasterLayer|LCZ_map|Insira o mapa LCZ|None
-##QgsProcessingParameterEnum|Select_plot_type|Tipo de gráfico|Barras;Pizza;Rosca|-1|0|False
+##QgsProcessingParameterEnum|Select_plot_type|Selecione o tipo de gráfico|Barras;Pizza;Rosca|-1|0|False
 ##QgsProcessingParameterBoolean|display|Visualizar gráfico (.html)|True
 ##QgsProcessingParameterString|Title|Título|Zonas Climáticas Locais|optional|true
 ##QgsProcessingParameterString|Subtitle|Subtítulo|Minha Cidade|optional|true
-##QgsProcessingParameterString|Caption|Legenda|Fonte: LCZ4r, 2024.|optional|true
+##QgsProcessingParameterString|Caption|Fonte|Fonte: LCZ4r, 2024.|optional|true
 ##QgsProcessingParameterString|xlab|Rótulo eixo x|Código LCZ|optional|true
 ##QgsProcessingParameterString|ylab|Rótulo eixo y|Área [quilômetros quadrados]|optional|true
 ##QgsProcessingParameterBoolean|Show_LCZ_legend|Mostrar legenda|True
@@ -90,15 +90,15 @@ if (Save_as_plot) {
 }
 
 
-#' LCZ_map: Objeto SpatRaster contendo o mapa LCZ (gerado pelas funções Baixar mapa LCZ).
-#' Select_plot_type: Tipo de gráfico. Opções: <b>Barras</b>, <b>Pizza</b>, <b>Rosca</b> </p><p>
-#' display: Se TRUE, o gráfico será exibido no navegador como HTML.
-#' Save_as_plot: Se TRUE, salva o gráfico; caso contrário, salva uma tabela (.csv). Formato vinculado a Output (.png/.csv).
-#' Show_LCZ_legend: Se TRUE, inclui a legenda LCZ.
-#' Output: 1. Se Salvar como gráfico=TRUE: extensões permitidas (.png, .jpg, .tif, .pdf, .svg). Exemplo: <b>/Users/meuPC/Documentos/area_lcz.png</b>;</p><p>
-#'        : 2. Se Salvar como gráfico=FALSE: salva tabela (.csv). Exemplo: <b>/Users/meuPC/Documentos/area_lcz.csv</b>
-#' ALG_DESC: Calcula as áreas das classes LCZ em porcentagem e quilômetros quadrados.</p><p>
-#'          : Mais informações: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_general_LCZ4r.html'>Documentação LCZ4r</a>
+#' LCZ_map: Objeto em formato SpatRaster contendo o mapa LCZ (gerado pelo conjunto de funções <em>"Baixar Mapa LCZ"<em>).
+#' Select_plot_type: Selecione o tipo de gráfico desejado. As opções disponíveis são: <b>Barras</b>, <b>Pizza</b>, <b>Rosca</b> </p><p>
+#' display: Se a opção "Visualizar gráfico" estiver selecionada, o gráfico será exibido no navegador como HTML.
+#' Save_as_plot: Se a opção "Salvar como gráfico" estiver selecionada, salva o gráfico; caso contrário, salva uma tabela (.csv). O formato está vinculado a saída da função (.png/.csv).
+#' Show_LCZ_legend: Se a opção "Mostrar legenda" estiver selecionada, a função vai inserir a legenda das classes LCZ.
+#' Output: 1. Se a opção "Salvar como gráfico" estiver selecionada, escolha um formato de arquivo: extensões permitidas (.png, .jpg, .tif, .pdf, .svg). Exemplo: <b>/Users/meuPC/Documentos/area_lcz.png</b>;</p><p>
+#'        : 2. Se a opção "Salvar como gráfico" não estiver selecionada: salva uma tabela (.csv). Exemplo: <b>/Users/meuPC/Documentos/area_lcz.csv</b>
+#' ALG_DESC: Calcula as áreas das classes LCZ em porcentagem e em quilômetros quadrados.</p><p>
+#'          : Guias e mais informações em: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_general_LCZ4r.html'>Documentação LCZ4r</a>
 #' ALG_CREATOR:<a href='https://github.com/ByMaxAnjos'>Max Anjos</a>
 #' ALG_HELP_CREATOR:<a href='https://bymaxanjos.github.io/LCZ4r/index.html'>Projeto LCZ4r</a>
 #' ALG_VERSION: 0.1.0

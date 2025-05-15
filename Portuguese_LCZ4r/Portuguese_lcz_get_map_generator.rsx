@@ -2,8 +2,8 @@
 ##Baixar Mapa LCZ (Generator Plataform)=display_name
 ##dont_load_any_packages
 ##pass_filenames 
-##QgsProcessingParameterString|ID|ID do LCZ Factsheet|None|optional|true
-##QgsProcessingParameterEnum|Select_band_type|Selecione o recurso a utilizar|lczFilter;lcz|-1|0|False
+##QgsProcessingParameterString|ID|ID da Ficha Informativa LCZ|None|optional|true
+##QgsProcessingParameterEnum|Select_band_type|Selecione o tipo de recurso que vai utilizar|lczFilter;lcz|-1|0|False
 ##QgsProcessingParameterRasterDestination|Output|Resultado
 
 library(LCZ4r)
@@ -20,9 +20,9 @@ if (!is.null(Select_band_type) && Select_band_type >= 0 && Select_band_type < le
 
 Output=LCZ4r::lcz_get_map_generator(ID=ID, band=result_band)
 
-#' ID: Identificador único gerado pela <a href='https://lcz-generator.rub.de/'>Plataforma LCZ Generator</a>.</p><p>Exemplo (Rio de Janeiro): <b>3110e623fbe4e73b1cde55f0e9832c4f5640ac21</b>
-#' Output: Arquivo raster TIFF (100 m de resolução) com classes LCZ 1-17.
-#' ALG_DESC: Obtém mapas de Zonas Climáticas Locais (LCZ) da plataforma geradora.</p><p>
+#' ID: Identificador único gerado pela <a href='https://lcz-generator.rub.de/'>Plataforma LCZ Generator</a>.</p><p>Exemplo (ID do Rio de Janeiro): <b>3110e623fbe4e73b1cde55f0e9832c4f5640ac21</b>
+#' Output: Arquivo raster no formato .TIFF (100 m de resolução) com as classes LCZ 1-17.
+#' ALG_DESC: Obtém mapas de Zonas Climáticas Locais (LCZ) de uma plataforma geradora.</p><p>
 #'         :Documentação: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_general_LCZ4r.html'>Funções LCZ</a>
 #' ALG_CREATOR:<a href='https://github.com/ByMaxAnjos'>Max Anjos</a>
 #' ALG_HELP_CREATOR:<a href='https://bymaxanjos.github.io/LCZ4r/index.html'>Projeto LCZ4r</a>

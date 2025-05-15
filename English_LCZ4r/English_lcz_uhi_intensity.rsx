@@ -9,12 +9,12 @@
 ##QgsProcessingParameterString|Date_end|End date|DD-MM-YYYY|False
 ##QgsProcessingParameterEnum|Time_frequency|Time Frequency|hour;day;DSTday;week;month;season;quater;year|-1|0|False
 ##QgsProcessingParameterEnum|Impute_missing_values|Impute missing values|mean;median;knn;bag|-1|None|True
-##QgsProcessingParameterEnum|Method|Select the UHI method to use|LCZ;manual|-1|0|False
+##QgsProcessingParameterEnum|Method|Select method to caluculate UHI|LCZ;manual|-1|0|False
+##QgsProcessingParameterString|Urban_station_reference|Urban station reference|None|optional|true
+##QgsProcessingParameterString|Rural_station_reference|Rural station reference|None|optional|true
 ##QgsProcessingParameterBoolean|Group_urban_and_rural_temperatures|Display urban and rural stations|True
 ##QgsProcessingParameterEnum|Select_extract_type|Select the extract method to use|simple;two.step;bilinear|-1|0|False
 ##QgsProcessingParameterEnum|Split_data_by|Split data by|year;season;seasonyear;month;monthyear;weekday;weekend;dst;hour;daylight;daylight-month;daylight-season;daylight-year|-1|None|True
-##QgsProcessingParameterString|Urban_station_reference|Urban station reference|None|optional|true
-##QgsProcessingParameterString|Rural_station_reference|Rural station reference|None|optional|true
 ##QgsProcessingParameterBoolean|Group_urban_and_rural_temperatures|Display urban and rural stations|True
 ##QgsProcessingParameterBoolean|display|Visualize plot(.html)|True
 ##QgsProcessingParameterString|Title|Title|Local Climate Zones|optional|true

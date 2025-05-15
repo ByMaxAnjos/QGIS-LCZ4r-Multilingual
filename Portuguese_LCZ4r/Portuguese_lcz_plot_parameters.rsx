@@ -6,11 +6,11 @@
 ##QgsProcessingParameterEnum|Select_parameter|Selecione o parâmetro|SVFmean;SVFmax;SVFmin;z0;ARmean;ARmax;ARmin;BSFmean;BSFmax;BSFmin;ISFmean;ISFmax;ISFmin;PSFmean;PSFmax;PSFmin;TSFmean;TSFmax;TSFmin;HREmean;HREmax;HREmin;TRCmean;TRCmax;TRCmin;SADmean;SADmax;SADmin;SALmean;SALmax;SALmin;AHmean;AHmax;AHmin|-1|0|False
 ##QgsProcessingParameterBoolean|display|Visualizar gráfico (.html)|True
 ##QgsProcessingParameterString|Subtitle|Subtítulo|Minha Cidade|optional|true
-##QgsProcessingParameterString|Caption|Legenda|Fonte: LCZ4r, 2024.|optional|true
+##QgsProcessingParameterString|Caption|Fonte|Fonte: LCZ4r, 2024.|optional|true
 ##QgsProcessingParameterNumber|Height|Altura do gráfico|QgsProcessingParameterNumber.Integer|7
 ##QgsProcessingParameterNumber|Width|Largura do gráfico|QgsProcessingParameterNumber.Integer|10
 ##QgsProcessingParameterNumber|dpi|Resolução (dpi)|QgsProcessingParameterNumber.Integer|300
-##QgsProcessingParameterFileDestination|Output|Salvar imagem|Arquivos PNG (*.png)
+##QgsProcessingParameterFileDestination|Output|Salvar arquivo em formato de imagem|Arquivos PNG (*.png)
 
 library(LCZ4r)
 library(ggplot2)
@@ -81,8 +81,8 @@ plot_lcz <- LCZ4r::lcz_plot_parameters(LCZ_map_parameter, iselect = result_par, 
 ggplot2::ggsave(Output, plot_lcz, height = Height, width = Width, dpi=dpi)
 
 
-#' LCZ_map_parameter: O SpatRaster no formato de stack da função "Retrieve LCZ parameter".
-#' display: Se TRUE, o gráfico será exibido no navegador como uma visualização HTML.
+#' LCZ_map_parameter: O arquivo de empilhamento de parâmetros no formato Spatraster, </p><p> gerado pela função <em>"Gerar Parâmetros LCZ"<em>.
+#' display: Se a opção "Visualizar gráfico" estiver selecionada, o gráfico será exibido no navegador como uma visualização HTML.
 #' Select_parameter: Selecione um parâmetro com base em valores médios, máximos ou mínimos:</p><p>
 #'             : <b>SVF</b>: Fator de Visão do Céu [0-1]. </p><p>
 #'             : <b>z0</b>: Comprimento de Rugosidade [metros]. </p><p>
@@ -96,10 +96,10 @@ ggplot2::ggsave(Output, plot_lcz, height = Height, width = Width, dpi=dpi)
 #'             : <b>SAD</b>: Admitância da Superfície [J m-2 s1/2 K-1]. </p><p> 
 #'             : <b>SAL</b>: Albedo da Superfície [0 - 0,5]. </p><p> 
 #'             : <b>AH</b>: Calor Antropogênico [W m-2]. </p><p> 
-#' Output: Formatos suportados: PNG (*.png), JPG (*.jpg *.jpeg), TIF (*.tif), PDF (*.pdf), SVG (*.svg).</p><p>
+#' Output: As opções de formatos suportados disponíveis: PNG (*.png), JPG (*.jpg *.jpeg), TIF (*.tif), PDF (*.pdf), SVG (*.svg).</p><p>
 #'       :Exemplo: <b>/Users/myPC/Documents/name_lcz_par.jpeg</b>
-#' ALG_DESC: Esta função gera uma representação gráfica de um mapa de Zonas Climáticas Locais (LCZ) fornecido como um objeto SpatRaster.</p><p>
-#'         :Mais informações: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_general_LCZ4r.html'>Funções gerais LCZ</a> 
+#' ALG_DESC: Esta função gera uma representação gráfica de um mapa de Zonas Climáticas Locais (LCZ), fornecido como um objeto no formato SpatRaster.</p><p>
+#'         : Para mais informações, visite: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_general_LCZ4r.html'>Funções Gerais LCZ</a> 
 #' ALG_CREATOR:<a href='https://github.com/ByMaxAnjos'>Max Anjos</a> 
 #' ALG_HELP_CREATOR:<a href='https://bymaxanjos.github.io/LCZ4r/index.html'>Projeto LCZ4r</a>  
 #' ALG_VERSION: 0.1.0

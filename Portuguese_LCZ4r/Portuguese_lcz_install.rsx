@@ -1,6 +1,7 @@
 ##LCZ4r Funções de Configuração=group
 ##Instalar LCZ4r=display_name
 ##pass_filenames
+##dont_load_any_packages
 ##QgsProcessingParameterBoolean|Install|Instalar o LCZ4r no QGIS|True
 
 if(!require(remotes)) install.packages("remotes")

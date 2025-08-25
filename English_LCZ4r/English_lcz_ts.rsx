@@ -24,7 +24,7 @@
 ##QgsProcessingParameterNumber|dpi|Plot resolution (DPI)|QgsProcessingParameterNumber.Integer|300
 ##QgsProcessingParameterBoolean|display|Visualize plot(.html)|True
 ##QgsProcessingParameterBoolean|Save_as_plot|Save as plot|True
-##QgsProcessingParameterFileDestination|Output|Save your image|PNG Files (*.png)
+##QgsProcessingParameterFileDestination|Output|Save your image|
 
 
 library(LCZ4r)
@@ -188,7 +188,7 @@ if (Save_as_plot == TRUE) {
 #' Impute_missing_values: Method to impute missing values (“mean”, “median”, “knn”, “bag”).
 #' Save_as_plot: Choose whether to save the output as a plot (TRUE) or as a table (FALSE). Remember to outputs (e.g., .jpeg for plot and .csv for table). 
 #' Palette_color: Define the color palette for plots. Explore additional palettes from the <a href='https://github.com/BlakeRMills/MetBrewer?tab=readme-ov-file#palettes'>MetBrewer R package</a>
-#' Output:1. If Save as plot is TRUE, specifies file extension: PNG (.png), JPG (.jpg .jpeg), TTIF (.tif), PDF (*.pdf), SVG (*.svg) Example: <b>/Users/myPC/Documents/name_lcz_ts.png</b>;</p><p>
+#' Output:1. If Save as plot is TRUE, specifies file extension: "png","jpeg", "tiff", "pdf","svg", "eps", "ps", "tex" (pictex), "bmp" or "wmf" (windows). Example: <b>/Users/myPC/Documents/name_lcz_ts.png</b>;</p><p>
 #'       :2. if Save as plot is FALSE, specifies file extension: table (.csv). Example: <b>/Users/myPC/Documents/name_lcz_ts.csv</b>
 #' ALG_DESC: This function enables the analysis of air temperature or other environmental variables associated with LCZ over time.</p><p>
 #'         :For detailed use cases and examples, refer to: <a href='https://bymaxanjos.github.io/LCZ4r/articles/local_func_time_series.html'>LCZ Local Functions (Time Series Analysis).</a> 

@@ -56,7 +56,7 @@ if (!is.null(Impute_missing_values) && Impute_missing_values >= 0 && Impute_miss
 }
 
 # Check for date conditions by
-type_by <- c("year","season", "seasonyear", "month", "monthyear","weekday", "weekend", "dst", "hour", "daylight", "daylight-month", "daylight-season", "daylight-year")
+type_by <- c("year","season", "seasonyear", "month", "monthyear","weekday", "weekend", "hour", "daylight", "daylight-month", "daylight-season", "daylight-year")
 if (!is.null(Split_data_by) && Split_data_by >= 0 && Split_data_by < length(type_by)) {
   result_by <- type_by[Split_data_by + 1]  # Add 1 to align with R's 1-based indexing
 } else {

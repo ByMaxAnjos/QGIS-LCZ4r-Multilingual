@@ -29,7 +29,7 @@
 # ------------------------------
 # **4. Output**
 # ------------------------------
-##QgsProcessingParameterFileDestination|Output|Save your image|PNG Files (*.png)
+##QgsProcessingParameterFileDestination|Output|Save your image|PNG Files (*.)
 
 
 library(LCZ4r)

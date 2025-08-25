@@ -25,7 +25,7 @@
 ##QgsProcessingParameterNumber|Width|图表宽度(英寸)|QgsProcessingParameterNumber.Integer|10
 ##QgsProcessingParameterNumber|dpi|分辨率(DPI)|QgsProcessingParameterNumber.Integer|300
 ##QgsProcessingParameterBoolean|Save_as_plot|保存为图表|True
-##QgsProcessingParameterFileDestination|Output|保存图像|PNG文件 (*.png)
+##QgsProcessingParameterFileDestination|Output|保存图像|
 library(LCZ4r)
 library(sf)
 library(ggplot2)

@@ -25,7 +25,8 @@
 ##QgsProcessingParameterNumber|Width|Ancho (pulgadas)|QgsProcessingParameterNumber.Integer|10
 ##QgsProcessingParameterNumber|dpi|Resolución (PPP)|QgsProcessingParameterNumber.Integer|300
 ##QgsProcessingParameterBoolean|Save_as_plot|Guardar como gráfico|True
-##QgsProcessingParameterFileDestination|Output|Guardar imagen|Archivos PNG (*.png)
+##QgsProcessingParameterFileDestination|Output|Guardar imagen|
+
 library(LCZ4r)
 library(sf)
 library(ggplot2)

@@ -24,7 +24,7 @@
 ##QgsProcessingParameterNumber|dpi|dpi plot resolution|QgsProcessingParameterNumber.Integer|300
 ##QgsProcessingParameterBoolean|display|Visualize plot(.html)|True
 ##QgsProcessingParameterBoolean|Save_as_plot|Save as plot|True
-##QgsProcessingParameterFileDestination|Output|Save your image|PNG Files (*.png)
+##QgsProcessingParameterFileDestination|Output|Save your image|
 
 library(LCZ4r)
 library(sf)
@@ -256,7 +256,7 @@ if(Select_hour != "") {
 #' display: If TRUE, the plot will be displayed in your web browser as an HTML visualization.
 #' Save_as_plot: Set to TRUE to save a plot into your PC; otherwise,  save a data frame (table.csv). Remember to link with Outputs (e.g., .jpeg for plot and .csv for table). 
 #' Palette_color: Define the color palette for plots. Explore additional palettes from the <a href='https://github.com/BlakeRMills/MetBrewer?tab=readme-ov-file#palettes'>MetBrewer R package.</a>
-#' Output:1. If Save as plot is TRUE, specifies file extension: PNG (.png), JPG (.jpg .jpeg), TTIF (.tif), PDF (*.pdf), SVG (*.svg) Example: <b>/Users/myPC/Documents/name_lcz_anomaly.png</b>;</p><p>
+#' Output:1. If Save as plot is TRUE, specifies file extension: "png","jpeg", "tiff", "pdf","svg", "eps", "ps", "tex" (pictex), "bmp" or "wmf" (windows). Example: <b>/Users/myPC/Documents/name_lcz_anomaly.png</b>;</p><p>
 #'       :2. if Save as plot is FALSE, specifies file extension: table (.csv). Example: <b>/Users/myPC/Documents/name_lcz_anomaly.csv</b>
 #' ALG_DESC:This function caluculates thermal anomaly for different LCZs.</p><p>
 #'         :For more information, visit: <a href='https://bymaxanjos.github.io/LCZ4r/articles/local_func_anomaly.html'>LCZ Local Functions(Thermal Anomalies).</a> 

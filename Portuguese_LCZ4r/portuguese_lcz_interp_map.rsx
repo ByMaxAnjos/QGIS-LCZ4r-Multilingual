@@ -56,7 +56,7 @@ if (!is.null(Impute_missing_values) && Impute_missing_values >= 0 && Impute_miss
 }
 
 # Check for date conditions by
-type_by <- c("year","season", "seasonyear", "month", "monthyear","weekday", "weekend", "dst", "hour", "daylight", "daylight-month", "daylight-season", "daylight-year")
+type_by <- c("year","season", "seasonyear", "month", "monthyear","weekday", "weekend","hour", "daylight", "daylight-month", "daylight-season", "daylight-year")
 if (!is.null(Split_data_by) && Split_data_by >= 0 && Split_data_by < length(type_by)) {
   result_by <- type_by[Split_data_by + 1]  # Add 1 to align with R's 1-based indexing
 } else {
@@ -76,8 +76,37 @@ if ("daylight-year" %in% result_by) {
 # Generate and plot or data.frame ----
 INPUT$date <-lubridate::as_datetime(INPUT$date)
 
+# Definir CRS alvo explicitamente
+target_crs_lonlat <- "EPSG:4326"  # WGS84
+target_crs_projected <- "EPSG:3857"  # Web Mercator
+
+# Carregar e reprojetar o raster LCZ com verificação robusta
 LCZ_map <- terra::rast(LCZ_map)
-LCZ_map <-terra::project(LCZ_map, "+proj=longlat +datum=WGS84 +no_defs")
+
+# Verificar e reprojetar para WGS84 se necessário
+if (is.na(terra::crs(LCZ_map))) {
+  warning("LCZ map has no CRS defined. Assigning WGS84.")
+  terra::crs(LCZ_map) <- target_crs_lonlat
+} else if (terra::crs(LCZ_map, proj = TRUE) != terra::crs(target_crs_lonlat, proj = TRUE)) {
+  message("Reprojecting LCZ map to WGS84 (EPSG:4326)")
+  LCZ_map <- terra::project(LCZ_map, target_crs_lonlat)
+}
+
+# Função para reprojeção segura com verificação
+safe_reproject <- function(sf_obj, target_crs) {
+  current_crs <- sf::st_crs(sf_obj)
+  
+  if (is.na(current_crs)) {
+    warning("Object has no CRS defined. Assigning target CRS.")
+    sf_obj <- sf::st_set_crs(sf_obj, target_crs)
+  } else if (!identical(current_crs, target_crs)) {
+    message("Reprojecting from ", current_crs$input, " to ", target_crs$input)
+    sf_obj <- sf::st_transform(sf_obj, target_crs)
+  }
+  
+  return(sf_obj)
+}
+
 
 # Convert to "d/m/y" format
 formatted_start <- format(as.Date(Date_start, format = "%d-%m-%Y"), "%d/%m/%Y")

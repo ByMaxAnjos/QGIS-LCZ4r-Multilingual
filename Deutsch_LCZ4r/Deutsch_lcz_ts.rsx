@@ -24,7 +24,7 @@
 ##QgsProcessingParameterNumber|dpi|Auflösung (DPI)|QgsProcessingParameterNumber.Integer|300
 ##QgsProcessingParameterBoolean|display|Diagramm anzeigen (.html)|True
 ##QgsProcessingParameterBoolean|Save_as_plot|Als Diagramm speichern|True
-##QgsProcessingParameterFileDestination|Output|Bild speichern|PNG-Dateien (*.png)
+##QgsProcessingParameterFileDestination|Output|Bild speichern|
 
 library(LCZ4r)
 library(sf)

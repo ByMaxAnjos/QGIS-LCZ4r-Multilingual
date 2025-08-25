@@ -10,7 +10,7 @@
 ##QgsProcessingParameterNumber|Height|Height plot|QgsProcessingParameterNumber.Integer|7
 ##QgsProcessingParameterNumber|Width|Width plot|QgsProcessingParameterNumber.Integer|10
 ##QgsProcessingParameterNumber|dpi|dpi plot resolution|QgsProcessingParameterNumber.Integer|300
-##QgsProcessingParameterFileDestination|Output|Save your image|PNG Files (*.png)
+##QgsProcessingParameterFileDestination|Output|Save your image|
 
 library(LCZ4r)
 library(ggplot2)
@@ -95,7 +95,7 @@ ggplot2::ggsave(Output, plot_lcz, height = Height, width = Width, dpi=dpi)
 #'             : <b>SAD</b>: Surface Admittance [J m-2 s1/2 K-1]. </p><p> 
 #'             : <b>SAL</b>: Surface Albedo [0 - 0.5]. </p><p> 
 #'             : <b>AH</b>: Anthropogenic Heat Outupt [W m-2]. </p><p> 
-#' Output: Specifies file extensions: PNG (*.png), JPG (*.jpg *.jpeg), TIF (*.tif), PDF (*.pdf), SVG (*.svg).</p><p>
+#' Output: Specifies file extensions: "png","jpeg", "tiff", "pdf","svg", "eps", "ps", "tex" (pictex), "bmp" or "wmf" (windows).</p><p>
 #'       :Example: <b>/Users/myPC/Documents/name_lcz_par.jpeg</b>
 #' ALG_DESC: This function generates a graphical representation of a Local Climate Zone (LCZ) map provided as a SpatRaster object.</p><p>
 #'         :For more information, visit: <a href='https://bymaxanjos.github.io/LCZ4r/articles/Introd_general_LCZ4r.html'>LCZ general functions</a> 

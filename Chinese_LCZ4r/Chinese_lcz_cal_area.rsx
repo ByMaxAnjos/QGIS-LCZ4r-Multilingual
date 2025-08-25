@@ -15,7 +15,7 @@
 ##QgsProcessingParameterNumber|Width|图表宽度|QgsProcessingParameterNumber.Integer|10
 ##QgsProcessingParameterNumber|dpi|图表分辨率(dpi)|QgsProcessingParameterNumber.Integer|300
 ##QgsProcessingParameterBoolean|Save_as_plot|保存为图表|True
-##QgsProcessingParameterFileDestination|Output|保存图像|PNG文件 (*.png)
+##QgsProcessingParameterFileDestination|Output|保存图像|
 
 library(LCZ4r)
 library(terra)

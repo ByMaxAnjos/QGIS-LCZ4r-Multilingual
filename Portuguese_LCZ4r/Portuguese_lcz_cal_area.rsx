@@ -15,7 +15,7 @@
 ##QgsProcessingParameterNumber|Width|Largura do gráfico|QgsProcessingParameterNumber.Integer|10
 ##QgsProcessingParameterNumber|dpi|Resolução (dpi)|QgsProcessingParameterNumber.Integer|300
 ##QgsProcessingParameterBoolean|Save_as_plot|Salvar como gráfico|True
-##QgsProcessingParameterFileDestination|Output|Salvar imagem|Arquivos PNG (*.png)
+##QgsProcessingParameterFileDestination|Output|Salvar imagem|
 
 library(LCZ4r)
 library(terra)

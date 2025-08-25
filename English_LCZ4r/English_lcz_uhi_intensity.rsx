@@ -26,7 +26,7 @@
 ##QgsProcessingParameterNumber|Width|Plot width (inches)|QgsProcessingParameterNumber.Integer|10
 ##QgsProcessingParameterNumber|dpi|Plot resolution (DPI)|QgsProcessingParameterNumber.Integer|300
 ##QgsProcessingParameterBoolean|Save_as_plot|Save as plot|True
-##QgsProcessingParameterFileDestination|Output|Save your image|PNG Files (*.png)
+##QgsProcessingParameterFileDestination|Output|Save your image|
 
 
 
@@ -187,7 +187,7 @@ if (Save_as_plot == TRUE) {
 #' Group_urban_and_rural_temperatures: If TRUE, urban and rural air temperatures are grouped in the same plot.
 #' display: If TRUE, the plot will be displayed in your web browser as an HTML visualization.
 #' Save_as_plot: Set to TRUE to save a plot into your PC; otherwise,  save a data frame (table.csv). Remember to link with Outputs .jpeg for plot and .csv for table. 
-#' Output:If Save as plot is TRUE, specifies file extension: PNG (.png), JPG (.jpg .jpeg), TIF (.tif), PDF (*.pdf). Example: <b>/Users/myPC/Documents/lcz_uhi.png</b>;</p><p>
+#' Output:If Save as plot is TRUE, specifies file extension: "png","jpeg", "tiff", "pdf","svg", "eps", "ps", "tex" (pictex), "bmp" or "wmf" (windows). Example: <b>/Users/myPC/Documents/lcz_uhi.png</b>;</p><p>
 #'       :if Save as plot is FALSE, specifies file extension: table (.csv). Example: <b>/Users/myPC/Documents/lcz_uhi.csv</b>
 #' ALG_DESC:This function calculates the Urban Heat Island (UHI) intensity based on air temperature measurements and Local Climate Zones (LCZ).</p><p>
 #'         :For more information, visit: <a href='https://bymaxanjos.github.io/LCZ4r/articles/local_func_uhi.html'>LCZ Local Functions (Urban Heat Island (UHI) Analysis)</a> 

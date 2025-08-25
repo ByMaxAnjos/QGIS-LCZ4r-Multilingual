@@ -1,6 +1,7 @@
 ##LCZ4r 配置功能=group
 ##安装LCZ4r=display_name
 ##pass_filenames
+##dont_load_any_packages
 ##QgsProcessingParameterBoolean|Install|在QGIS中安装LCZ4r|True
 
 if(!require(remotes)) install.packages("remotes")

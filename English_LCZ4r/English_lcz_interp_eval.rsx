@@ -63,7 +63,7 @@ if (!is.null(Impute_missing_values) && Impute_missing_values >= 0 && Impute_miss
 INPUT$date <-lubridate::as_datetime(INPUT$date)
 
 LCZ_map <- terra::rast(LCZ_map)
-LCZ_map <-terra::project(LCZ_map, "+proj=longlat +datum=WGS84 +no_defs")
+LCZ_map <- terra::project(LCZ_map, "EPSG:4326")
 
 # Convert to "d/m/y" format
 formatted_start <- format(as.Date(Date_start, format = "%d-%m-%Y"), "%d/%m/%Y")

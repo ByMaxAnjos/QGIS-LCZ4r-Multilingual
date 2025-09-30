@@ -23,13 +23,13 @@
 ##QgsProcessingParameterNumber|Height|Height plot|QgsProcessingParameterNumber.Integer|7
 ##QgsProcessingParameterNumber|Width|Width plot|QgsProcessingParameterNumber.Integer|10
 ##QgsProcessingParameterNumber|dpi|dpi plot resolution|QgsProcessingParameterNumber.Integer|300
-##QgsProcessingParameterNumber|Number_of_columns|Number of columns|QgsProcessingParameterNumber.Integer|1
-##QgsProcessingParameterNumber|Number_of_rows|Number of rows|QgsProcessingParameterNumber.Integer|1
+#QgsProcessingParameterNumber|Number_of_columns|Number of columns|QgsProcessingParameterNumber.Integer|1
+#QgsProcessingParameterNumber|Number_of_rows|Number of rows|QgsProcessingParameterNumber.Integer|1
 
 # ------------------------------
 # **4. Output**
 # ------------------------------
-##QgsProcessingParameterFileDestination|Output|Save your image|PNG Files (*.)
+##QgsProcessingParameterFileDestination|Output|Save your image|PNG Files (*.png)
 
 
 library(LCZ4r)
@@ -53,9 +53,7 @@ plot_map <- lcz_plot_interp(Raster_interpolated,
                 subtitle = Subtitle,
                 caption = Caption,
                 fill = Legend,
-                palette=result_colors,
-                ncol=Number_of_columns,
-                nrow=Number_of_rows
+                palette=result_colors
                 )
 # Plot visualization
 if (display) {

@@ -5,6 +5,7 @@
 ##QgsProcessingParameterBoolean|Install|Installing the LCZ4r in QGIS|True
 
 if(!require(remotes)) install.packages("remotes")
+options(timeout = 300)
 remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
 
 if(!require(interp)) install.packages("interp", type = "binary")

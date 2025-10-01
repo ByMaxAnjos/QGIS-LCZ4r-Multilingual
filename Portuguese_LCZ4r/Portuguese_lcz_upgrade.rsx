@@ -7,75 +7,68 @@
 ##QgsProcessingParameterEnum|Select_Language|Selecione um idioma de sua preferência|Inglês;Português;Chinês;Espanhol;Alemão;Francês|-1|0|False
 
 if(Upgrade){
-if(!require(remotes)) install.packages("remotes")
-remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
+    if(!require(remotes)) install.packages("remotes")
+    options(timeout = 300)
+    # Sempre use upgrade = "never" para evitar conflitos de dependências no QGIS
+    remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
 }
 
 Languages <- c("English", "Portuguese", "Chinese", "Spanish", "Deutsch", "French")
 
+# Obtém o idioma selecionado (o QGIS retorna o índice, então somamos 1)
 if (!is.null(Select_Language) && Select_Language >= 0 && Select_Language < length(Languages)) {
-  result_language <- Languages[Select_Language + 1] # Alinhado com indexação baseada em 1 do R
+    result_language <- Languages[Select_Language + 1]
 } else {
-  stop("Invalid language selection. Please choose the correct language")
+    stop("Invalid language selection. Please choose the correct language")
 }
 
-folder_name <- switch(result_language,
-  "English"   = "English_LCZ4r",
-  "Portuguese"   = "Portuguese_LCZ4r",
-  "Chinese"   = "Chinese_LCZ4r",
-  "Spanish"   = "Spanish_LCZ4r",
-  "Deutsch"   = "Deutsch_LCZ4r",
-  "French"   = "French_LCZ4r"
-)
-
-script_files <- switch(result_language,
-  "English" = c("English_lcz_get_map.rsx", "English_lcz_get_map_euro.rsx", "English_lcz_get_map_usa.rsx", "English_lcz_get_map_generator.rsx", 
-                "English_lcz_cal_area.rsx", "English_lcz_plot_map.rsx", "English_lcz_get_parameters.rsx", "English_lcz_plot_parameters.rsx", "English_lcz_ts.rsx",  
-                "English_lcz_uhi_intensity.rsx", "English_lcz_anomaly.rsx", "English_lcz_interp_map.rsx", "English_lcz_anomaly_map.rsx", "English_lcz_plot_interp.rsx", 
-                "English_lcz_interp_eval.rsx", "English_lcz_upgrade.rsx", "English_lcz_install.rsx"),
-"Portuguese" = c("Portuguese_lcz_get_map.rsx", "Portuguese_lcz_get_map_euro.rsx", "Portuguese_lcz_get_map_usa.rsx", "Portuguese_lcz_get_map_generator.rsx", 
-                "Portuguese_lcz_cal_area.rsx", "Portuguese_lcz_plot_map.rsx", "Portuguese_lcz_get_parameters.rsx", "Portuguese_lcz_plot_parameters.rsx", "Portuguese_lcz_ts.rsx",  
-                "Portuguese_lcz_uhi_intensity.rsx", "Portuguese_lcz_anomaly.rsx", "Portuguese_lcz_interp_map.rsx", "Portuguese_lcz_anomaly_map.rsx", "Portuguese_lcz_plot_interp.rsx", 
-                "Portuguese_lcz_interp_eval.rsx", "Portuguese_lcz_upgrade.rsx", "Portuguese_lcz_install.rsx"),
-  "Chinese" = c("Chinese_lcz_get_map.rsx", "Chinese_lcz_get_map_euro.rsx", "Chinese_lcz_get_map_usa.rsx", "Chinese_lcz_get_map_generator.rsx", 
-                "Chinese_lcz_cal_area.rsx", "Chinese_lcz_plot_map.rsx", "Chinese_lcz_get_parameters.rsx", "Chinese_lcz_plot_parameters.rsx", "Chinese_lcz_ts.rsx",  
-                "Chinese_lcz_uhi_intensity.rsx", "Chinese_lcz_anomaly.rsx", "Chinese_lcz_interp_map.rsx", "Chinese_lcz_anomaly_map.rsx", "Chinese_lcz_plot_interp.rsx", 
-                "Chinese_lcz_interp_eval.rsx", "Chinese_lcz_upgrade.rsx", "Chinese_lcz_install.rsx"),
-"Spanish" = c("Spanish_lcz_get_map.rsx", "Spanish_lcz_get_map_euro.rsx", "Spanish_lcz_get_map_usa.rsx", "Spanish_lcz_get_map_generator.rsx", 
-                "Spanish_lcz_cal_area.rsx", "Spanish_lcz_plot_map.rsx", "Spanish_lcz_get_parameters.rsx", "Spanish_lcz_plot_parameters.rsx", "Spanish_lcz_ts.rsx",  
-                "Spanish_lcz_uhi_intensity.rsx", "Spanish_lcz_anomaly.rsx", "Spanish_lcz_interp_map.rsx", "Spanish_lcz_anomaly_map.rsx", "Spanish_lcz_plot_interp.rsx", 
-                "Spanish_lcz_interp_eval.rsx", "Spanish_lcz_upgrade.rsx", "Spanish_lcz_install.rsx"),
-"Deutsch" = c("Deutsch_lcz_get_map.rsx", "Deutsch_lcz_get_map_euro.rsx", "Deutsch_lcz_get_map_usa.rsx", "Deutsch_lcz_get_map_generator.rsx", 
-                "Deutsch_lcz_cal_area.rsx", "Deutsch_lcz_plot_map.rsx", "Deutsch_lcz_get_parameters.rsx", "Deutsch_lcz_plot_parameters.rsx", "Deutsch_lcz_ts.rsx",  
-                "Deutsch_lcz_uhi_intensity.rsx", "Deutsch_lcz_anomaly.rsx", "Deutsch_lcz_interp_map.rsx", "Deutsch_lcz_anomaly_map.rsx", "Deutsch_lcz_plot_interp.rsx", 
-                "Deutsch_lcz_interp_eval.rsx", "Deutsch_lcz_upgrade.rsx", "Deutsch_lcz_install.rsx"),
-"French" = c("French_lcz_get_map.rsx", "French_lcz_get_map_euro.rsx", "French_lcz_get_map_usa.rsx", "French_lcz_get_map_generator.rsx", 
-                "French_lcz_cal_area.rsx", "French_lcz_plot_map.rsx", "French_lcz_get_parameters.rsx", "French_lcz_plot_parameters.rsx", "French_lcz_ts.rsx",  
-                "French_lcz_uhi_intensity.rsx", "French_lcz_anomaly.rsx", "French_lcz_interp_map.rsx", "French_lcz_anomaly_map.rsx", "French_lcz_plot_interp.rsx", 
-                "French_lcz_interp_eval.rsx", "French_lcz_upgrade.rsx", "French_lcz_install.rsx")
-                
-)
-
+# Define o nome da pasta com base no idioma
+folder_name <- paste0(result_language, "_LCZ4r")
 base_url <- "https://raw.githubusercontent.com/ByMaxAnjos/QGIS-LCZ4r-Multilingual/master/"
 
-if (!dir.exists(in_folder)) dir.create(in_folder, recursive = TRUE)
+# --- 2. DEFINIÇÃO CENTRALIZADA DOS ARQUIVOS (MAIS EFETIVO) ---
+
+# Define a lista de funções (.rsx) apenas UMA VEZ.
+base_scripts <- c(
+    "lcz_get_map.rsx", "lcz_get_map_euro.rsx", "lcz_get_map_usa.rsx", "lcz_get_map_generator.rsx",
+    "lcz_cal_area.rsx", "lcz_plot_map.rsx", "lcz_get_parameters.rsx", "lcz_plot_parameters.rsx", "lcz_ts.rsx",
+    "lcz_uhi_intensity.rsx", "lcz_anomaly.rsx", "lcz_interp_map.rsx", "lcz_anomaly_map.rsx", "lcz_plot_interp.rsx",
+    "lcz_interp_eval.rsx", "lcz_upgrade.rsx", "lcz_install.rsx"
+)
+
+# Cria a lista completa, prefixando o idioma
+script_files <- paste0(result_language, "_", base_scripts)
+
+# --- 3. EXECUÇÃO ROBUSTA ---
+
+# Cria o diretório se não existir
+dir.create(in_folder, recursive = TRUE, showWarnings = FALSE)
 
 for (script in script_files) {
-  script_url <- paste0(base_url, folder_name, "/", script)
-  dest_file <- file.path(in_folder, script)
+    script_url <- paste0(base_url, folder_name, "/", script)
+    dest_file <- file.path(in_folder, script)
+    temp_dest_file <- file.path(in_folder, paste0("temp_", script))
 
-  # Check if the file exists and delete it before downloading, except for upgrade files.
-  if (file.exists(dest_file) && !grepl("upgrade.rsx", script, ignore.case = TRUE)) {
-    file.remove(dest_file)
-  }
+    tryCatch({
+        # 1. Tenta baixar o script para o arquivo temporário
+        download.file(script_url, destfile = temp_dest_file, mode = "wb", quiet = TRUE)
 
-  # Download the script
-  tryCatch({
-    download.file(script_url, destfile = dest_file, mode = "wb", quiet = TRUE)
-    source(dest_file)
-  }, error = function(e) {
-    warning(paste("Failed to download or source:", script))
-  })
+        # 2. Se o download foi bem-sucedido, substitui o arquivo antigo (se necessário)
+        if (file.exists(dest_file) && !grepl("upgrade.rsx", script, ignore.case = TRUE)) {
+            file.remove(dest_file)
+        }
+        
+        # Move o arquivo temporário para o destino final
+        file.rename(temp_dest_file, dest_file) 
+        
+    }, error = function(e) {
+        warning(paste("Falha ao baixar ou instalar o script:", script, "Erro:", conditionMessage(e)))
+    }, finally = {
+        # 3. Garante que o arquivo temporário seja removido, mesmo em caso de erro
+        if (file.exists(temp_dest_file)) {
+            file.remove(temp_dest_file)
+        }
+    })
 }
 
 #' Upgrade: Se a opção "Atualizar o pacote R LCZ4r" estiver selecionada, as Funções Gerais e Locais do pacote LCZ4r serão reinstaladas. Isso vai garantir que você esteja usando as versões mais recentes dessas funções, que podem incluir atualizações e melhorias importantes.</p><p>

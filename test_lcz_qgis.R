@@ -14,7 +14,8 @@ zip::zip("scripts/English_LCZ4r.zip", files = files_to_zip, recurse = TRUE)
 
 # Define language folders
 path <- "scripts/"
-file.remove(path)
+unlink("scripts/", recursive = TRUE)
+dir.create("scripts/")
 languages <- c("English_LCZ4r", "Portuguese_LCZ4r", "Chinese_LCZ4r", "Spanish_LCZ4r", "Deutsch_LCZ4r", "French_LCZ4r")
 
 # Loop through each language and create a ZIP file

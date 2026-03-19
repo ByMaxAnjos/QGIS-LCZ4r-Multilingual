@@ -4,7 +4,9 @@
 ##dont_load_any_packages
 ##QgsProcessingParameterBoolean|Install|在QGIS中安装LCZ4r|True
 
-if(!require(remotes)) install.packages("remotes")
+if (!require("remotes", quietly = TRUE)) {
+  install.packages("remotes", type = "binary", repos = "https://cran.r-project.org")
+}
 options(timeout = 300)
 remotes::install_github("ByMaxAnjos/LCZ4r", upgrade = "never")
 
